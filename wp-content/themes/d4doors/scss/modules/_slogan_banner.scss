@@ -1,0 +1,52 @@
+.slogan_banner_section {
+    /* Animations */
+    @keyframes slideInLeft {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideInRight {
+        0% {
+            transform: translateX(100%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    .slide-left {
+        animation: slideInLeft 2s ease-out;
+    }
+
+    .slide-right {
+        text-align: right;
+        animation: slideInRight 2s ease-out;
+    }
+
+    .row2 {
+        margin-top: 40px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        @include media-breakpoint-down(sm) {
+            justify-content: start;
+        }
+        .text {
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 150%;
+            max-width: 439px;
+            @include media-breakpoint-down(sm) {
+                max-width: none;
+            }
+        }
+    }
+}

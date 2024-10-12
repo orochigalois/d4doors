@@ -1,0 +1,50 @@
+.icons_section {
+    padding: 120px 0 140px;
+    @include media-breakpoint-down(md) {
+        padding: 50px 0;
+    }
+    .wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1220px;
+        margin:auto;
+        a.each {
+            flex: 33.33%;
+
+            padding:0 40px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 50px;
+            align-items: center;
+            
+
+            @include media-breakpoint-down(md) { 
+                flex: 50%;
+            }
+            @include media-breakpoint-down(sm) { 
+                flex: 100%;
+                padding:0 0px;
+            }
+
+            &:hover{
+                text-decoration: none;
+            }
+            .each__img {
+                img{
+                    width: 52px;
+                    height: 52px;
+                }
+            }
+
+            .each__text {
+                margin-top: 10px;
+                h6 {
+                    margin-bottom: 0px;
+                }
+                p{
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

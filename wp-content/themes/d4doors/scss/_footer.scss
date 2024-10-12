@@ -1,0 +1,117 @@
+.footer {
+
+
+    .footer_wrap {
+        padding: 85px 40px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+
+        @include media-breakpoint-down(md) {
+            flex-direction: column;
+            padding: 30px 0px;
+        }
+
+        p,
+        a {
+            font-family: $poppins-font;
+
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 16px;
+            color: #000000;
+            margin-bottom: 0;
+
+            @include media-breakpoint-down(md) {
+                margin-top: 5px;
+            }
+        }
+
+        .email__tel {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+            @include media-breakpoint-down(md) {
+                align-items: center;
+            }
+
+            a {
+                color: #E30613;
+                font-family: "Poppins", sans-serif;
+                font-weight: 700;
+                font-size: 16px;
+                margin-bottom: 10px;
+                display: block;
+            }
+        }
+
+        .footer_left {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 49%;
+
+            @include media-breakpoint-down(md) {
+                flex-direction: column;
+                width: 100%;
+            }
+        }
+
+        .footer_right {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 49%;
+
+            @include media-breakpoint-down(md) {
+                flex-direction: column;
+                width: 100%;
+            }
+        }
+
+
+    }
+}
+
+#toTop {
+    width: 45px;
+    height: 45px;
+    background: #eee;
+    opacity: 0.5;
+    text-align: center;
+    position: fixed;
+    bottom: 7px;
+    right: 7px;
+    cursor: pointer;
+    transition: color .3s, background-color .3s, opacity .3s;
+    z-index: 9;
+    display: block;
+    border-radius: 5px;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    // padding:20px;
+    .fa-angle-up:before {
+        content: "\1F845";
+        color: #000;
+        font-size: 1.5em;
+        position: relative;
+        top: 3px;
+    }
+
+    // @include media-breakpoint-down(sm) {
+    //     width: 30px;
+    //     height: 30px;
+
+    //     bottom: 15px;
+    //     right: 15px;
+
+    //     .fa-angle-up:before {
+    //         top: -5px;
+    //     }
+    // }
+}

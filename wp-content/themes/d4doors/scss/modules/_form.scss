@@ -1,0 +1,124 @@
+.form_section {
+    padding: 191px 0;
+    position: relative;
+    @include media-breakpoint-down(md) {
+        padding: 50px 0;
+    }
+
+    .overlay {
+        background-color: rgba(68, 68, 68, 0.4);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        top: 0;
+        left: 0;
+    }
+
+    .wrapper {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1104px;
+        margin: auto;
+
+
+
+        .left {
+            width: 50%;
+            padding-right: 80px;
+
+            p {
+                font-weight: 500;
+            }
+
+            @include media-breakpoint-down(md) {
+                width: 100%;
+                padding-right: 0px;
+                margin-bottom: 40px;
+            }
+        }
+
+        .right {
+            width: 50%;
+            padding-left: 80px;
+
+            @include media-breakpoint-down(md) {
+                width: 100%;
+                padding-left: 0px;
+             
+            }
+
+            h5 {
+                margin-bottom: 30px;
+            }
+
+            .form__wrap #mc_embed_signup_scroll {
+                display: flex;
+                flex-wrap: wrap;
+
+                .firstname {
+                    width: 50%;
+                    padding-right: 10px;
+                    margin-bottom: 10px;
+                }
+
+                .lastname {
+                    width: 50%;
+                    margin-bottom: 10px;
+                }
+
+                .company {
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+                .email {
+                    width: 100%;
+                    margin-bottom: 40px;
+                }
+
+                .submit {
+                    width: 100%;
+                    text-align: right;
+
+                    input {
+                        color: #E30613;
+                        padding: 17px 63px;
+                        font-family: $poppins-font;
+
+                        font-weight: 700;
+                        font-size: 13px;
+                        line-height: 16px;
+
+                        background-color: white;
+                        outline: 0;
+                        border: 0;
+                    }
+                }
+
+                input[type=text] , input[type=email] {
+                    width: 100%;
+                    outline: 0;
+                    border: 0;
+                    padding: 13px 20px;
+                    border-left: 2px #E30613 solid;
+                }
+
+            }
+
+
+        }
+    }
+
+
+    #mc_embed_signup {
+        background-color: transparent;
+
+    }
+
+    #mc_embed_signup form {
+        padding: 0;
+    }
+
+}

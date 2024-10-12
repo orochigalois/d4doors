@@ -1,0 +1,48 @@
+title: 'Options'
+key: 'options'
+location:
+  -
+    -
+      param: 'options_page'
+      operator: '=='
+      value: 'acf-options-theme-options'
+fields:
+  header:
+    label: 'Header'
+    type: 'tab'
+  header_logo:
+    label: Logo
+    type: "image"
+    preview_size: 'thumbnail'
+    max_size: 5 # in MB
+    max_width: 2000 # in px
+    max_height: 2000 # in px
+  header_address:
+    label: Address
+    type: "link"
+    return_format: "array"
+  header_phone:
+    label: Phone
+    type: "link"
+    return_format: "array"
+  header_email:
+    label: Email
+    type: "link"
+    return_format: "array"
+  footer:
+    label: Footer
+    type: tab
+  copyright1:
+    label: Copyright 1
+    type: wysiwyg
+    tabs: all
+    toolbar: full
+    media_upload: true
+    delay: true
+  copyright2:
+    label: Copyright 2
+    type: wysiwyg
+    tabs: all
+    toolbar: full
+    media_upload: true
+    delay: true

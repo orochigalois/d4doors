@@ -1,0 +1,717 @@
+title: "Flexible Content"
+key: "service_content"
+position: "acf_after_title"
+hide_on_screen: []
+location: null
+fields:
+  service_flexible:
+    label: Content Builder
+    type: "flexible_content"
+    button_label: "Add Row"
+    min: 0
+    max: 0
+    layouts:
+      hero_alt_section:
+        display: "block"
+        label: "Hero Alt Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%hero_alt_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+          content_setting:
+            label: Content Setting
+            type: accordion
+          background:
+            label: Background
+            type: image
+            preview_size: thumbnail
+            max_size: 5 # in MB
+      block_1_section:
+        display: "block"
+        label: "Block 1 Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%block_1_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+          content_setting:
+            label: Content Setting
+            type: accordion
+          slider:
+            label: Slider
+            type: repeater
+            layout: block
+            sub_fields:
+              image:
+                label: Image
+                type: image
+                preview_size: thumbnail
+                max_size: 5 # in MB
+          wysiwyg:
+            label: Wysiwyg
+            type: wysiwyg
+            tabs: all
+            toolbar: full
+            media_upload: true
+            delay: true
+      text_section:
+        display: "block"
+        label: "Text Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%text_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+          content_setting:
+            label: Content Setting
+            type: accordion
+          wysiwyg:
+            label: Wysiwyg
+            type: wysiwyg
+            tabs: all
+            toolbar: full
+            media_upload: true
+            delay: true
+      block_2_section:
+        display: "block"
+        label: "Block 2 Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%block_2_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+          content_setting:
+            label: Content Setting
+            type: accordion
+          image:
+            label: Image
+            type: image
+            preview_size: thumbnail
+            max_size: 5 # in MB
+          wysiwyg:
+            label: Wysiwyg
+            type: wysiwyg
+            tabs: all
+            toolbar: full
+            media_upload: true
+            delay: true
+      block_3_section:
+        display: "block"
+        label: "Block 3 Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%block_3_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+          content_setting:
+            label: Content Setting
+            type: accordion
+          wysiwyg:
+            label: Wysiwyg
+            type: wysiwyg
+            tabs: all
+            toolbar: full
+            media_upload: true
+            delay: true
+          image:
+            label: Image
+            type: image
+            preview_size: thumbnail
+            max_size: 5 # in MB
+      cta_section:
+        display: "block"
+        label: "CTA Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%cta_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+          content_setting:
+            label: Content Setting
+            type: accordion
+          image:
+            label: Image
+            type: image
+            preview_size: thumbnail
+            max_size: 5 # in MB
+          tel:
+            type: text
+            label: Tel
+          wysiwyg:
+            label: Wysiwyg
+            type: wysiwyg
+            tabs: all
+            toolbar: full
+            media_upload: true
+            delay: true
+      form_section:
+        display: "block"
+        label: "Form Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%form_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+          content_setting:
+            label: Content Setting
+            type: accordion
+          background:
+            label: Background
+            type: image
+            preview_size: thumbnail
+            max_size: 5 # in MB
+          title:
+            label: Title
+            type: text
+          text:
+            label: Text
+            type: text
+          form_title:
+            label: Form title
+            type: text
+      static_brands_section:
+        display: "block"
+        label: "Static Brands Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%static_brands_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+          content_setting:
+            label: Content Setting
+            type: accordion
+          link_1:
+            label: Link 1
+            type: "link"
+            return_format: "array"
+          image_1:
+            label: Image 1
+            type: image
+            preview_size: thumbnail
+            max_size: 5 # in MB
+          link_2:
+            label: Link 2
+            type: "link"
+            return_format: "array"
+          image_2:
+            label: Image 2
+            type: image
+            preview_size: thumbnail
+            max_size: 5 # in MB
+          link_3:
+            label: Link 3
+            type: "link"
+            return_format: "array"
+          image_3:
+            label: Image 3
+            type: image
+            preview_size: thumbnail
+            max_size: 5 # in MB
+      block_4_section:
+        display: "block"
+        label: "Block 4 Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%block_4_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+          content_setting:
+            label: Content Setting
+            type: accordion
+          title:
+            label: Title
+            type: text
+          subtitle:
+            label: Subtitle
+            type: text
+          image:
+            label: Image
+            type: image
+            preview_size: thumbnail
+            max_size: 5 # in MB
+          wysiwyg:
+            label: Wysiwyg
+            type: wysiwyg
+            tabs: all
+            toolbar: full
+            media_upload: true
+            delay: true
+      features_section:
+        display: "block"
+        label: "Features Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%features_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+          content_setting:
+            label: Content Setting
+            type: accordion
+          repeater:
+            label: Repeater
+            type: repeater
+            layout: block
+            sub_fields:
+              link:
+                label: Link
+                type: "link"
+                return_format: "array"
+              icon:
+                label: Icon
+                type: image
+                preview_size: thumbnail
+                max_size: 5 # in MB
+              text:
+                label: Text
+                type: text

@@ -1,0 +1,7 @@
+fields:
+  - options.acf.yaml
+  - flex-content.acf.yaml
+  - service-content.acf.yaml
+pages:
+  - page-default.acf.yaml
+  - service-default.acf.yaml

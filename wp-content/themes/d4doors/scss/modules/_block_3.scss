@@ -1,0 +1,40 @@
+.block_3_section {
+    padding: 28px 0 82px;
+
+    .wrapper {
+        display: flex;
+        max-width: 1048px;
+        flex-wrap: wrap;
+        margin: auto;
+
+        .left {
+            width: 50%;
+            padding-right: 25px;
+
+            @include media-breakpoint-down(md) {
+                width: 100%;
+                padding-right: 0;
+                padding-bottom: 20px;
+                padding-top: 20px;
+            }
+        }
+
+        .right {
+            width: 50%;
+            padding-left: 25px;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+
+            @include media-breakpoint-down(md) {
+                width: 100%;
+                padding-left: 0px;
+            }
+        }
+
+
+
+    }
+}

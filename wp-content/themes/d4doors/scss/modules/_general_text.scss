@@ -1,0 +1,27 @@
+.general_text_section {
+
+    .wrapper {
+
+        max-width: 1138px;
+        margin: auto;
+        border-top: 1px solid #DCDCDC;
+        padding-top: 108px;
+        @include media-breakpoint-down(md) {
+            padding: 50px 0 0;
+        }
+    }
+
+
+    h2 {
+        max-width: 1138px;
+        margin: 0 auto;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 14px;
+        max-width: 1138px;
+        margin: 0 auto;
+    }
+}
