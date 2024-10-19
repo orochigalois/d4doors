@@ -17,7 +17,10 @@ body.menu__open {
 .wrapper {
 	// overflow-x:hidden;
 }
-
+// .row{
+// 	margin-left: -30px;
+// 	margin-right: -30px;
+// }
 .white {
 	color: white !important;
 }
@@ -50,10 +53,10 @@ h2 {
 
 h3 {
 	font-family: $poppins-font;
-	font-weight: 700;
-	font-size: 30px;
-	line-height: 45px;
-	color: #333333;
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 120%;
+	color: #231f20;
 }
 
 h4 {
@@ -86,41 +89,6 @@ p {
 	font-size: 16px;
 	line-height: 28px;
 	color: #333333;
-}
-
-p.fs20 {
-	font-family: $poppins-font;
-	font-weight: 500;
-	font-size: 20px;
-	line-height: 28px;
-	text-align: center;
-	color: #333333;
-}
-
-p.fs14 {
-	font-family: $poppins-font;
-	font-weight: 300;
-	font-size: 14px;
-	line-height: 25px;
-	color: #333333;
-}
-
-p.fs13 {
-	font-family: $poppins-font;
-	font-size: 13px;
-	line-height: 16px;
-	color: #000000;
-}
-
-p.center-bold {
-	font-family: $poppins-font;
-	font-weight: 500;
-	font-size: 20px;
-	line-height: 28px;
-	text-align: center;
-	color: #333333;
-	margin-top: 50px !important;
-	margin-bottom: 60px !important;
 }
 
 .button_container {
@@ -174,61 +142,12 @@ p.center-bold {
 	width: 100%; /* Grow orange line on hover */
 }
 
-// .button {
-// 	display: inline-block;
-// 	background-color: #e30613;
-// 	border: 1px solid #e30613;
-// 	border-radius: 6px;
-
-// 	color: white;
-// 	font-family: $poppins-font;
-// 	font-weight: 700;
-// 	font-size: 20px;
-// 	line-height: 30px;
-
-// 	cursor: pointer;
-
-// 	letter-spacing: 0em;
-// 	padding: 13px 60px;
-
-// 	&:hover {
-// 		background-color: white;
-// 		color: #e30613;
-// 		text-decoration: none;
-// 	}
-// }
-
-// .button__alt {
-// 	background-color: white !important;
-// 	color: #e30613 !important;
-// 	margin-left: 10px;
-// 	padding: 13px 49px;
-// 	&:hover {
-// 		background-color: #e30613 !important;
-// 		color: white !important;
-// 	}
-// 	@media only screen and (max-width: 400px) {
-// 		margin-left: 0px;
-// 		margin-top: 10px;
-// 	}
-// }
-
-// .learn__more {
-// 	font-family: $poppins-font;
-// 	font-weight: 700;
-
-// 	font-size: 16px;
-// 	line-height: 24px;
-
-// 	padding-top: 15px;
-// 	color: #333333;
-// 	cursor: pointer;
-
-// 	&::after {
-// 		content: url(../images/svg/arrowdown.svg);
-// 		display: block;
-// 		left: 34px;
-// 		top: 6px;
-// 		position: relative;
-// 	}
-// }
+.d4_title {
+	font-style: normal;
+	font-weight: 500;
+	font-size: 12px;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: #615651;
+	padding-top: 10px;
+}

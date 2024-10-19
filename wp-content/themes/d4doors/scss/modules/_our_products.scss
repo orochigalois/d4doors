@@ -1,0 +1,193 @@
+.our_products_section {
+    .accordion__wrapper {
+        display: block;
+        @include media-breakpoint-down(sm) {
+            display: none;
+        }
+        display: flex;
+        width: 100%;
+        justify-content: end;
+
+        .accordion__tile {
+            display: flex;
+            height: 900px;
+
+            &.open {
+                .accordion__content {
+                    max-width: 510px;
+                    width: 38vw;
+                    opacity: 1;
+                    padding-left: 15px;
+                    transition:
+                        width 0.7s ease,
+                        opacity 1s 0.3s ease,
+                        padding-left 1s 0.3s ease;
+                }
+            }
+            .accordion__content {
+                width: 0px;
+                opacity: 0;
+                padding-left: 0;
+
+                .title {
+                    border-top: 1px solid #cab6ad;
+                    max-width: 440px;
+                }
+                h3 {
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 28px;
+                    line-height: 120%;
+                    color: #231f20;
+                    max-width: 440px;
+                    margin-top: 70px;
+                    margin-bottom: 30px;
+                }
+                p {
+                    font-family: "Poppins";
+                    font-style: normal;
+                    font-weight: 300;
+                    font-size: 16px;
+                    line-height: 150%;
+                    color: #231f20;
+                    max-width: 434px;
+                    margin-bottom: 50px;
+                }
+            }
+            .accordion__header {
+                cursor: pointer;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                overflow: hidden;
+                border-radius: 20px;
+
+                max-width: 300px;
+                width: 20vw;
+                .accordion__number {
+                    font-size: 222px;
+                    font-weight: 500;
+                    color: #e3e3e3;
+                    position: relative;
+                    left: -74px;
+                    top: 117px;
+                    line-height: 0;
+                }
+                .accordion__text {
+                    transform: rotate(180deg);
+                    writing-mode: vertical-rl;
+                    padding-right: 40px;
+                    padding-left: 186px;
+                    padding-top: 30px;
+
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 74px;
+                    line-height: 100%;
+                    text-transform: capitalize;
+                    color: #e3e3e3;
+                }
+            }
+        }
+        #accordion-1 {
+            .accordion__header {
+                background: #231f20;
+            }
+        }
+        #accordion-2 {
+            .accordion__header {
+                background: #615651;
+            }
+        }
+        #accordion-3 {
+            .accordion__header {
+                background: #8c7b74;
+            }
+        }
+    }
+
+    .accordion__wrapper__mobile {
+        display: none;
+        @include media-breakpoint-down(sm) {
+            display: block;
+        }
+        #accordion-mobile-1 {
+            background: #231f20;
+        }
+        #accordion-mobile-2 {
+            background: #615651;
+        }
+        #accordion-mobile-3 {
+            background: #8c7b74;
+        }
+
+        .accordion {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 100%;
+            text-transform: capitalize;
+            color: #e3e3e3;
+            outline: none;
+            border: none;
+            width: 100%;
+            background-color: transparent;
+            text-align: left;
+            padding-top: 28px;
+            padding-bottom: 28px;
+            padding-left: 30px;
+            padding-right: 70px;
+            position: relative;
+            border-radius: 20px;
+        }
+
+        .active,
+        .accordion:hover {
+            // background-color: #ccc;
+        }
+
+        .accordion:after {
+            content: url(../images/svg/aright.svg);
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            width: 31px;
+            height: 31px;
+            transition: 0.4s;
+        }
+
+        .active:after {
+            transform: rotate(90deg);
+        }
+
+        .panel {
+            padding-left: 10px;
+            padding-bottom: 10px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+
+            h3 {
+                font-style: normal;
+                font-weight: 500;
+                font-size: 28px;
+                line-height: 120%;
+                color: #231f20;
+                max-width: 440px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            p {
+                font-family: "Poppins";
+                font-style: normal;
+                font-weight: 300;
+                font-size: 16px;
+                line-height: 150%;
+                color: #231f20;
+                max-width: 434px;
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

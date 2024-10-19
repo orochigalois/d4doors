@@ -68,6 +68,7 @@
 	@if $value == on {
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
+		font-smooth: never;
 	}
 	@else {
 		-webkit-font-smoothing: subpixel-antialiased;
