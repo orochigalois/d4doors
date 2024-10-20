@@ -1,0 +1,113 @@
+.slider_alt_2_section {
+    padding: 80px 0;
+    .title {
+        border-top: 1px solid #cab6ad;
+    }
+    .layer2 {
+        padding-top: 50px;
+        padding-bottom: 70px;
+    }
+    .layer2-left {
+        font-family: "Poppins";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 28px;
+        line-height: 120%;
+        color: #231f20;
+        max-width: 556px;
+    }
+    .layer2-right {
+        @include media-breakpoint-down(md) {
+            padding-top: 30px;
+        }
+
+        p {
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 150%;
+
+            color: #000000;
+        }
+        .link {
+            // margin-top: 50px;
+        }
+    }
+    .slider-class {
+        .slick-slide {
+            margin-left: 8px;
+            margin-right: 8px;
+            @include media-breakpoint-down(sm) {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+        .img__wrap {
+            border-radius: 20px;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 55.6%;
+            position: relative;
+            height: 0;
+            .mask {
+                height: 100%;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.3);
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 10;
+            }
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+            }
+            .item__title {
+                position: absolute;
+
+                left: 30px;
+                bottom: 30px;
+                z-index: 11;
+                h3 {
+                    font-weight: 500;
+                    font-size: 40px;
+                    line-height: 100%;
+                    color: #fbfbfb;
+                    margin-bottom: 0;
+                }
+            }
+            .item__tags {
+                position: absolute;
+
+                left: 30px;
+                top: 30px;
+                z-index: 11;
+                display: flex;
+                gap: 10px;
+                p.tag {
+                    font-weight: 300;
+                    font-size: 14px;
+                    line-height: 100%;
+
+                    color: #000000;
+
+                    background: #e3e3e3;
+                    border-radius: 40px;
+
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 6px 11px;
+                }
+            }
+        }
+    }
+}
