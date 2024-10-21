@@ -34,79 +34,41 @@
 	<div id="top"></div>
 	<div id="wrapper">
 		<header id="header">
-			<div class="container-fluid">
+			<div class="container">
+				<div class="header_wrap">
+					<a href="/">
+						<img class="default" src="<?= get_field('header_logo', 'options')['url']; ?>" alt="">
+						<img class="sticky" src="<?= get_field('header_logo', 'options')['url']; ?>" alt="">
+					</a>
 
-				<a href="/">
-					<img class="logo" src="<?= get_field('header_logo', 'options')['url']; ?>" alt="">
-				</a>
+					<nav id="nav" role="navigation" aria-label="Primary Menu"><a class="nav-opener" href="#"><span>Open</span></a>
+						<div class="nav-drop">
+							<?php
 
+							wp_nav_menu(array(
+								'depth' => 0,
+								'container' => '',
+								'theme_location' => 'header-menu',
+							));
 
-				<img class="hamburger" src="<?= get_template_directory_uri() . '/images/svg/hamburger.svg' ?>" alt="">
-				<img src="<?= get_template_directory_uri() . '/images/svg/close.svg' ?>" alt="" class="menu__close">
+							?>
+						</div>
+					</nav>
 
+					<?php
 
+					$link = get_field('header_contact', 'options');
+
+					if ($link) :
+						$link_url = $link['url'];
+						$link_title = $link['title'];
+						$link_target = $link['target'] ? $link['target'] : '_self';
+					?>
+						<a class="btn__contact" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
+					<?php endif; ?>
+				</div>
 			</div>
 
 
 		</header>
-		<div class="overlay"></div>
-		<div class="main__menu">
-
-
-			<nav>
-				<?php
-
-				wp_nav_menu(array(
-					'depth' => 0,
-					'container' => '',
-					'theme_location' => 'header-menu',
-				));
-
-				?>
-			</nav>
-			<div class="bottom">
-				<h3>Get in touch</h3>
-				<div class="left">
-					<?php
-
-					$link = get_field('header_address', 'options');
-
-					if ($link) :
-						$link_url = $link['url'];
-						$link_title = $link['title'];
-						$link_target = $link['target'] ? $link['target'] : '_self';
-					?>
-						<a class="address" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
-					<?php endif; ?>
-					<?php
-
-					$link = get_field('header_phone', 'options');
-
-					if ($link) :
-						$link_url = $link['url'];
-						$link_title = $link['title'];
-						$link_target = $link['target'] ? $link['target'] : '_self';
-					?>
-						<a class="phone"  href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
-					<?php endif; ?>
-					<?php
-
-					$link = get_field('header_email', 'options');
-
-					if ($link) :
-						$link_url = $link['url'];
-						$link_title = $link['title'];
-						$link_target = $link['target'] ? $link['target'] : '_self';
-					?>
-						<a class="email"  href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
-					<?php endif; ?>
-				</div>
-				<div class="right">
-					<?= do_shortcode("[ninja_form id=2]"); ?>
-				</div>
-			</div>
-
-
-
-		</div>
 		<main class="main">

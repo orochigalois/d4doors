@@ -11,8 +11,9 @@
     </div>
     <div class="row layer2">
       <div class="col-lg-6">
-        <div class="layer2-left">
-          <?= get_sub_field('text'); ?>
+        <div class="layer2-left highlight__text">
+          <p class="fg"><?= get_sub_field('text'); ?></p>
+          <p class="bg"><?= wrapMatchWithSpans(get_sub_field('text'), get_sub_field('highlight')); ?></p>
         </div>
       </div>
       <div class="col-lg-6">

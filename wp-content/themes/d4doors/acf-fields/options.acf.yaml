@@ -17,32 +17,58 @@ fields:
     max_size: 5 # in MB
     max_width: 2000 # in px
     max_height: 2000 # in px
-  header_address:
-    label: Address
-    type: "link"
-    return_format: "array"
-  header_phone:
-    label: Phone
-    type: "link"
-    return_format: "array"
-  header_email:
-    label: Email
+  header_contact:
+    label: Contact
     type: "link"
     return_format: "array"
   footer:
     label: Footer
     type: tab
-  copyright1:
-    label: Copyright 1
-    type: wysiwyg
-    tabs: all
-    toolbar: full
-    media_upload: true
-    delay: true
-  copyright2:
-    label: Copyright 2
-    type: wysiwyg
-    tabs: all
-    toolbar: full
-    media_upload: true
-    delay: true
+  slogan:
+    label: Slogan
+    type: text
+  facebook:
+    label: Facebook
+    type: link
+    return_format: array
+  linkedin:
+    label: Linkedin
+    type: link
+    return_format: array
+  twitter:
+    label: Twitter
+    type: link
+    return_format: array
+  youtube:
+    label: Youtube
+    type: link
+    return_format: array
+  instagram:
+    label: Instagram
+    type: link
+    return_format: array
+  text:
+    label: Text
+    type: text
+  copyright:
+    label: Copyright
+    type: text
+  address:
+    label: Address
+    type: link
+    return_format: array
+  work_hours:
+    label: Work Hours
+    type: text
+  phone1:
+    label: Phone1
+    type: link
+    return_format: array
+  phone2:
+    label: Phone2
+    type: link
+    return_format: array
+  email:
+    label: Email
+    type: link
+    return_format: array

@@ -1,22 +1,163 @@
 	</main> <!-- end main -->
 	<footer class="footer">
 		<div class="container">
+			<div class="wrapper">
+				<div class="layer1">
+					<div class="col1">
+						<div class="slogan"><?= get_field('slogan', 'options'); ?></div>
+						<div class="social">
+							<?php
+							$link = get_field('facebook', 'options');
+
+							if ($link) :
+								$link_url = $link['url'];
+								$link_title = $link['title'];
+								$link_target = $link['target'] ? $link['target'] : '_self';
+							?>
+								<a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+									<svg class="facebook-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M14 7.04244C13.9998 5.69647 13.6164 4.37874 12.8951 3.24523C12.1737 2.11172 11.1447 1.20992 9.92977 0.646581C8.71487 0.0832425 7.36499 -0.11804 6.03993 0.0665642C4.71487 0.251168 3.47012 0.813927 2.45306 1.68822C1.43599 2.56251 0.689201 3.71171 0.301092 4.99979C-0.0870168 6.28786 -0.100189 7.66085 0.263135 8.95623C0.626458 10.2516 1.35106 11.4151 2.35116 12.309C3.35126 13.2029 4.58498 13.7897 5.90625 14V9.07853H4.12883V7.04244H5.90625V5.49058C5.90625 3.72566 6.95158 2.75017 8.54992 2.75017C9.075 2.75774 9.59885 2.80364 10.1173 2.88751V4.62132H9.23417C8.96831 4.58581 8.69932 4.65799 8.48634 4.82199C8.27336 4.98599 8.13382 5.22837 8.09842 5.49586C8.08841 5.57077 8.08684 5.64657 8.09375 5.72183V7.04244H10.0333L9.723 9.07853H8.08967V14C9.73702 13.7388 11.2376 12.8944 12.3211 11.6189C13.4047 10.3433 14 8.72043 14 7.04244Z" />
+									</svg>
+								</a>
+							<?php endif; ?>
+							<?php
+							$link = get_field('linkedin', 'options');
+
+							if ($link) :
+								$link_url = $link['url'];
+								$link_title = $link['title'];
+								$link_target = $link['target'] ? $link['target'] : '_self';
+							?>
+								<a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+									<svg class="linkedin-icon" width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M12.354 0.0810547H0.565217C0.242236 0.0810547 0 0.323291 0 0.646272V12.5158C0 12.7581 0.242236 13.0003 0.565217 13.0003H12.4348C12.7578 13.0003 13 12.7581 13 12.4351V0.646272C12.9193 0.323291 12.677 0.0810547 12.354 0.0810547ZM3.79503 11.0624H1.93789V4.92578H3.87578V11.0624H3.79503ZM2.90683 4.11832C2.26087 4.11832 1.7764 3.5531 1.7764 2.98789C1.7764 2.34192 2.26087 1.85745 2.90683 1.85745C3.55279 1.85745 4.03727 2.34192 4.03727 2.98789C3.95652 3.5531 3.47205 4.11832 2.90683 4.11832ZM10.9814 11.0624H9.04348V8.07484C9.04348 7.34813 9.04348 6.45994 8.07453 6.45994C7.10559 6.45994 6.9441 7.26739 6.9441 8.07484V11.1432H5.00621V4.92578H6.86335V5.73323C7.10559 5.24876 7.75155 4.76428 8.63975 4.76428C10.5776 4.76428 10.9006 6.05621 10.9006 7.67112V11.0624H10.9814Z" />
+									</svg>
+								</a>
+							<?php endif; ?>
+							<?php
+							$link = get_field('twitter', 'options');
+
+							if ($link) :
+								$link_url = $link['url'];
+								$link_title = $link['title'];
+								$link_target = $link['target'] ? $link['target'] : '_self';
+							?>
+								<a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+									<svg class="twitter-icon" width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M6.30284 8.57151L2.42455 12.9998H0.276367L5.29948 7.26172L6.30284 8.57151Z" />
+										<path d="M7.47461 4.40697L11.0257 0.344727H13.1725L8.46893 5.72399L7.47461 4.40697Z" />
+										<path d="M14 12.9997H9.67969L0 0.344727H4.42969L14 12.9997ZM10.2722 11.7148H11.4618L3.78338 1.56231H2.50704L10.2722 11.7148Z" />
+									</svg>
+								</a>
+							<?php endif; ?>
+							<?php
+							$link = get_field('youtube', 'options');
+
+							if ($link) :
+								$link_url = $link['url'];
+								$link_title = $link['title'];
+								$link_target = $link['target'] ? $link['target'] : '_self';
+							?>
+								<a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+									<svg class="youtube-icon" width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M15.8 2.8C15.6 1.5 15 0.6 13.6 0.4C11.4 8.9407e-08 8 0 8 0C8 0 4.6 8.9407e-08 2.4 0.4C1 0.6 0.3 1.5 0.2 2.8C0 4.1 0 6 0 6C0 6 0 7.9 0.2 9.2C0.4 10.5 1 11.4 2.4 11.6C4.6 12 8 12 8 12C8 12 11.4 12 13.6 11.6C15 11.3 15.6 10.5 15.8 9.2C16 7.9 16 6 16 6C16 6 16 4.1 15.8 2.8ZM6 9V3L11 6L6 9Z" />
+									</svg>
+
+								</a>
+							<?php endif; ?>
+							<?php
+							$link = get_field('instagram', 'options');
+
+							if ($link) :
+								$link_url = $link['url'];
+								$link_title = $link['title'];
+								$link_target = $link['target'] ? $link['target'] : '_self';
+							?>
+								<a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+									<svg class="instagram-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M7 1.26087C8.869 1.26087 9.09037 1.26875 9.82887 1.302C10.2726 1.30733 10.7122 1.38903 11.1283 1.5435C11.4326 1.65592 11.7077 1.83535 11.9332 2.0685C12.1664 2.29407 12.3458 2.56919 12.4583 2.8735C12.6127 3.28956 12.6944 3.7291 12.6997 4.17287C12.733 4.91138 12.7409 5.13538 12.7409 7.00175C12.7409 8.86812 12.733 9.09212 12.6997 9.83062C12.6944 10.2744 12.6127 10.7139 12.4583 11.13C12.342 11.432 12.1638 11.7062 11.935 11.935C11.7062 12.1638 11.432 12.342 11.13 12.4583C10.7139 12.6127 10.2744 12.6944 9.83062 12.6997C9.09212 12.733 8.86812 12.7409 7.00175 12.7409C5.13538 12.7409 4.91138 12.733 4.17287 12.6997C3.7291 12.6944 3.28956 12.6127 2.8735 12.4583C2.56919 12.3458 2.29407 12.1664 2.0685 11.9332C1.83535 11.7077 1.65592 11.4326 1.5435 11.1283C1.38903 10.7122 1.30733 10.2726 1.302 9.82887C1.26875 9.09037 1.26087 8.86637 1.26087 7C1.26087 5.13363 1.26875 4.90963 1.302 4.17113C1.30733 3.72735 1.38903 3.28781 1.5435 2.87175C1.65592 2.56744 1.83535 2.29232 2.0685 2.06675C2.29407 1.8336 2.56919 1.65417 2.8735 1.54175C3.28956 1.38728 3.7291 1.30558 4.17287 1.30025C4.91138 1.267 5.13538 1.25912 7.00175 1.25912M7 0C5.09862 0 4.86062 0.007875 4.1125 0.042C3.53234 0.053798 2.95837 0.163857 2.415 0.3675C1.94772 0.542989 1.52452 0.81865 1.17513 1.17513C0.81865 1.52452 0.542989 1.94772 0.3675 2.415C0.163857 2.95837 0.053798 3.53234 0.042 4.1125C0.007875 4.86062 0 5.09862 0 7C0 8.90137 0.007875 9.13937 0.042 9.8875C0.053798 10.4677 0.163857 11.0416 0.3675 11.585C0.542989 12.0523 0.81865 12.4755 1.17513 12.8249C1.52452 13.1813 1.94772 13.457 2.415 13.6325C2.95893 13.8363 3.5335 13.9464 4.11425 13.958C4.86063 13.9921 5.09862 14 7 14C8.90137 14 9.13937 13.9921 9.8875 13.958C10.4683 13.9464 11.0428 13.8363 11.5868 13.6325C12.0517 13.4525 12.474 13.1774 12.8266 12.8248C13.1792 12.4723 13.4543 12.05 13.6342 11.585C13.8381 11.0411 13.9481 10.4665 13.9598 9.88575C13.9939 9.13938 14.0018 8.90137 14.0018 6.99825C14.0018 5.09513 13.9939 4.85887 13.9598 4.11075C13.9472 3.53108 13.8365 2.95772 13.6325 2.415C13.457 1.94772 13.1813 1.52452 12.8249 1.17513C12.4755 0.81865 12.0523 0.542989 11.585 0.3675C11.0416 0.163857 10.4677 0.053798 9.8875 0.042C9.13937 0.007875 8.90137 0 7 0Z" />
+										<path d="M7.00075 3.40625C6.28983 3.40625 5.59487 3.61706 5.00375 4.01203C4.41264 4.407 3.95193 4.96839 3.67987 5.62519C3.40781 6.282 3.33662 7.00474 3.47532 7.702C3.61401 8.39927 3.95636 9.03975 4.45906 9.54245C4.96176 10.0451 5.60223 10.3875 6.2995 10.5262C6.99676 10.6649 7.7195 10.5937 8.37631 10.3216C9.03312 10.0496 9.5945 9.58886 9.98947 8.99775C10.3844 8.40663 10.5953 7.71167 10.5953 7.00075C10.5953 6.52871 10.5023 6.0613 10.3216 5.62519C10.141 5.18909 9.87623 4.79283 9.54245 4.45905C9.20867 4.12527 8.81241 3.86051 8.37631 3.67987C7.9402 3.49922 7.47279 3.40625 7.00075 3.40625ZM7.00075 9.33437C6.5392 9.33437 6.08802 9.19751 5.70426 8.94109C5.3205 8.68467 5.02139 8.3202 4.84476 7.89379C4.66814 7.46738 4.62192 6.99816 4.71197 6.54548C4.80201 6.0928 5.02427 5.67699 5.35063 5.35063C5.67699 5.02426 6.0928 4.80201 6.54548 4.71197C6.99816 4.62192 7.46738 4.66813 7.89379 4.84476C8.32021 5.02139 8.68467 5.32049 8.94109 5.70426C9.19751 6.08802 9.33438 6.5392 9.33438 7.00075C9.33438 7.61967 9.08851 8.21323 8.65087 8.65087C8.21323 9.08851 7.61967 9.33437 7.00075 9.33437Z" />
+										<path d="M10.7365 4.10383C11.2004 4.10383 11.5765 3.72775 11.5765 3.26383C11.5765 2.79991 11.2004 2.42383 10.7365 2.42383C10.2726 2.42383 9.89648 2.79991 9.89648 3.26383C9.89648 3.72775 10.2726 4.10383 10.7365 4.10383Z" />
+									</svg>
+
+								</a>
+							<?php endif; ?>
+						</div>
+					</div>
+					<div class="col2">
+						<?php
+
+						wp_nav_menu(array(
+							'depth' => 0,
+							'container' => '',
+							'theme_location' => 'header-menu',
+						));
+
+						?>
+					</div>
+					<div class="col3">
+						<h4>ADDRESS</h4>
+						<div class="address">
+							<?php
+							$link = get_field('address', 'options');
+
+							if ($link) :
+								$link_url = $link['url'];
+								$link_title = $link['title'];
+								$link_target = $link['target'] ? $link['target'] : '_self';
+							?>
+								<a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
+							<?php endif; ?>
+						</div>
+						<p class="working__hour">
+							<?= get_field('work_hours', 'options'); ?>
+						</p>
+						<h4>CONTACT</h4>
+						<div class="contact">
+							<?php
+							$link = get_field('phone1', 'options');
+
+							if ($link) :
+								$link_url = $link['url'];
+								$link_title = $link['title'];
+								$link_target = $link['target'] ? $link['target'] : '_self';
+							?>
+								<a class="phone1" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
+							<?php endif; ?>
+							<span>(Free call)</span>
+							<?php
+							$link = get_field('phone2', 'options');
+
+							if ($link) :
+								$link_url = $link['url'];
+								$link_title = $link['title'];
+								$link_target = $link['target'] ? $link['target'] : '_self';
+							?>
+								<a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
+							<?php endif; ?>
+							<?php
+							$link = get_field('email', 'options');
+
+							if ($link) :
+								$link_url = $link['url'];
+								$link_title = $link['title'];
+								$link_target = $link['target'] ? $link['target'] : '_self';
+							?>
+								<a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
+							<?php endif; ?>
+						</div>
+					</div>
+				</div>
 
 
-			<div class="footer_wrap">
-				<div class="email__tel">
-					<a href="tel:0298381442">(02) 9838 1442</a>
-					<a href="mailto:sales@bmblinds.com.au">sales@bmblinds.com.au</a>
+				<div class="layer2">
+					<?= get_field('text', 'options'); ?>
 				</div>
-				<div class="footer_left">
-					<?= get_field('copyright1', 'options'); ?>
-					<a href="/terms-conditions/" class="terms">Terms & Conditions</a>
-				</div>
-				<div class="footer_right">
-					<a href="/warranty/" class="terms">Warranty</a>
-					<?= get_field('copyright2', 'options'); ?>
+				<div class="layer3">
+					<?= get_field('copyright', 'options'); ?>
 				</div>
 			</div>
+
 
 		</div>
 

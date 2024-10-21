@@ -94,25 +94,22 @@
               </div>
             <?php
             }
-            wp_reset_postdata();
+            wp_reset_postdata(); // Reset global post data after the loop
           } else {
             echo '<p>No projects found.</p>';
           }
         } else {
-          
+
           // If the field is not empty, display the selected projects
           foreach ($projects as $project) {
-            // Load each project object
-            $post = $project;
-            setup_postdata($post);
-            $flexible_content = get_field('flexible');
+            $flexible_content = get_field('flexible', $project->ID);
             ?>
             <div class="item">
               <div class="img__wrap">
-                <img src="<?= get_the_post_thumbnail_url(get_the_ID(), 'full') ?>" alt="">
+                <img src="<?= get_the_post_thumbnail_url($project->ID, 'full') ?>" alt="">
                 <div class="mask"></div>
                 <div class="item__title">
-                  <h3><?= get_the_title(); ?></h3>
+                  <h3><?= get_the_title($project->ID); ?></h3>
                 </div>
                 <div class="item__tags">
                   <?php
@@ -142,11 +139,12 @@
               </div>
             </div>
         <?php
-            wp_reset_postdata(); // Reset post data after each iteration
           }
+          wp_reset_postdata(); // Reset post data after all projects have been processed
         }
         ?>
       </div>
+
 
 
 

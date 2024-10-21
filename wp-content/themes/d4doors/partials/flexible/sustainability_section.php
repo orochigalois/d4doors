@@ -1,6 +1,6 @@
 <!-- Generate by Flexible Module Helper -->
 <?php $random__id = lp_generateRandomString(); ?>
-<section class="our_features_section" id="<?= $random__id; ?>">
+<section class="sustainability_section" id="<?= $random__id; ?>">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -19,48 +19,43 @@
       <div class="col-lg-6">
         <div class="layer2-right">
           <?= get_sub_field('wysiwyg'); ?>
+          <div class="link">
+            <?php
+            $link = get_sub_field('link');
+            if ($link):
+              $link_url = $link['url'];
+              $link_title = $link['title'];
+              $link_target = $link['target'] ? $link['target'] : '_self';
+            ?>
+              <a class="button_container" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                <div class="button"><?php echo esc_html($link_title); ?></div>
+                <img src="<?= get_template_directory_uri() . '/images/svg/link_arrow.svg' ?>" alt="link arrow">
+              </a>
+            <?php endif; ?>
+          </div>
+
+
         </div>
 
       </div>
     </div>
-    <div class="row__tiles">
-      <?php
-      if (have_rows('repeater')):
-        $counter = 1; // Initialize a counter to track tile positions
-        while (have_rows('repeater')) :  ?>
-          <?php if ($counter == 3 || $counter == 4 || $counter == 5) : ?>
-            <div class="tile__wrap dummy">
-              <div class="tile">
-                <p>Dummy Tile <?= $counter; ?></p>
-              </div>
-            </div>
-          <?php else:
-            the_row(); ?>
-            <div class="tile__wrap">
-              <div class="tile">
-                <img src="<?= get_sub_field('image')['url']; ?>" alt="">
-                <div class="copy">
-                  <p><?= get_sub_field('text'); ?></p>
-                  <h3><?= get_sub_field('title'); ?></h3>
-                </div>
-              </div>
-            </div>
+    <div class="row__images">
 
-          <?php endif; ?>
+      <div class="imgx1">
+        <div class="img__wrap">
+          <img src="<?= get_sub_field('image1')['url']; ?>" alt="">
+        </div>
+      </div>
 
-          <?php
-          // Increment the counter, reset after 8 tiles
-          $counter++;
-          if ($counter > 8) {
-            $counter = 1;
-          }
-          ?>
-      <?php endwhile;
-      endif;
-      ?>
 
+      <div class="imgx3">
+        <div class="img__wrap">
+          <img src="<?= get_sub_field('image2')['url']; ?>" alt="">
+        </div>
+      </div>
     </div>
   </div>
+
 </section>
 <?php if (get_sub_field('padding_top')) : ?>
   <style>

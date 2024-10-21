@@ -125,3 +125,26 @@ function lp_generateRandomString($length = 10) {
     }
     return $randomString;
 }
+
+function wrapMatchWithSpans($text, $match)
+{
+	// Check if $match is found in $text
+	if (strpos($text, $match) !== false) {
+		// Split $match by spaces to get each word
+		$words = explode(' ', $match);
+
+		// Wrap each word with <span></span>
+		$new = '';
+		foreach ($words as $word) {
+			$new .= "<span>$word</span> ";
+		}
+
+		// Trim any extra space at the end of $new
+		$new = trim($new);
+
+		// Replace $match in $text with the newly created $new string
+		$text = str_replace($match, $new, $text);
+	}
+
+	return $text;
+}

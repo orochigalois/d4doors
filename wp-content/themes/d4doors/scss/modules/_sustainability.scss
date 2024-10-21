@@ -1,4 +1,4 @@
-.about_us_section {
+.sustainability_section {
     padding: 80px 0;
     .title {
         border-top: 1px solid #cab6ad;
@@ -7,13 +7,7 @@
         padding-top: 50px;
     }
     .layer2-left {
-        font-family: "Poppins";
-        font-style: normal;
-        font-weight: 500;
-        font-size: 28px;
-        line-height: 120%;
-        color: #231f20;
-        max-width: 556px;
+        
     }
     .layer2-right {
         @include media-breakpoint-down(md) {
@@ -29,11 +23,8 @@
 
             color: #000000;
         }
-        .link1 {
+        .link {
             margin-top: 50px;
-        }
-        .link2 {
-            margin-top: 16px;
         }
     }
 
@@ -60,15 +51,15 @@
         .imgx1 {
             flex: 0 0 25%;
             max-width: 25%;
-            @include media-breakpoint-down(md) {
-                flex: 0 0 50%;
-                max-width: 50%;
+            @include media-breakpoint-down(sm) {
+                flex: 0 0 100%;
+                max-width: 100%;
             }
         }
-        .imgx2 {
-            flex: 0 0 50%;
-            max-width: 50%;
-            @include media-breakpoint-down(md) {
+        .imgx3 {
+            flex: 0 0 75%;
+            max-width: 75%;
+            @include media-breakpoint-down(sm) {
                 margin-top: 12px;
                 flex: 0 0 100%;
                 max-width: 100%;
