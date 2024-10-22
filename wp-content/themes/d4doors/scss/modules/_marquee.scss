@@ -1,0 +1,21 @@
+.marquee_section {
+    padding: 60px 0;
+    @include media-breakpoint-down(sm) { 
+       padding: 25px 0; 
+    }
+    .marquee__wrap{
+        display: flex;
+        align-items: center;
+        height: 140px;
+    }
+    span {
+        font-weight: 500;
+        font-size: 110px;
+        line-height: 120%;
+        color: #231f20;
+    }
+    .svg__wrap{
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+}

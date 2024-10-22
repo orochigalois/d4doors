@@ -121,10 +121,63 @@ $(function () {
 
     initMobileNav();
     initHeader();
-
+    initIsotope();
 
     initAnchorScroll();
 });
+
+var spec = [];
+var gender = [];
+var interest = [];
+function initIsotope() {
+    if (!$(".result__masonry").length) {
+        return;
+    }
+
+    function updateArray() {
+        spec = [];
+        $(".filter #filter1 .filter_content ul>li").each(function () {
+            if ($(this).hasClass("active")) {
+                spec.push($(this).text());
+            }
+        });
+
+    }
+
+    $(".filter .filter_btn").on("click", document, function () {
+        if ($(this).hasClass("active")) {
+            $(this).removeClass("active");
+        }
+        else {
+            $(".filter .filter_btn").removeClass("active");
+            $(this).addClass("active");
+        }
+
+    });
+    $(".filter .filter_content ul>li").on("click", document, function () {
+        $(this).toggleClass("active");
+        updateArray();
+        let full_text = spec.join(", ");
+        if (full_text.length > 16) {
+            full_text = full_text.slice(0, 13) + "...";
+        }
+        if (full_text)
+            $("#filter1 .filter_btn span").text(full_text);
+        else
+            $("#filter1 .filter_btn span").text("Specialisation");
+
+
+
+    });
+
+
+
+    $('.result__masonry').isotope({
+        itemSelector: '.grid-item',
+        layoutMode: 'fitRows'
+    });
+
+}
 
 function initHeader() {
 

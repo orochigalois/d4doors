@@ -1,0 +1,56 @@
+title: "Company Fields"
+key: "company_field"
+position: "normal"
+hide_on_screen: []
+location:
+  - 
+    - param: "post_type"
+      operator: "=="
+      value: "company"
+fields:
+  # company_name:
+  #   label: Company  Name
+  #   type: text
+  # state:
+  #   label: Australian States
+  #   name: aus_states
+  #   type: button_group
+  #   instructions: "Select an Australian state."
+  #   required: 1
+  #   choices:
+  #     NSW: "New South Wales"
+  #     VIC: "Victoria"
+  #     QLD: "Queensland"
+  #     SA: "South Australia"
+  #     WA: "Western Australia"
+  #     TAS: "Tasmania"
+  #     ACT: "Australian Capital Territory"
+  #     NT: "Northern Territory"
+  #   default_value: NSW
+  #   layout: vertical
+  #   return_format: value
+  address:
+    label: Address
+    type: link
+    return_format: array
+  working_hours:
+    label: Working hours
+    type: text
+  phone:
+    label: Phone
+    type: link
+    return_format: array
+  is_free_call:
+    label: Is Free call?
+    type: true_false
+    ui: true
+    default_value: true
+  website:
+    label: Website
+    type: link
+    return_format: array
+  email:
+    label: Email
+    type: link
+    return_format: array
+  

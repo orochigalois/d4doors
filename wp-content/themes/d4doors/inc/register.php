@@ -88,6 +88,70 @@ function lp_register_post_types()
 		'menu_icon'	 => 'dashicons-hammer',
 		'rewrite'	   => array('slug' => 'project', 'with_front' => true),
 	));
+	register_post_type('blog', array(
+		'labels'		=> array(
+			'name'			   => __('Blogs'),
+			'singular_name'	  => __('Blog'),
+			'add_new'			=> __('Add New'),
+			'add_new_item'	   => __('Add New Blog'),
+			'edit_item'		  => __('Edit Blog'),
+			'new_item'		   => __('New Blog'),
+			'all_items'		  => __('All Blogs'),
+			'view_item'		  => __('View Blog'),
+			'search_items'	   => __('Search Blog'),
+			'not_found'		  => __('No Blogs found'),
+			'not_found_in_trash' => __('No Blogs found in the Trash'),
+			'parent_item_colon'  => '',
+			'menu_name'		  => 'Blogs'
+		),
+		'public'		=> true,
+		'supports'	  => array('title', 'thumbnail', 'excerpt'),
+		'has_archive'   => 'blogs',
+		'menu_icon'	 => 'dashicons-welcome-write-blog',
+		'rewrite'	   => array('slug' => 'blog', 'with_front' => true),
+	));
+	register_post_type('company', array(
+		'labels'		=> array(
+			'name'			   => __('Companys'),
+			'singular_name'	  => __('Company'),
+			'add_new'			=> __('Add New'),
+			'add_new_item'	   => __('Add New Company'),
+			'edit_item'		  => __('Edit Company'),
+			'new_item'		   => __('New Company'),
+			'all_items'		  => __('All Companys'),
+			'view_item'		  => __('View Company'),
+			'search_items'	   => __('Search Company'),
+			'not_found'		  => __('No Companys found'),
+			'not_found_in_trash' => __('No Companys found in the Trash'),
+			'parent_item_colon'  => '',
+			'menu_name'		  => 'Companys'
+		),
+		'public'		=> true,
+		// 'supports'	  => array('title', 'thumbnail','excerpt'),
+		'supports'	  => array('title', 'thumbnail'),
+		// 'has_archive'   => 'companys',
+		'menu_icon'	 => 'dashicons-sticky',
+		'rewrite'	   => array('slug' => 'company', 'with_front' => true),
+	));
+
+	register_taxonomy('company-state', array('company'), array(
+		'labels'			=> array(
+			'name'			  => _x('Company State', 'taxonomy general name'),
+			'singular_name'	 => _x('Company State', 'taxonomy singular name'),
+			'search_items'	  => __('Search Company State'),
+			'all_items'		 => __('All Company State'),
+			'parent_item'	   => __('Parent Company State'),
+			'parent_item_colon' => __('Parent Company State:'),
+			'edit_item'		 => __('Edit Company State'),
+			'update_item'	   => __('Update Company State'),
+			'add_new_item'	  => __('Add New Company State'),
+			'new_item_name'	 => __('New Company State Name'),
+			'menu_name'		 => __('Company State'),
+		),
+		'hierarchical'	  => true,
+		'show_ui'		   => true,
+		'show_in_menu'	  => true,
+	));
 }
 add_action('init', 'lp_register_post_types');
 

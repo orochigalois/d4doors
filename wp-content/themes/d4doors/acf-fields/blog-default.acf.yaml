@@ -1,5 +1,5 @@
-title: 'Project Field'
-key: 'project_default'
+title: 'Blog Field'
+key: 'blog_default'
 position: 'acf_after_title'
 hide_on_screen: []
 location:
@@ -7,7 +7,7 @@ location:
     -
       param: 'post_type'
       operator: '=='
-      value: 'project'
+      value: 'blog'
 fields:
   flex_content:
     label: Flex Content

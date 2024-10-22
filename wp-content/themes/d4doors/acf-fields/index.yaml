@@ -1,7 +1,8 @@
 fields:
   - options.acf.yaml
   - flex-content.acf.yaml
-  # - project-content.acf.yaml
 pages:
   - page-default.acf.yaml
   - project-default.acf.yaml
+  - blog-default.acf.yaml
+  - company.acf.yaml

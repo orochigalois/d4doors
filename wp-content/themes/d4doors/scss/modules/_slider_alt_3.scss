@@ -1,0 +1,32 @@
+.slider_alt_3_section {
+    padding: 60px 0;
+    @include media-breakpoint-down(sm) {
+        padding: 25px 0;
+    }
+    .title {
+        border-top: 1px solid #cab6ad;
+    }
+    .layer2 {
+        padding-top: 50px;
+    }
+    .layer2-left {
+    }
+    .layer2-right {
+        @include media-breakpoint-down(md) {
+            padding-top: 30px;
+        }
+
+        p {
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 150%;
+
+            color: #000000;
+        }
+        .link {
+            margin-top: 50px;
+        }
+    }
+}
