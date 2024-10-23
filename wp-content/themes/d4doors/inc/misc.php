@@ -128,6 +128,9 @@ function lp_generateRandomString($length = 10) {
 
 function wrapMatchWithSpans($text, $match)
 {
+	if (empty($text) || empty($match)) {
+		return $text;
+	}
 	// Check if $match is found in $text
 	if (strpos($text, $match) !== false) {
 		// Split $match by spaces to get each word

@@ -1,5 +1,5 @@
 .company_index_section {
-    padding: 90px 0 30px;
+    padding: 60px 0;
     @include media-breakpoint-down(sm) {
         padding: 25px 0;
     }
@@ -10,7 +10,7 @@
         }
     }
 
-    .filter {
+    .filter__company {
         border-top: 1px solid #cab6ad;
         padding-top: 10px;
         position: relative;
@@ -83,7 +83,7 @@
     }
 
 
-    .result__masonry {
+    .result__masonry__company {
         display: flex;
         flex-wrap: wrap;
         margin-left: -6px;

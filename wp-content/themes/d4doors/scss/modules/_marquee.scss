@@ -1,5 +1,5 @@
 .marquee_section {
-    padding: 60px 0;
+    padding: 40px 0 60px;
     @include media-breakpoint-down(sm) { 
        padding: 25px 0; 
     }

@@ -62,6 +62,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 $(function () {
+    initSlider();
+    initAccordion();
+    // initAccordionProduct();
+
+    initMobileNav();
+    initHeader();
+    initIsotope__company();
+    initIsotope__project();
+
+    initAnchorScroll();
+});
+function initSlider() {
     jQuery('.slider_section .slider-class').slick({
         autoplay: true,
         dots: true,
@@ -110,41 +122,88 @@ $(function () {
         centerMode: true,
         centerPadding: '220px',
         responsive: [{
-            breakpoint: 767,
+            breakpoint: 991,
             settings: {
                 centerMode: false,
                 centerPadding: '0',
             }
         }]
     });
-    initAccordion();
+    jQuery('.slider__alt3 .slider-class').slick({
+        autoplay: false,
+        dots: false,
+        speed: 300,
+        fade: false,
+        arrows: false,
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        centerMode: true,
+        centerPadding: '75px',
+        responsive: [{
+            breakpoint: 1150,
+            settings: {
+                slidesToShow: 2,
+            }
+        }, {
+            breakpoint: 900,
+            settings: {
+                slidesToShow: 1,
+                // centerMode: false,
+                // centerPadding: '0',
+            }
+        }, {
+            breakpoint: 599,
+            settings: {
+                slidesToShow: 1,
+                centerMode: false,
+                centerPadding: '0',
+            }
+        }]
+    });
 
-    initMobileNav();
-    initHeader();
-    initIsotope();
+    // Custom navigation button click handlers
+    jQuery('.slider__alt3 .nav__button .prev').on('click', function () {
+        jQuery('.slider__alt3 .slider-class').slick('slickPrev');
+    });
 
-    initAnchorScroll();
-});
+    jQuery('.slider__alt3 .nav__button .next').on('click', function () {
+        jQuery('.slider__alt3 .slider-class').slick('slickNext');
+    });
 
-function initIsotope() {
-    if (!$(".result__masonry").length) {
+    // Event listener for when the slider changes
+    jQuery('.slider__alt3 .slider-class').on('afterChange', function (event, slick, currentSlide) {
+        // Check if we're on the first or last slide
+        if (currentSlide === 0) {
+            // console.log('Reached the first slide');
+        }
+
+        if (currentSlide === slick.$slides.length - slick.options.slidesToShow) {
+            // console.log('Reached the last slide');
+        }
+    });
+}
+
+
+function initIsotope__company() {
+    if (!$(".result__masonry__company").length) {
         return;
     }
 
     // Initialize Isotope on the result masonry grid
-    var $grid = $('.result__masonry').isotope({
+    var $grid = $('.result__masonry__company').isotope({
         itemSelector: '.grid-item',
         layoutMode: 'fitRows'
     });
 
     // Filter items when filter button is clicked
-    $('.filter__content ul li').on('click', function () {
+    $('.filter__company .filter__content ul li').on('click', function () {
 
-        $(".filter .filter__btn").removeClass("active");
+        $(".filter__company .filter__btn").removeClass("active");
         let keyword = $(this).text();
-        
 
-        $(".filter .filter__btn span").text(keyword);
+
+        $(".filter__company .filter__btn span").text(keyword);
         // Get the data-slug attribute from the clicked filter
         var filterValue = $(this).attr('data-slug');
 
@@ -160,33 +219,85 @@ function initIsotope() {
         var visibleItemsCount = $grid.data('isotope').filteredItems.length;
 
         // Update the result count somewhere on the page
-        $(".filter .filter__number span").text(visibleItemsCount);
+        $(".filter__company .filter__number span").text(visibleItemsCount);
 
         // Update the active class for the filter buttons
-        $('.filter__content ul li').removeClass('active');
+        $('.filter__company .filter__content ul li').removeClass('active');
         $(this).addClass('active');
     });
 
 
 
-    $(".filter .filter__btn").on("click", document, function () {
+    $(".filter__company .filter__btn").on("click", document, function () {
         if ($(this).hasClass("active")) {
             $(this).removeClass("active");
         }
         else {
-            $(".filter .filter__btn").removeClass("active");
+            $(".filter__company .filter__btn").removeClass("active");
             $(this).addClass("active");
         }
 
     });
 
 
+}
+function initIsotope__project() {
+    if (!$(".result__masonry__project").length) {
+        return;
+    }
+
+    // Initialize Isotope on the result masonry grid
+    var $grid = $('.result__masonry__project').isotope({
+        itemSelector: '.grid-item',
+        layoutMode: 'masonry',
+        // masonry: {
+        //     columnWidth: 100
+        // }
+    });
+
+    // Filter items when filter button is clicked
+    $('.filter__project .filter__content ul li').on('click', function () {
+
+        $(".filter__project .filter__btn").removeClass("active");
+        let keyword = $(this).text();
 
 
-    // $('.result__masonry').isotope({
-    //     itemSelector: '.grid-item',
-    //     layoutMode: 'fitRows'
-    // });
+        $(".filter__project .filter__btn span").text(keyword);
+        // Get the data-slug attribute from the clicked filter
+        var filterValue = $(this).attr('data-slug');
+
+        // If 'ALL' is selected, show all items
+        if (filterValue === 'all') {
+            $grid.isotope({ filter: '*' });
+        } else {
+            // Otherwise, filter based on the state slug
+            $grid.isotope({ filter: '.prod__' + filterValue });
+        }
+
+        // Count the number of visible items after filtering
+        var visibleItemsCount = $grid.data('isotope').filteredItems.length;
+
+        // Update the result count somewhere on the page
+        $(".filter__project .filter__number span").text(visibleItemsCount);
+
+        // Update the active class for the filter buttons
+        $('.filter__project .filter__content ul li').removeClass('active');
+        $(this).addClass('active');
+    });
+
+
+
+    $(".filter__project .filter__btn").on("click", document, function () {
+        if ($(this).hasClass("active")) {
+            $(this).removeClass("active");
+        }
+        else {
+            $(".filter__project .filter__btn").removeClass("active");
+            $(this).addClass("active");
+        }
+
+    });
+
 
 }
 
@@ -222,6 +333,22 @@ function initAnchorScroll() {
 }
 
 function initAccordion() {
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    }
+}
+function initAccordionProduct() {
     var acc = document.getElementsByClassName("accordion");
     var i;
 

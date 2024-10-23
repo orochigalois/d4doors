@@ -62,7 +62,7 @@ function lp_register_post_types()
 		),
 		'public'		=> true,
 		'supports'	  => array('title', 'thumbnail'),
-		'has_archive'   => 'products',
+		'has_archive'   => 'all-products',
 		'menu_icon'	 => 'dashicons-cart',
 		'rewrite'	   => array('slug' => 'product', 'with_front' => true),
 	));
@@ -84,7 +84,7 @@ function lp_register_post_types()
 		),
 		'public'		=> true,
 		'supports'	  => array('title', 'thumbnail'),
-		'has_archive'   => 'projects',
+		'has_archive'   => 'all-projects',
 		'menu_icon'	 => 'dashicons-hammer',
 		'rewrite'	   => array('slug' => 'project', 'with_front' => true),
 	));
@@ -110,6 +110,26 @@ function lp_register_post_types()
 		'menu_icon'	 => 'dashicons-welcome-write-blog',
 		'rewrite'	   => array('slug' => 'blog', 'with_front' => true),
 	));
+
+	register_taxonomy('blog-type', array('blog'), array(
+		'labels'			=> array(
+			'name'			  => _x('Blog Type', 'taxonomy general name'),
+			'singular_name'	 => _x('Blog Type', 'taxonomy singular name'),
+			'search_items'	  => __('Search Blog Type'),
+			'all_items'		 => __('All Blog Type'),
+			'parent_item'	   => __('Parent Blog Type'),
+			'parent_item_colon' => __('Parent Blog Type:'),
+			'edit_item'		 => __('Edit Blog Type'),
+			'update_item'	   => __('Update Blog Type'),
+			'add_new_item'	  => __('Add New Blog Type'),
+			'new_item_name'	 => __('New Blog Type Name'),
+			'menu_name'		 => __('Blog Type'),
+		),
+		'hierarchical'	  => true,
+		'show_ui'		   => true,
+		'show_in_menu'	  => true,
+	));
+
 	register_post_type('company', array(
 		'labels'		=> array(
 			'name'			   => __('Companys'),

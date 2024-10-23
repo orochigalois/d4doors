@@ -1,0 +1,137 @@
+.product_instruction_section {
+    padding: 60px 0;
+    @include media-breakpoint-down(sm) {
+        padding: 25px 0;
+    }
+    .title {
+        border-top: 1px solid #cab6ad;
+    }
+    .layer2 {
+        margin-top: 70px;
+    }
+    .layer2-left {
+        font-family: "Poppins";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 28px;
+        line-height: 120%;
+        color: #231f20;
+        max-width: 556px;
+    }
+    .layer2-right {
+        @include media-breakpoint-down(md) {
+            padding-top: 30px;
+        }
+
+        p {
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 150%;
+
+            color: #000000;
+        }
+    }
+    .layer2__accordion {
+        .accordion {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #231f20;
+            outline: none;
+            border: none;
+            border-top: 1px solid #cfc9ca;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .active,
+        .accordion:hover {
+            border-top: 1px solid #231f20;
+            &::after {
+                content: url(../images/svg/addsign.svg);
+            }
+        }
+
+        .accordion:after {
+            content: url(../images/svg/addgray.svg);
+            position: absolute;
+            top: 20px;
+            right: 0px;
+        }
+
+        .active:after {
+            content: url(../images/svg/addsign.svg);
+        }
+
+        .panel {
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+
+            h3 {
+                font-style: normal;
+                font-weight: 500;
+                font-size: 28px;
+                line-height: 120%;
+                color: #231f20;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            p {
+                font-family: "Poppins";
+                font-style: normal;
+                font-weight: 300;
+                font-size: 16px;
+                line-height: 150%;
+                color: #231f20;
+                margin-bottom: 20px;
+            }
+
+            a {
+                color: #fe6020;
+                text-decoration: underline;
+            }
+            ul {
+                padding-left: 20px;
+                li {
+                    font-weight: 300;
+                    font-size: 16px;
+                    line-height: 150%;
+                    color: #231f20;
+                }
+                li::marker {
+                    color: #fe6020;
+                }
+            }
+
+            .download {
+                padding-top: 30px;
+                a {
+                    display: block;
+                    /* Download 1234 */
+
+                    font-weight: 400;
+                    font-size: 13px;
+                    line-height: 20px;
+                    /* identical to box height */
+                    letter-spacing: 0.03em;
+                    text-transform: uppercase;
+                    
+                    color: #000000;
+                    text-decoration: none;
+                    margin-bottom: 13px;
+                    &:hover {
+                        color: #fe6020;
+                    }
+                }
+            }
+        }
+    }
+}

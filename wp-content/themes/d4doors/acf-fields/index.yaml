@@ -4,5 +4,6 @@ fields:
 pages:
   - page-default.acf.yaml
   - project-default.acf.yaml
+  - product-default.acf.yaml
   - blog-default.acf.yaml
   - company.acf.yaml

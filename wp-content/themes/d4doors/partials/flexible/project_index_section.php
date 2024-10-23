@@ -1,30 +1,50 @@
 <!-- Generate by Flexible Module Helper -->
 <?php $random__id = lp_generateRandomString(); ?>
-<section class="company_index_section" id="<?= $random__id; ?>">
+<section class="project_index_section" id="<?= $random__id; ?>">
   <div class="container">
-    <div class="filter__company">
+    <div class="filter__project">
       <div class="filter__btn">
         FILTERED BY: <span>All</span>
       </div>
       <div class="filter__content">
         <?php
         $terms = get_terms(array(
-          'taxonomy' => 'company-state',
+          'taxonomy' => 'project-state',
           'parent'   => 0,
           'hide_empty' => 0
         ));
         ?>
         <ul>
           <li data-slug="all">All</li>
-          <?php foreach ($terms as $term) : ?>
-            <li data-slug="<?= $term->slug; ?>"><?= $term->name; ?></li>
-          <?php endforeach; ?>
+          <?php
+          $args = array(
+            'post_type'      => 'product',
+            'posts_per_page' => -1, // Get all posts
+            'post_status'    => 'publish', // Only get published posts
+          );
+
+          $products = new WP_Query($args);
+
+          if ($products->have_posts()) {
+            while ($products->have_posts()) {
+              $products->the_post();
+
+              // Get the slug of the current post
+              $slug = get_post_field('post_name', get_the_ID());
+          ?>
+              <li data-slug="<?= $slug ?>"><?= $slug ?></li>
+          <?php
+            }
+            wp_reset_postdata(); // Restore original post data
+          }
+
+          ?>
         </ul>
       </div>
       <div class="filter__number">
         <?php
-        // Query for all posts of post type 'company'
-        $args = array('post_type' => 'company', 'posts_per_page' => -1);
+        // Query for all posts of post type 'project'
+        $args = array('post_type' => 'project', 'posts_per_page' => -1);
         $loop = new WP_Query($args);
         $post_count = $loop->found_posts; // Get the total number of posts
         wp_reset_query();
@@ -35,84 +55,56 @@
     </div>
 
 
-    <div class="result__masonry__company">
+    <div class="result__masonry__project">
       <?php
-      $args = array('post_type' => 'company', 'posts_per_page' => -1);
+      $args = array('post_type' => 'project', 'posts_per_page' => -1);
       $loop = new WP_Query($args);
       while ($loop->have_posts()) : $loop->the_post();
+        $flexible_content = get_field('flexible');
       ?>
-        <div class="grid-item <?php $state__terms = get_the_terms(get_the_ID(), 'company-state');
-                              foreach ($state__terms as $term) {
-                                if (isset($term))
-                                  echo 'state__' . $term->slug . ' ';
-                              } ?>">
-          <div class="tile__wrap">
-            <div class="tile">
-              <div class="content">
-                <h3><?= get_the_title(); ?></h3>
-                <div class="description">
-                  <h4>ADDRESS</h4>
-                  <div class="address">
-                    <?php
-                    $link = get_field('address');
+        <a href="<?php echo esc_url(get_permalink()); ?>" class="grid-item <?php
+                                                                      if ($flexible_content) {
+                                                                        foreach ($flexible_content as $block) {
+                                                                          // Check for specific layouts/blocks
+                                                                          if ($block['acf_fc_layout'] == 'project_instruction_section') {
 
-                    if ($link) :
-                      $link_url = $link['url'];
-                      $link_title = $link['title'];
-                      $link_target = $link['target'] ? $link['target'] : '_self';
-                    ?>
-                      <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
-                    <?php endif; ?>
-                  </div>
-                  <div class="working_hours"><?= get_field('working_hours'); ?></div>
-                  <h4 class="contact">CONTACT</h4>
-                  <div class="phone">
-                    <?php
-                    $is_free_call = get_field('is_free_call');
-                    $link = get_field('phone');
-
-                    if ($link) :
-                      $link_url = $link['url'];
-                      $link_title = $link['title'];
-                      $link_target = $link['target'] ? $link['target'] : '_self';
-                    ?>
-                      <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
-                      <?php if ($is_free_call): ?><span>(Free call)</span><?php endif; ?>
-                    <?php endif; ?>
-                  </div>
-                  <div class="website">
-                    <?php
-                    $link = get_field('website');
-
-                    if ($link) :
-                      $link_url = $link['url'];
-                      $link_title = $link['title'];
-                      $link_target = $link['target'] ? $link['target'] : '_self';
-                    ?>
-                      <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
-                    <?php endif; ?>
-                  </div>
-                  <div class="email">
-                    <?php
-                    $link = get_field('email');
-
-                    if ($link) :
-                      $link_url = $link['url'];
-                      $link_title = $link['title'];
-                      $link_target = $link['target'] ? $link['target'] : '_self';
-                    ?>
-                      <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
-                    <?php endif; ?>
-                  </div>
-                </div>
-
+                                                                            // Get the 'products' relationship field
+                                                                            $products = $block['products'];
+                                                                            $year = $block['year'];
+                                                                            if ($products) {
+                                                                              foreach ($products as $product) {
+                                                                                echo 'prod__' .  get_post_field('post_name', $product->ID) . ' ';
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                      ?>">
+          <div class="tile">
+            <div class="img__wrap">
+              <img src="<?= get_the_post_thumbnail_url(); ?>" alt="">
+              <div class="item__tags">
+                <?php
+                if ($products) {
+                  foreach ($products as $product) {
+                    echo '<p class="tag">' . get_the_title($product->ID) . '</p>';
+                  }
+                }
+                ?>
               </div>
-
+            </div>
+            <?php if ($year): ?>
+              <div class="year">
+                <?= esc_html($year); ?>
+              </div>
+            <?php endif; ?>
+            <div class="title">
+              <h3><?= get_the_title(); ?></h3>
             </div>
 
           </div>
 
-        </div>
+        </a>
 
       <?php
 
@@ -122,7 +114,6 @@
       ?>
 
     </div>
-
 </section>
 <?php if (get_sub_field('padding_top')) : ?>
   <style>

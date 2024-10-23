@@ -58,7 +58,7 @@
               $projects_query->the_post();
               $flexible_content = get_field('flexible');
         ?>
-              <div class="item">
+              <a href="<?php echo esc_url(get_permalink()); ?>" class="item">
                 <div class="img__wrap">
                   <img src="<?= get_the_post_thumbnail_url(get_the_ID(), 'full') ?>" alt="">
                   <div class="mask"></div>
@@ -91,7 +91,7 @@
                     ?>
                   </div>
                 </div>
-              </div>
+              </a>
             <?php
             }
             wp_reset_postdata(); // Reset global post data after the loop
@@ -104,7 +104,7 @@
           foreach ($projects as $project) {
             $flexible_content = get_field('flexible', $project->ID);
             ?>
-            <div class="item">
+            <a href="<?php echo esc_url(get_permalink($project->ID)); ?>" class="item">
               <div class="img__wrap">
                 <img src="<?= get_the_post_thumbnail_url($project->ID, 'full') ?>" alt="">
                 <div class="mask"></div>
@@ -137,7 +137,7 @@
                   ?>
                 </div>
               </div>
-            </div>
+            </a>
         <?php
           }
           wp_reset_postdata(); // Reset post data after all projects have been processed
