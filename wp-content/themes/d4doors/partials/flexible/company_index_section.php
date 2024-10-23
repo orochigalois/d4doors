@@ -3,27 +3,35 @@
 <section class="company_index_section" id="<?= $random__id; ?>">
   <div class="container">
     <div class="filter">
-      <div id="filter1">
-        <div class="filter_btn">
-          <span>
-            ALL
-          </span>
-        </div>
-        <div class="filter_content">
-          <?php
-          $terms = get_terms(array(
-            'taxonomy' => 'company-state',
-            'parent'   => 0,
-            'hide_empty' => 0
-          ));
-          ?>
-          <ul>
-            <?php foreach ($terms as $term) : ?>
-              <li data-slug="<?= $term->slug; ?>"><?= $term->name; ?></li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
+      <div class="filter__btn">
+        FILTERED BY: <span>All</span>
       </div>
+      <div class="filter__content">
+        <?php
+        $terms = get_terms(array(
+          'taxonomy' => 'company-state',
+          'parent'   => 0,
+          'hide_empty' => 0
+        ));
+        ?>
+        <ul>
+          <li data-slug="all">All</li>
+          <?php foreach ($terms as $term) : ?>
+            <li data-slug="<?= $term->slug; ?>"><?= $term->name; ?></li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+      <div class="filter__number">
+        <?php
+        // Query for all posts of post type 'company'
+        $args = array('post_type' => 'company', 'posts_per_page' => -1);
+        $loop = new WP_Query($args);
+        $post_count = $loop->found_posts; // Get the total number of posts
+        wp_reset_query();
+        ?>
+        <span><?= $post_count; ?></span> Results
+      </div>
+
     </div>
 
 
@@ -34,10 +42,10 @@
       while ($loop->have_posts()) : $loop->the_post();
       ?>
         <div class="grid-item <?php $state__terms = get_the_terms(get_the_ID(), 'company-state');
-                                    foreach ($state__terms as $term) {
-                                      if (isset($term))
-                                        echo 'state__' . $term->slug . ' ';
-                                    } ?>">
+                              foreach ($state__terms as $term) {
+                                if (isset($term))
+                                  echo 'state__' . $term->slug . ' ';
+                              } ?>">
           <div class="tile__wrap">
             <div class="tile">
               <div class="content">

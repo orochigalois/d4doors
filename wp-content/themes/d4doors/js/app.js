@@ -65,56 +65,67 @@ $(function () {
     initAnchorScroll();
 });
 
-var spec = [];
-var gender = [];
-var interest = [];
 function initIsotope() {
     if (!$(".result__masonry").length) {
         return;
     }
 
-    function updateArray() {
-        spec = [];
-        $(".filter #filter1 .filter_content ul>li").each(function () {
-            if ($(this).hasClass("active")) {
-                spec.push($(this).text());
-            }
-        });
+    // Initialize Isotope on the result masonry grid
+    var $grid = $('.result__masonry').isotope({
+        itemSelector: '.grid-item',
+        layoutMode: 'fitRows'
+    });
 
-    }
+    // Filter items when filter button is clicked
+    $('.filter__content ul li').on('click', function () {
 
-    $(".filter .filter_btn").on("click", document, function () {
+        $(".filter .filter__btn").removeClass("active");
+        let keyword = $(this).text();
+        
+
+        $(".filter .filter__btn span").text(keyword);
+        // Get the data-slug attribute from the clicked filter
+        var filterValue = $(this).attr('data-slug');
+
+        // If 'ALL' is selected, show all items
+        if (filterValue === 'all') {
+            $grid.isotope({ filter: '*' });
+        } else {
+            // Otherwise, filter based on the state slug
+            $grid.isotope({ filter: '.state__' + filterValue });
+        }
+
+        // Count the number of visible items after filtering
+        var visibleItemsCount = $grid.data('isotope').filteredItems.length;
+
+        // Update the result count somewhere on the page
+        $(".filter .filter__number span").text(visibleItemsCount);
+
+        // Update the active class for the filter buttons
+        $('.filter__content ul li').removeClass('active');
+        $(this).addClass('active');
+    });
+
+
+
+    $(".filter .filter__btn").on("click", document, function () {
         if ($(this).hasClass("active")) {
             $(this).removeClass("active");
         }
         else {
-            $(".filter .filter_btn").removeClass("active");
+            $(".filter .filter__btn").removeClass("active");
             $(this).addClass("active");
         }
 
     });
-    $(".filter .filter_content ul>li").on("click", document, function () {
-        $(this).toggleClass("active");
-        updateArray();
-        let full_text = spec.join(", ");
-        if (full_text.length > 16) {
-            full_text = full_text.slice(0, 13) + "...";
-        }
-        if (full_text)
-            $("#filter1 .filter_btn span").text(full_text);
-        else
-            $("#filter1 .filter_btn span").text("Specialisation");
 
 
 
-    });
 
-
-
-    $('.result__masonry').isotope({
-        itemSelector: '.grid-item',
-        layoutMode: 'fitRows'
-    });
+    // $('.result__masonry').isotope({
+    //     itemSelector: '.grid-item',
+    //     layoutMode: 'fitRows'
+    // });
 
 }
 
