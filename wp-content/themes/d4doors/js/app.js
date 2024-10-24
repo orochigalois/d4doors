@@ -3,14 +3,16 @@ import '../scss/app.scss';
 $(function () {
     initSlider();
     initAccordion();
-    // initAccordionProduct();
 
     initMobileNav();
     initHeader();
     initIsotope__company();
     initIsotope__project();
+    initIsotope__resource();
 
     initAnchorScroll();
+
+    initAppendSVG();
 });
 function initSlider() {
     jQuery('.slider_section .slider-class').slick({
@@ -239,6 +241,65 @@ function initIsotope__project() {
 
 
 }
+function initIsotope__resource() {
+    if (!$(".result__masonry__resource").length) {
+        return;
+    }
+
+    // Initialize Isotope on the result masonry grid
+    var $grid = $('.result__masonry__resource').isotope({
+        itemSelector: '.grid-item',
+        layoutMode: 'masonry',
+        // masonry: {
+        //     columnWidth: 100
+        // }
+    });
+
+    // Filter items when filter button is clicked
+    $('.filter__resource .filter__content ul li').on('click', function () {
+
+        $(".filter__resource .filter__btn").removeClass("active");
+        let keyword = $(this).text();
+
+
+        $(".filter__resource .filter__btn span").text(keyword);
+        // Get the data-slug attribute from the clicked filter
+        var filterValue = $(this).attr('data-slug');
+
+        // If 'ALL' is selected, show all items
+        if (filterValue === 'all') {
+            $grid.isotope({ filter: '*' });
+        } else {
+            // Otherwise, filter based on the state slug
+            $grid.isotope({ filter: '.type__' + filterValue });
+        }
+
+        // Count the number of visible items after filtering
+        var visibleItemsCount = $grid.data('isotope').filteredItems.length;
+
+        // Update the result count somewhere on the page
+        $(".filter__resource .filter__number span").text(visibleItemsCount);
+
+        // Update the active class for the filter buttons
+        $('.filter__resource .filter__content ul li').removeClass('active');
+        $(this).addClass('active');
+    });
+
+
+
+    $(".filter__resource .filter__btn").on("click", document, function () {
+        if ($(this).hasClass("active")) {
+            $(this).removeClass("active");
+        }
+        else {
+            $(".filter__resource .filter__btn").removeClass("active");
+            $(this).addClass("active");
+        }
+
+    });
+
+
+}
 
 function initHeader() {
 
@@ -287,22 +348,6 @@ function initAccordion() {
         });
     }
 }
-function initAccordionProduct() {
-    var acc = document.getElementsByClassName("accordion");
-    var i;
-
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.maxHeight) {
-                panel.style.maxHeight = null;
-            } else {
-                panel.style.maxHeight = panel.scrollHeight + "px";
-            }
-        });
-    }
-}
 // mobile menu init
 function initMobileNav() {
     jQuery('body').mobileNav({
@@ -310,6 +355,22 @@ function initMobileNav() {
         menuOpener: '.nav-opener',
         hideOnClickOutside: true,
         menuDrop: 'ul'
+    });
+}
+
+
+
+function initAppendSVG() {
+
+    jQuery(document).on('nfFormReady', function (e, layoutView) {
+        // Define the SVG as a string
+        var svg = `<svg width="18" height="6" viewBox="0 0 18 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 3L13 3" stroke="#FE6020" stroke-linecap="square" stroke-linejoin="round"/>
+<path d="M13 5.40002L17.8 3.00003L13 0.600027L13 5.40002Z" fill="#FE6020"/>
+</svg>
+`;
+
+        $('.submit-wrap .nf-field-element input').after(svg);
     });
 }
 /*

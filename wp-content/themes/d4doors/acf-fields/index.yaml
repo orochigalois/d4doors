@@ -7,3 +7,4 @@ pages:
   - product-default.acf.yaml
   - blog-default.acf.yaml
   - company.acf.yaml
+  - resource.acf.yaml

@@ -1,15 +1,15 @@
 <!-- Generate by Flexible Module Helper -->
 <?php $random__id = lp_generateRandomString(); ?>
-<section class="company_index_section" id="<?= $random__id; ?>">
+<section class="resource_index_section" id="<?= $random__id; ?>">
   <div class="container">
-    <div class="filter__company">
+    <div class="filter__resource">
       <div class="filter__btn">
         FILTERED BY: <span>All</span>
       </div>
       <div class="filter__content">
         <?php
         $terms = get_terms(array(
-          'taxonomy' => 'company-state',
+          'taxonomy' => 'resource-type',
           'parent'   => 0,
           'hide_empty' => 0
         ));
@@ -23,8 +23,8 @@
       </div>
       <div class="filter__number">
         <?php
-        // Query for all posts of post type 'company'
-        $args = array('post_type' => 'company', 'posts_per_page' => -1);
+        // Query for all posts of post type 'resource'
+        $args = array('post_type' => 'resource', 'posts_per_page' => -1);
         $loop = new WP_Query($args);
         $post_count = $loop->found_posts; // Get the total number of posts
         wp_reset_query();
@@ -34,86 +34,50 @@
 
     </div>
 
-
-    <div class="result__masonry__company">
+    <div class="table__header">
+      <div class="title">Name</div>
+      <div class="tags">Resource type</div>
+    </div>
+    <div class="result__masonry__resource">
       <?php
-      $args = array('post_type' => 'company', 'posts_per_page' => -1);
+      $args = array('post_type' => 'resource', 'posts_per_page' => -1);
       $loop = new WP_Query($args);
       while ($loop->have_posts()) : $loop->the_post();
+        $type__terms = get_the_terms(get_the_ID(), 'resource-type');
       ?>
-        <div class="grid-item <?php $state__terms = get_the_terms(get_the_ID(), 'company-state');
-                              foreach ($state__terms as $term) {
-                                if (isset($term))
-                                  echo 'state__' . $term->slug . ' ';
-                              } ?>">
-          <div class="tile__wrap">
-            <div class="tile">
-              <div class="content">
-                <h3><?= get_the_title(); ?></h3>
-                <div class="description">
-                  <h4>ADDRESS</h4>
-                  <div class="address">
-                    <?php
-                    $link = get_field('address');
-
-                    if ($link) :
-                      $link_url = $link['url'];
-                      $link_title = $link['title'];
-                      $link_target = $link['target'] ? $link['target'] : '_self';
-                    ?>
-                      <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
-                    <?php endif; ?>
-                  </div>
-                  <div class="working_hours"><?= get_field('working_hours'); ?></div>
-                  <h4 class="contact">CONTACT</h4>
-                  <div class="phone">
-                    <?php
-                    $is_free_call = get_field('is_free_call');
-                    $link = get_field('phone');
-
-                    if ($link) :
-                      $link_url = $link['url'];
-                      $link_title = $link['title'];
-                      $link_target = $link['target'] ? $link['target'] : '_self';
-                    ?>
-                      <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
-                      <?php if ($is_free_call): ?><span>(Free call)</span><?php endif; ?>
-                    <?php endif; ?>
-                  </div>
-                  <div class="website">
-                    <?php
-                    $link = get_field('website');
-
-                    if ($link) :
-                      $link_url = $link['url'];
-                      $link_title = $link['title'];
-                      $link_target = $link['target'] ? $link['target'] : '_self';
-                    ?>
-                      <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
-                    <?php endif; ?>
-                  </div>
-                  <div class="email">
-                    <?php
-                    $link = get_field('email');
-
-                    if ($link) :
-                      $link_url = $link['url'];
-                      $link_title = $link['title'];
-                      $link_target = $link['target'] ? $link['target'] : '_self';
-                    ?>
-                      <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
-                    <?php endif; ?>
-                  </div>
-                </div>
-
+        <?php if ($type__terms): ?>
+          <div class="grid-item <?php
+                                foreach ($type__terms as $term) {
+                                  if (isset($term))
+                                    echo 'type__' . $term->slug . ' ';
+                                } ?>">
+            <div class="title">
+              <?= get_the_title(); ?>
+            </div>
+            <div class="right">
+              <div class="tags"><?php foreach ($type__terms as $term) {
+                                  if (isset($term))
+                                    echo '<div class="tag">' . $term->name . '</div>';
+                                } ?></div>
+              <div class="download">
+                <?php
+                $link = get_field('link');
+                if ($link):
+                  $link_url = $link['url'];
+                  $link_title = $link['title'];
+                  $link_target = $link['target'] ? $link['target'] : '_self';
+                ?>
+                  <a class="button_download_container" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                    <div class="button">DOWNLOAD</div>
+                    <img src="<?= get_template_directory_uri() . '/images/svg/download.svg' ?>" alt="download icon">
+                  </a>
+                <?php endif; ?>
               </div>
-
             </div>
 
+
           </div>
-
-        </div>
-
+        <?php endif; ?>
       <?php
 
       endwhile;
@@ -123,7 +87,6 @@
 
     </div>
   </div>
-
 </section>
 <?php if (get_sub_field('padding_top')) : ?>
   <style>

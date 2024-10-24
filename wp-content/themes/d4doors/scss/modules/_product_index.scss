@@ -1,0 +1,132 @@
+.product_index_section {
+    padding: 60px 0;
+    @media only screen and (max-width: 600px) {
+        padding: 25px 0;
+    }
+    .title {
+        border-top: 1px solid #cab6ad;
+    }
+    .layer2 {
+        margin-top: 70px;
+    }
+    .layer2-left {
+        font-family: "Poppins";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 28px;
+        line-height: 120%;
+        color: #231f20;
+        max-width: 556px;
+    }
+    .layer2-right {
+        @media only screen and (max-width: 600px) {
+            padding-top: 30px;
+        }
+
+        p {
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 150%;
+
+            color: #000000;
+        }
+    }
+
+    .product__tiles {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1396px;
+        margin-left: -8px;
+        margin-right: -8px;
+        margin-top: 120px;
+        a.tile__wrap {
+            padding-left: 8px;
+            padding-right: 8px;
+            flex: 0 0 33.33%;
+            width: 33.33%;
+            text-decoration: none;
+            @include media-breakpoint-down(md) {
+                flex: 0 0 100%;
+                width: 100%;
+                padding-bottom: 16px;
+            }
+
+            &:nth-child(1) {
+                .tile {
+                    background: #231f20;
+                }
+            }
+            &:nth-child(2) {
+                .tile {
+                    background: #615651;
+                }
+            }
+            &:nth-child(3) {
+                .tile {
+                    background: #8c7b74;
+                }
+            }
+            .tile {
+                width: 100%;
+                padding-top: 100%;
+                position: relative;
+                height: 0;
+                border-radius: 20px;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: end;
+                .tile__number {
+                    position: absolute;
+                    font-size: 222px;
+                    font-weight: 500;
+                    color: #e3e3e3;
+                    left: -69px;
+                    top: 109px;
+                    line-height: 0;
+                    z-index: 1;
+                    transition: all 0.8s;
+                    @media only screen and (max-width: 1350px) {
+                        top: 10vw;
+                        font-size: 18vw;
+                    }
+                    @include media-breakpoint-down(md) {
+                        top: 109px;
+                        font-size: 222px;
+                    }
+                }
+                .tile__text {
+                    font-weight: 500;
+                    font-size: 62px;
+                    line-height: 100%;
+                    color: #e3e3e3;
+                    padding: 24px;
+                    @media only screen and (max-width: 1350px) {
+                        font-size: 4vw;
+                    }
+                    @include media-breakpoint-down(md) {
+                        font-size: 48px;
+                    }
+                }
+                &:hover {
+                    .tile__number {
+                        position: absolute;
+                        font-size: 270px;
+                        top: 129px;
+                        color: #fbfbfb;
+                        @media only screen and (max-width: 1350px) {
+                            top: 12vw;
+                            font-size: 20vw;
+                        }
+                        @include media-breakpoint-down(md) {
+                            top: 129px;
+                            font-size: 270px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

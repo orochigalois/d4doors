@@ -1357,3 +1357,236 @@ fields:
                     label: Link
                     type: link
                     return_format: array
+      product_index_section:
+        display: "block"
+        label: "Product Index Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%product_index_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+          content_setting:
+            label: Content Setting
+            type: accordion
+          title:
+            label: Title
+            type: text
+          text:
+            label: Text
+            type: text
+          highlight:
+            label: Highlight
+            type: text
+            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor
+          wysiwyg:
+            label: Wysiwyg
+            type: wysiwyg
+            tabs: all
+            toolbar: full
+            media_upload: true
+            delay: true
+          repeater:
+            label: Repeater
+            type: repeater
+            layout: block
+            sub_fields:
+              title:
+                label: Title
+                type: text
+              text:
+                label: Text
+                type: text
+              link:
+                label: Link
+                type: link
+                return_format: array
+      resource_index_section:
+        display: "block"
+        label: "Resource Index Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%resource_index_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+      contact_us_section:
+        display: "block"
+        label: "Contact Us Section"
+        sub_fields:
+          screenshot:
+            type: message
+            label: Module Screenshot
+            message: <a href="%%THEME_INSTRUCTION_FOLDER%%contact_us_section.png" data-lity>Demo Preview</a>
+          padding_setting:
+            label: Padding Setting (override default values)
+            type: accordion
+          padding_top_1920:
+            label: Greater than or equal to 1920px Padding Top
+            type: number
+          padding_bottom_1920:
+            label: Greater than or equal to 1920px Padding Bottom
+            type: number
+          padding_top_1440:
+            label: Greater than or equal to 1440px Padding Top
+            type: number
+          padding_bottom_1440:
+            label: Greater than or equal to 1440px Padding Bottom
+            type: number
+          padding_top_1280:
+            label: Greater than or equal to 1280px Padding Top
+            type: number
+          padding_bottom_1280:
+            label: Greater than or equal to 1280px Padding Bottom
+            type: number
+          padding_top_1024:
+            label: Greater than or equal to 1024px Padding Top
+            type: number
+          padding_bottom_1024:
+            label: Greater than or equal to 1024px Padding Bottom
+            type: number
+          padding_top_768:
+            label: Greater than or equal to 768px Padding Top
+            type: number
+          padding_bottom_768:
+            label: Greater than or equal to 768px Padding Bottom
+            type: number
+          padding_top_576:
+            label: Greater than or equal to 576px Padding Top
+            type: number
+          padding_bottom_576:
+            label: Greater than or equal to 576px Padding Bottom
+            type: number
+          padding_top:
+            label: Less than 576px Padding Top
+            type: number
+          padding_bottom:
+            label: Less than 576px Padding Bottom
+            type: number
+          content_setting:
+            label: Content Setting
+            type: accordion
+          title:
+            label: Title
+            type: text
+          text:
+            label: Text
+            type: text
+          highlight:
+            label: Highlight
+            type: text
+          address:
+            label: Address
+            type: link
+            return_format: array
+          working_hours:
+            label: Working Hours
+            type: text
+          phone:
+            label: Phone
+            type: link
+            return_format: array
+          is_free_call:
+            label: Is Free call?
+            type: true_false
+            ui: true
+            default_value: true
+          website:
+            label: Website
+            type: link
+            return_format: array
+          email:
+            label: Email
+            type: link
+            return_format: array
+          form_shortcode:
+            label: Form Shortcode
+            type: text

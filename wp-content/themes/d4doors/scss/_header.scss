@@ -2,12 +2,12 @@ $menu__breakpoint: 991px;
 
 #header {
 	width: 100%;
-	background: white;
+	background: #fbfbfb;
 	// border-bottom: 1px solid #e3e3e3;
 	z-index: 100;
 	position: relative;
 	&.is_sticky_now {
-		background: white;
+		background: #fbfbfb;
 		top: 0;
 		left: 0;
 		position: fixed;
@@ -96,9 +96,12 @@ body.nav-active {
 #wrapper {
 	width: 100%;
 	overflow: hidden;
-	background: white;
+	background-color: #fbfbfb;
 }
-
+#wrapper .main{
+	background-color: #fbfbfb;
+	
+}
 /*_______________________________nav*/
 #nav {
 	margin-left: 20px;
@@ -244,7 +247,7 @@ body.nav-active {
 				}
 
 				ul.sub-menu {
-					background-color: #ffffff;
+					background-color: #fbfbfb;
 					box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 					border-radius: 4px;
 					margin-top: 10px;
@@ -273,7 +276,7 @@ body.nav-active {
 					}
 
 					ul.sub-menu {
-						background-color: #ffffff;
+						background-color: #fbfbfb;
 						box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 						border-radius: 0px;
 						left: 0px;
@@ -417,5 +420,5 @@ body.nav-active {
 }
 
 .nav-active #header.is_sticky_now #nav .nav-drop {
-	background-color: white;
+	background-color: #fbfbfb;
 }

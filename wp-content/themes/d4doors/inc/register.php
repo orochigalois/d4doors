@@ -1,26 +1,30 @@
 <?php
 
-function lp_register_theme_support() {
+function lp_register_theme_support()
+{
 	add_theme_support('title-tag');
 	add_theme_support('post-thumbnails');
 }
 add_action('after_setup_theme', 'lp_register_theme_support');
 
-function lp_register_image_sizes() {
+function lp_register_image_sizes()
+{
 	add_image_size('max_width', 1920, 0, false);
 	add_image_size('container_width', 1200, 0, false);
 	add_image_size('xs_width', 768, 0, false);
 }
 add_action('after_setup_theme', 'lp_register_image_sizes');
 
-function lp_register_menus() {
+function lp_register_menus()
+{
 	register_nav_menus(array(
 		'header-menu' => 'Header menu',
 	));
 }
 add_action('init', 'lp_register_menus');
 
-function lp_register_sidebars() {
+function lp_register_sidebars()
+{
 	/*register_sidebar(array(
 		'name' => 'Sidebar',
 		'id' => 'sidebar',
@@ -34,7 +38,8 @@ function lp_register_sidebars() {
 add_action('widgets_init', 'lp_register_sidebars');
 
 
-function lp_register_query_vars($vars) {
+function lp_register_query_vars($vars)
+{
 	//$vars[] = 'barrister_status';
 
 	return $vars;
@@ -87,6 +92,47 @@ function lp_register_post_types()
 		'has_archive'   => 'all-projects',
 		'menu_icon'	 => 'dashicons-hammer',
 		'rewrite'	   => array('slug' => 'project', 'with_front' => true),
+	));
+	register_post_type('resource', array(
+		'labels'		=> array(
+			'name'			   => __('Resources'),
+			'singular_name'	  => __('Resource'),
+			'add_new'			=> __('Add New'),
+			'add_new_item'	   => __('Add New Resource'),
+			'edit_item'		  => __('Edit Resource'),
+			'new_item'		   => __('New Resource'),
+			'all_items'		  => __('All Resources'),
+			'view_item'		  => __('View Resource'),
+			'search_items'	   => __('Search Resource'),
+			'not_found'		  => __('No Resources found'),
+			'not_found_in_trash' => __('No Resources found in the Trash'),
+			'parent_item_colon'  => '',
+			'menu_name'		  => 'Resources'
+		),
+		'public'		=> true,
+		'supports'	  => array('title'),
+		'has_archive'   => 'all-resources',
+		'menu_icon'	 => 'dashicons-book-alt',
+		'rewrite'	   => array('slug' => 'resource', 'with_front' => true),
+	));
+
+	register_taxonomy('resource-type', array('resource'), array(
+		'labels'			=> array(
+			'name'			  => _x('Resource Type', 'taxonomy general name'),
+			'singular_name'	 => _x('Resource Type', 'taxonomy singular name'),
+			'search_items'	  => __('Search Resource Type'),
+			'all_items'		 => __('All Resource Type'),
+			'parent_item'	   => __('Parent Resource Type'),
+			'parent_item_colon' => __('Parent Resource Type:'),
+			'edit_item'		 => __('Edit Resource Type'),
+			'update_item'	   => __('Update Resource Type'),
+			'add_new_item'	  => __('Add New Resource Type'),
+			'new_item_name'	 => __('New Resource Type Name'),
+			'menu_name'		 => __('Resource Type'),
+		),
+		'hierarchical'	  => true,
+		'show_ui'		   => true,
+		'show_in_menu'	  => true,
 	));
 	register_post_type('blog', array(
 		'labels'		=> array(
@@ -224,9 +270,10 @@ function lp_register_rewrite_rules()
 add_action('init', 'lp_register_rewrite_rules');
 
 
-add_shortcode( 'learnmore', 'learn_more_func' );
-function learn_more_func( $atts ) {
-    return "<div class=\"learn__more\">
+add_shortcode('learnmore', 'learn_more_func');
+function learn_more_func($atts)
+{
+	return "<div class=\"learn__more\">
 	Learn More
   </div>";
 }

@@ -1,0 +1,15 @@
+title: "Resource Fields"
+key: "resource_field"
+position: "normal"
+hide_on_screen: []
+location:
+  - 
+    - param: "post_type"
+      operator: "=="
+      value: "resource"
+fields:
+  link:
+    label: Resource Link
+    type: link
+    return_format: array
+  
