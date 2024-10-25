@@ -78,8 +78,8 @@ function initSlider() {
     jQuery('.slider_section .slider-class').slick({
         autoplay: true,
         dots: true,
-        speed: 300,
-        fade: true,
+        speed: 1000,
+        fade: false,
         arrows: false,
     });
     jQuery('.project__slider__section .slider-class').slick({

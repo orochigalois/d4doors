@@ -152,3 +152,9 @@ add_action('init', function () {
         remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 60);
     }
 });
+
+function remove_posts_menu_item()
+{
+    remove_menu_page('edit.php'); // Hides the "Posts" menu item
+}
+add_action('admin_menu', 'remove_posts_menu_item');
