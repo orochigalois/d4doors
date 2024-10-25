@@ -105,6 +105,11 @@ abstract class NF_Abstracts_Field extends NF_Abstracts_Element
      */
     protected $_old_classname = '';
 
+	/**
+	 * @var bool
+	 */
+    protected $_show_in_builder = true;
+
     //-----------------------------------------------------
     // Public Methods
     //-----------------------------------------------------
@@ -212,7 +217,7 @@ abstract class NF_Abstracts_Field extends NF_Abstracts_Element
         }
 
         // If a type is not set, return 'textbox'
-        return ( get_parent_class() && isset ( parent::$_type ) ) ? parent::$_type : 'textbox';
+        return ( get_parent_class(self::class) && isset ( parent::$_type ) ) ? parent::$_type : 'textbox';
     }
 
     public function get_settings()
@@ -265,6 +270,10 @@ abstract class NF_Abstracts_Field extends NF_Abstracts_Element
     public function get_old_classname()
     {
         return $this->_old_classname;
+    }
+
+    public function show_in_builder() {
+	    return $this->_show_in_builder;
     }
 
     protected function load_settings( $only_settings = array() )

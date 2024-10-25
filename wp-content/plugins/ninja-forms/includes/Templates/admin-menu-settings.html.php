@@ -1,13 +1,16 @@
 <div class="wrap">
 
-    <h1><?php esc_html_e( 'Settings', 'ninja-forms' ); ?></h1>
+    <h1><?php esc_html_e( 'Settings',  'ninja-forms' ); ?>
+    <a href="https://ninjaforms.com/docs/plugin-settings/?utm_source=Ninja+Forms+Plugin&utm_medium=Settings&utm_campaign=Documentation&utm_content=Plugin+Settings+Documentation" target="_blank">
+        <img src="<?php echo Ninja_Forms::$url . 'assets/img/help_icon.png'; ?>" alt="Documentation Link" width="25" height="25"></a>
+    </h1>
 
     <h2 class="nav-tab-wrapper">
         <?php foreach( $tabs as $tab => $name ): ?>
             <?php if( $tab == $active_tab ): ?>
                 <span class="nav-tab nav-tab-active"><?php echo $name ?></span>
             <?php else: ?>
-                <a href="<?php echo add_query_arg( 'tab', $tab );?>" target="" class="nav-tab "><?php echo $name ?></a>
+                <a href="<?php echo esc_url( add_query_arg( 'tab', $tab ) ); ?>" target="" class="nav-tab "><?php echo $name ?></a>
             <?php endif; ?>
         <?php endforeach; ?>
     </h2>
@@ -58,7 +61,7 @@
                                             break;
                                         case 'password' :
                                             echo "<input type='password' class='code widefat' name='{$setting['id']}' id='{$setting['id']}' value='" . esc_attr($setting['value']) . "'>";
-                                            break;		
+                                            break;
                                         case 'checkbox' :
                                             $checked = ( $setting[ 'value' ] ) ? 'checked' : '';
                                             echo "<input type='hidden' name='{$setting['id']}' value='0'>";

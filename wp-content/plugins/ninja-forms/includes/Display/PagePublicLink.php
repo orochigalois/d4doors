@@ -2,6 +2,9 @@
 
 class NF_Display_PagePublicLink extends NF_Display_Page
 {
+	protected $form_id;
+	protected $form;
+
 	public function __construct($form_id)
 	{
 		$this->form_id = $form_id;
@@ -25,7 +28,12 @@ class NF_Display_PagePublicLink extends NF_Display_Page
 	 */
     public function get_title()
     {
-        return ''; // Public form pages should not have visible page titles
+		/** 
+         * Public form pages should not have visible page titles.
+         * Specifically write out an empty span to keep themes from being cute
+         *   and saying "Untitled" on pages without a title.
+         */
+        return '<span style="display:none;"></span>';
     }
 
 	/**

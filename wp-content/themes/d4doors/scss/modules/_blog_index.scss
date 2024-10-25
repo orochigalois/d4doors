@@ -1,0 +1,179 @@
+.blog_index_section {
+    padding: 100px 0 0;
+    @include media-breakpoint-down(sm) {
+        padding: 25px 0 0;
+    }
+    a {
+        &:hover {
+            text-decoration: none;
+            color: #fe6020 !important;
+        }
+    }
+
+    .filter__blog {
+        border-top: 1px solid #cab6ad;
+        padding-top: 10px;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        .filter__btn {
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 18px;
+            /* identical to box height */
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            color: #615651;
+            &::after {
+                content: url(../images/svg/downarrow.svg);
+            }
+            &.active {
+                &::after {
+                    content: url(../images/svg/uparrow.svg);
+                }
+            }
+            &:hover {
+                color: #fe6020;
+            }
+        }
+
+        .filter__number {
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 18px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        .filter__content {
+            display: none;
+
+            position: absolute;
+            left: 0;
+            top: 40px;
+            z-index: 100;
+            max-width: 300px;
+
+            background: #f5f5f5;
+            border: 1px solid #cab6ad;
+
+            ul {
+                list-style-type: none;
+                padding: 20px;
+                padding-bottom: 0;
+                li {
+                    font-weight: 500;
+                    font-size: 12px;
+                    line-height: 18px;
+                    /* identical to box height */
+                    letter-spacing: 0.2em;
+                    text-transform: uppercase;
+                    cursor: pointer;
+                    color: #615651;
+                    margin-bottom: 10px;
+                    &:hover {
+                        color: #fe6020;
+                    }
+                }
+            }
+        }
+        .filter__btn.active + .filter__content {
+            display: block;
+        }
+    }
+
+    .result__masonry__blog {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: -18px;
+        margin-right: -18px;
+        margin-top: 95px;
+        @include media-breakpoint-down(md) {
+            margin-left: -10px;
+            margin-right: -10px;
+        }
+
+        .grid-item {
+            display: block;
+            width: 33.33%; //very very important for isotope to work
+            padding: 0 18px 100px;
+
+            @include media-breakpoint-down(md) {
+                width: 50%;
+                padding: 0 10px 50px;
+            }
+            @include media-breakpoint-down(sm) {
+                width: 100%;
+            }
+
+            .item__title {
+                font-weight: 500;
+                font-size: 20px;
+                line-height: 120%;
+                text-transform: capitalize;
+                color: #111822;
+                margin-top: 40px;
+                margin-bottom: 25px;
+            }
+
+            .item__excerpt {
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 130%;
+                color: #111822;
+            }
+            .img__wrap {
+                border-radius: 20px;
+                overflow: hidden;
+                width: 100%;
+                padding-top: 47%;
+                position: relative;
+                height: 0;
+                .mask {
+                    height: 100%;
+                    width: 100%;
+                    background-color: rgba(0, 0, 0, 0.3);
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 10;
+                }
+                img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    object-fit: cover;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .item__tags {
+                    position: absolute;
+
+                    left: 20px;
+                    top: 20px;
+                    z-index: 11;
+                    display: flex;
+                    gap: 10px;
+                    p.tag {
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 100%;
+                        color: #111822;
+
+                        background: #e3e3e3;
+                        border-radius: 40px;
+
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 10px 13px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,5 +1,16 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
 
+$date_time_24_hours_options = array();
+for ($i=0; $i < 24 ; $i++) { 
+    $date_time_24_hours_options[] = array( 'label' => $i, 'value' => $i );
+}
+
+$date_time_12_hours_options = array();
+for ($i=1; $i <= 12 ; $i++) { 
+    $date_time_12_hours_options[] = array( 'label' => $i, 'value' => $i );
+}
+
+
 return apply_filters( 'ninja_forms_field_settings', array(
 
     /*
@@ -140,7 +151,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'width' => 'one-half',
         'group' => 'primary',
         'value' => 'unchecked',
-
+        'help' => esc_html__( 'Choose here whether the checkbox will be checked or unchecked by default when the user first views the form.', 'ninja-forms' ),
     ),
 
     /*
@@ -159,6 +170,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'label' => esc_html__( 'Checked Value', 'ninja-forms' ),
                 'value' => esc_textarea( __( 'Checked', 'ninja-forms' ) ),
                 'width' => 'one-half',
+                'help' => esc_html__( 'Text entered here will display in submissions for this form if the user checks the box.', 'ninja-forms' ),
             ),
             array(
                 'name'  => 'unchecked_value',
@@ -166,6 +178,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'label' => esc_html__( 'Unchecked Value', 'ninja-forms' ),
                 'value' => esc_textarea( __( 'Unchecked', 'ninja-forms' ) ),
                 'width' => 'one-half',
+                'help' => esc_html__( 'Text entered here will display in submissions for this form if the user does not check the box.', 'ninja-forms' ),
             ),
         ),
     ),
@@ -184,6 +197,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         ),
         'label' => esc_html__( 'List Orientation', 'ninja-forms' ),
         'value' => 'horizontal',
+        'help' => esc_html__( 'Enter text you would like displayed in the field before a user enters any data.', 'ninja-forms' ),
     ),
 
     /*
@@ -469,6 +483,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'fields'
             )
         ),
+        'help' => esc_html__( 'Text entered here will display in the field by default but can be deleted by the user.', 'ninja-forms' ),
     ),
 
     /*
@@ -501,6 +516,70 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'use_merge_tags' => FALSE,
                 'help' => esc_html__( 'Adds an extra class to your field element.', 'ninja-forms' ),
             ),
+        ),
+    ),
+
+    /*
+     * Add all of our custom date field settings.
+     */
+    'date_mode' => array(
+        'name' => 'date_mode',
+        'type' => 'select',
+        'label' => esc_html__( 'Date/Time Mode', 'ninja-forms' ),
+        'width' => 'full',
+        'group' => 'primary',
+        'options' => array(
+            array(
+                'label' => esc_html__( 'Date Only', 'ninja_forms' ),
+                'value' => 'date_only',
+            ),
+            array(
+                'label' => esc_html__( 'Time Only', 'ninja_forms' ),
+                'value' => 'time_only',
+            ),
+            array(
+                'label' => esc_html__( 'Both Date & Time', 'ninja_forms' ),
+                'value' => 'date_and_time',
+            ),
+        ),
+        'default' => 'date_only',
+        'value' => 'date_only',
+    ),
+
+    'time_settings' => array(
+        'name' => 'time_settings',
+        'type' => 'fieldset',
+        'label' => esc_html__( 'Time Settings', 'ninja-forms' ),
+        'width' => 'full',
+        'group' => 'primary',
+        'settings' => array(
+            'hours_24' => array(
+                'name' => 'hours_24',
+                'type' => 'toggle',
+                'label' => esc_html__( '24 Hour Input', 'ninja-forms' ),
+                'width' => 'one-half',
+                'group' => 'primary',
+                'default' => 0,
+                'value' => 0,
+            ),
+            'minute_increment' => array(
+                'name' => 'minute_increment',
+                'type' => 'number',
+                'label' => esc_html__( 'Minute Increment', 'ninja-forms' ),
+                'width' => 'full',
+                'group' => 'primary',
+                'default' => 5,
+                'value' => 5,
+                'min_val' => 1,
+                'max_val' => 60,
+            ),
+        ),
+        'deps' => array(
+            'settings' => array(
+                array( 'name' => 'date_mode', 'value' => 'date_and_time' ),
+                array( 'name' => 'date_mode', 'value' => 'time_only' ),
+            ),
+            'match' => 'any',
         ),
     ),
 
@@ -561,6 +640,13 @@ return apply_filters( 'ninja_forms_field_settings', array(
             ),
         ),
         'value'         => 'default',
+        'deps' => array(
+            'settings' => array(
+                array( 'name' => 'date_mode', 'value' => 'date_and_time' ),
+                array( 'name' => 'date_mode', 'value' => 'date_only' ),
+            ),
+            'match' => 'any',
+        ),
     ),
 
     /*
@@ -572,7 +658,14 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'type'          => 'toggle',
         'label'         => esc_html__( 'Default To Current Date', 'ninja-forms' ),
         'width'         => 'one-half',
-        'group'         => 'primary'
+        'group'         => 'primary',
+        'deps' => array(
+            'settings' => array(
+                array( 'name' => 'date_mode', 'value' => 'date_and_time' ),
+                array( 'name' => 'date_mode', 'value' => 'date_only' ),
+            ),
+            'match' => 'any',
+        ),
     ),
 
     /*
@@ -598,7 +691,14 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'label' => esc_html__( 'End Year', 'ninja_forms' ),
                 'value' => ''
             ),
-        )
+        ),
+        'deps' => array(
+            'settings' => array(
+                array( 'name' => 'date_mode', 'value' => 'date_and_time' ),
+                array( 'name' => 'date_mode', 'value' => 'date_only' ),
+            ),
+            'match' => 'any',
+        ),
     ),
 
     /*
@@ -648,11 +748,11 @@ return apply_filters( 'ninja_forms_field_settings', array(
      */
 
     'help'           => array(
-        'name'              => 'help',
+        'name'              => 'help_text',
         'type'              => 'fieldset',
         'label'             => esc_html__( 'Help Text', 'ninja-forms' ),
         'group'             => 'display',
-        'help'              => esc_html__( 'Shown to users as a hover.', 'ninja-forms' ),
+        'help'              => esc_html__( 'Entering text here will display an informational icon next to the field label. When a user hovers over it, a small window will appear containing this text.', 'ninja-forms' ),
         'settings'          => array(
             /*
              * HELP TEXT
@@ -679,6 +779,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'type'              => 'fieldset',
         'label'             => esc_html__( 'Description', 'ninja-forms' ),
         'group'             => 'display',
+        'help'              => esc_html__( 'Any text entered here will appear between the label and the field.', 'ninja-forms' ),
         'settings'          => array(
             /*
              * DESCRIPTION TEXT
@@ -709,13 +810,13 @@ return apply_filters( 'ninja_forms_field_settings', array(
     ),
 
     'personally_identifiable'   => array(
-	    'name'           => 'personally_identifiable',
-	    'type'           => 'toggle',
-	    'group'          => 'advanced',
-	    'label'          => esc_html__( 'This Field Is Personally Identifiable Data', 'ninja-forms' ),
-	    'width'          => 'full',
-	    'value'          => '',
-	    'help'           => esc_html__( 'This option helps with privacy regulation compliance', 'ninja-forms' ),
+        'name'           => 'personally_identifiable',
+        'type'           => 'toggle',
+        'group'          => 'advanced',
+        'label'          => esc_html__( 'This Field Is Personally Identifiable Data', 'ninja-forms' ),
+        'width'          => 'full',
+        'value'          => '',
+        'help'           => esc_html__( 'This option helps with privacy regulation compliance', 'ninja-forms' ),
     ),
 
     /*
@@ -732,6 +833,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'width' => 'one-half',
         'group' => 'advanced',
         'value' => 5,
+        'help'  => esc_html__( 'Adjusts the number of list option selections that are viewable by the user at one time without scrolling through the list.', 'ninja-forms' ),
     ),
 
     /*
@@ -844,6 +946,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'label'     => esc_html__( 'Disable Input', 'ninja-forms' ),
         'width'     => 'full',
         'group'     => 'restrictions',
+        'help'      => esc_html__( 'Prevents users from typing into the field.', 'ninja-forms' ),
     ),
 
     //TODO: Ask about the list of states and countries.
@@ -954,7 +1057,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'label' => esc_html__( 'Processing Label', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'primary',
-        'value' => esc_textarea( __( 'Processing', 'ninja-forms' ) )
+        'value' => esc_html__( 'Processing', 'ninja-forms' )
     ),
 
     /*

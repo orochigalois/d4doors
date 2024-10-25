@@ -3,7 +3,7 @@
 /**
  * Class NF_MergeTags_Other
  */
-final class NF_MergeTags_Other extends NF_Abstracts_MergeTags
+class NF_MergeTags_Other extends NF_Abstracts_MergeTags
 {
     protected $id = 'other';
 
@@ -42,8 +42,14 @@ final class NF_MergeTags_Other extends NF_Abstracts_MergeTags
     {
         if( is_admin() ) {
             if( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) return;
-            $url_query = parse_url( wp_get_referer(), PHP_URL_QUERY );
-            parse_str( $url_query, $variables );
+
+            $referrer = wp_get_referer();
+
+            if(!is_string($referrer)){
+                return;
+            }
+
+            $variables = $this->constructVariablesFromReferrer($referrer);
         } else {
             $variables = $_GET;
         }
@@ -53,21 +59,52 @@ final class NF_MergeTags_Other extends NF_Abstracts_MergeTags
         foreach( $variables as $key => $value ){
             if ( is_array( $value ) ) {
                 $value = wp_kses_post_deep( $value );
+                $value = map_deep( $value, 'esc_attr' );
             } else {
                 $value = wp_kses_post( $value );
+                $value = esc_attr( $value );
             }
-            $value = esc_attr( $value );
             $this->set_merge_tags( $key, $value );
         }
     }
 
+    /**
+     * Construct key-value responses from a referrer string
+     *
+     * @param string $referrer
+     * @return array
+     */
+    protected function constructVariablesFromReferrer(string $referrer): array
+    {
+        $return = [];
+
+        $url_query = parse_url( $referrer, PHP_URL_QUERY );
+
+        if(is_string($url_query)){
+
+            parse_str( $url_query, $return );
+        }
+
+        return $return;
+    }
+    
     public function __call($name, $arguments)
     {
         return $this->merge_tags[ $name ][ 'value' ];
     }
 
+    /**
+     * Assign a merge tag construct array to a key
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
     public function set_merge_tags( $key, $value )
     {
+        // Remove static callback potential
+        if( false !== strpos( $key, '::' ) ) return;
+
         $callback = ( is_numeric( $key ) ) ? 'querystring_' . $key : $key;
 
         $this->merge_tags[ $callback ] = array(
@@ -115,5 +152,37 @@ final class NF_MergeTags_Other extends NF_Abstracts_MergeTags
         return apply_filters( 'ninja_forms-get_ip', apply_filters( 'nf_get_ip', $ip ) );
     }
 
+    protected function referer_url()
+    {   
+        return apply_filters( 'ninja_forms-referer_url_mt', wp_get_referer() );
+    }
+
+    protected function mergetag_random( $length = 5 ) {
+        $characters    = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $random_string = '';
+        
+        for ( $i = 0; $i < $length; $i++ ) {
+            $random_string .= $characters[ rand( 0, strlen( $characters ) - 1 ) ];
+        }
+    
+        return apply_filters('ninja_forms-mergetag_random', $random_string );
+    }
+
+    protected function mergetag_year()
+    {   
+
+
+        return apply_filters( 'ninja_forms-mergetag_year', date( 'Y' ) );
+    }
+
+    protected function mergetag_month()
+    {   
+        return apply_filters( 'ninja_forms-mergetag_month', date( 'm' ) );
+    }
+
+    protected function mergetag_day()
+    {   
+        return apply_filters( 'ninja_forms-mergetag_day', date( 'd' ) );
+    }
 
 } // END CLASS NF_MergeTags_Other

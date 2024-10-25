@@ -1,5 +1,5 @@
 .contact_us_section {
-    padding: 60px 0;
+    padding: 100px 0 20px;
     @include media-breakpoint-down(sm) {
         padding: 25px 0;
     }
@@ -7,7 +7,7 @@
         border-top: 1px solid #cab6ad;
     }
     .layer2 {
-        margin-top: 70px;
+        margin-top: 50px;
     }
     .layer2-left {
         font-family: "Poppins";
@@ -19,12 +19,7 @@
         max-width: 556px;
     }
     .description {
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        margin-top: 95px;
         h3 {
             font-weight: 500;
             font-size: 24px;
@@ -56,7 +51,7 @@
             line-height: 140%;
 
             color: #615651;
-            margin-bottom: 20px;
+            margin-bottom: 50px;
         }
         h4.contact {
             margin-bottom: 12px;
@@ -93,6 +88,7 @@
         }
     }
     .layer2-right {
+        margin-top: 45px;
         @include media-breakpoint-down(md) {
             padding-top: 30px;
         }
@@ -107,8 +103,29 @@
             color: #000000;
         }
     }
-
+    .nf-error-msg {
+        font-weight: 400 !important;
+        font-size: 14px !important;
+        line-height: 150% !important;
+    }
+    .nf-form-errors .nf-error-msg {
+        padding-left: 10px;
+    }
     .nf-form-cont {
+        .label-above .nf-field-label {
+            padding-left: 13px;
+        }
+        .nf-multi-cell .nf-cell {
+            padding: 5px 16px;
+            @include media-breakpoint-down(lg) {
+                padding: 5px 2px;
+            }
+        }
+        .ninja-forms-req-symbol {
+            color: #231f20;
+            position: relative;
+            left: -5px;
+        }
         .nf-response-msg {
             p {
                 color: black !important;
@@ -119,36 +136,54 @@
             display: none;
         }
 
-        max-width: 728px;
+        .nf-error.field-wrap .nf-field-element:after {
+            background: #e80000;
+            color: #fff;
+            font-size: 16px;
+            content: "\f12a";
+            position: absolute;
+            top: 5px;
+            right: 4px;
+            border-radius: 30px;
+            bottom: 1px;
+            height: 40px;
+            width: 40px;
+            line-height: 41px;
+            text-align: center;
+            transition: all 0.5s;
+        }
+
+        max-width: 720px;
         margin-left: auto;
-        margin-right: auto;
-        padding: 50px 50px 20px;
-
-        @include media-breakpoint-down(md) {
-            padding: 20px;
-
-            .nf-field-label {
-                text-align: left;
-            }
+        @include media-breakpoint-down(lg) {
+            max-width: none;
+            margin-right: auto;
         }
 
         .nf-form-content {
+            @include media-breakpoint-down(lg) {
+                padding: 0;
+            }
             label {
                 font-weight: 400;
                 font-size: 13px;
                 color: #000000;
-                letter-spacing: 0.1em;
                 line-height: 1.2;
+                letter-spacing: 0.02em;
+                display: block;
             }
 
-            input:not([type="button"]) {
-                border: 1px solid #dddddd;
+            input:not([type="submit"]) {
+                border: 1px solid #231f20;
+                border-radius: 30px;
                 background-color: white;
-            }
-
-            select {
-                border: 1px solid #dddddd;
-                background-color: transparent;
+                &::placeholder {
+                    font-weight: 400;
+                    font-size: 15px;
+                    line-height: 150%;
+                    text-transform: capitalize;
+                    color: #d1d0cf;
+                }
             }
 
             .list-select-wrap .nf-field-element > div {
@@ -156,30 +191,47 @@
             }
 
             textarea {
-                border: 1px solid #dddddd;
+                border: 1px solid #231f20;
+                border-radius: 20px;
                 background-color: white;
+                height: 260px;
             }
-            .submit-wrap .nf-field-element{
+            .submit-wrap .nf-field-label {
                 position: relative;
+                &::after {
+                    content: url(../images/svg/link_arrow.svg);
+                    position: absolute;
+                    top: 10px;
+                    right: -61px;
+                }
+            }
+            .submit-wrap .nf-field-element {
+                position: relative;
+                display: flex;
+                align-items: center;
                 input {
                     position: relative;
                     text-transform: uppercase;
                     display: block;
                     color: black;
                     font-size: 13px;
-                    font-style: normal;
                     font-weight: 400;
                     font-size: 13px;
-                    line-height: 20px;
                     letter-spacing: 0.03em;
-                    margin-right: 5px;
                     background-color: transparent;
+                    padding: 0;
+                    padding-right: 9px;
+                    height: 30px;
+                    cursor: pointer;
+                }
+                svg {
+                    cursor: pointer;
                 }
 
                 &::before {
                     content: "";
                     position: absolute;
-                    width: 100%;
+                    width: 75px;
                     height: 1px; /* Thickness of the light yellow line */
                     background-color: #ffded1;
                     left: 0;
@@ -197,7 +249,7 @@
 
                 &:hover::after {
                     background-color: #fe6020;
-                    width: 100%; /* Start at 0 width */
+                    width: 75px; /* Start at 0 width */
                     transition: width 0.3s ease-in-out;
                 }
             }

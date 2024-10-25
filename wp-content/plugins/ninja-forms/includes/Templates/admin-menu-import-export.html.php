@@ -1,13 +1,16 @@
 <div class="wrap">
 
-    <h1><?php esc_html_e( 'Import / Export', 'ninja-forms' ); ?></h1>
+    <h1><?php esc_html_e( 'Import / Export', 'ninja-forms' ); ?>
+    <a href="https://ninjaforms.com/docs/import-export/?utm_source=Ninja+Forms+Plugin&utm_medium=Import+Export&utm_campaign=Documentation&utm_content=Import+Export+Documentation" target="_blank">
+        <img src="<?php echo Ninja_Forms::$url . 'assets/img/help_icon.png'; ?>" alt="Documentation Link" width="25" height="25">
+    </a></h1>
 
     <h2 class="nav-tab-wrapper">
         <?php foreach( $tabs as $tab => $name ): ?>
             <?php if( $tab == $active_tab ): ?>
                 <span class="nav-tab nav-tab-active"><?php echo esc_html( $name ) ?></span>
             <?php else: ?>
-                <a href="<?php echo add_query_arg( 'tab', $tab );?>" target="" class="nav-tab "><?php echo $name ?></a>
+                <a href="<?php echo esc_url( add_query_arg( 'tab', $tab) ); ?>" target="" class="nav-tab "><?php echo $name ?></a>
             <?php endif; ?>
         <?php endforeach; ?>
     </h2>

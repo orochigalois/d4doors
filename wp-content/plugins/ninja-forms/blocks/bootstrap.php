@@ -94,6 +94,7 @@ add_action('init', function () {
 add_action('admin_enqueue_scripts', function () {
     //Conditionally load data for Blocks
     $screen = get_current_screen();
+    if( is_null( $screen ) ) return;
     if( ! $screen->is_block_editor() ) return;
         //Get all forms, to base form selector on.
         $formsBuilder = (new NinjaForms\Blocks\DataBuilder\FormsBuilderFactory)->make();
@@ -130,7 +131,7 @@ add_action('rest_api_init', function () {
             $formsBuilder = (new NinjaForms\Blocks\DataBuilder\FormsBuilderFactory)->make();
             return $formsBuilder->get();
         },
-        'permission_callback' => '__return_true',
+        'permission_callback' => $tokenAuthenticationCallback,
     ));
 
     register_rest_route('ninja-forms-views', 'forms/(?P<id>\d+)/fields', [
@@ -214,7 +215,7 @@ add_action( 'wp_head', function () {
             }
         }
 
-        $js_dir  = Ninja_Forms::$url . 'assets/js/min/';
+        $js_lib_dir  = Ninja_Forms::$url . 'assets/js/lib/';
 
         $form_id = absint( $_GET[ 'nf_preview_form' ] );
         // Style below: update width and height for particular form
@@ -243,7 +244,7 @@ add_action( 'wp_head', function () {
         // register our script to target the form iFrame in page builder
         wp_register_script(
             'ninja-forms-block-setup',
-            $js_dir . 'blockFrameSetup.js',
+            $js_lib_dir . 'blockFrameSetup.js',
             array( 'underscore', 'jquery' )
         );
 

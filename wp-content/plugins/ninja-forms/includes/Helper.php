@@ -17,7 +17,7 @@ final class WPN_Helper
     public static function addslashes( $value )
     {
         $value = is_array($value) ?
-            array_map(array( 'self', 'addslashes' ), $value) :
+            array_map('WPN_Helper::addslashes' , $value) :
             addslashes($value);
         return $value;
     }
@@ -28,12 +28,43 @@ final class WPN_Helper
      */
     public static function utf8_encode( $input ){
         if ( is_array( $input ) )    {
-            return array_map( array( 'self', 'utf8_encode' ), $input );
+            return array_map( 'WPN_Helper::utf8_encode' , $input );
         } elseif ( function_exists( 'utf8_encode' ) ) {
-            return utf8_encode( $input );
+            return static::iso8859_1_to_utf8( $input );
         } else {
             return $input;
         }
+    }
+
+    /**
+     * Replace utf8_encode with mimicked functionaliy
+     * 
+     * Deprecated in PHP8 and removed in PHP9
+     * 
+     * Replacement credit: https://php.watch/versions/8.2/utf8_encode-utf8_decode-deprecated
+     * and https://github.com/symfony/polyfill-php72/blob/v1.26.0/Php72.php#L32-39
+     *
+     * @param string $string
+     * @return string
+     */
+    public static function iso8859_1_to_utf8( $s) {
+        
+        if(!is_string($s)){
+            return $s;
+        }
+
+        $s .= $s;
+        $len = \strlen($s);
+    
+        for ($i = $len >> 1, $j = 0; $i < $len; ++$i, ++$j) {
+            switch (true) {
+                case $s[$i] < "\x80": $s[$j] = $s[$i]; break;
+                case $s[$i] < "\xC0": $s[$j] = "\xC2"; $s[++$j] = $s[$i]; break;
+                default: $s[$j] = "\xC3"; $s[++$j] = \chr(\ord($s[$i]) - 64); break;
+            }
+        }
+    
+        return substr($s, 0, $j);
     }
 
     /**
@@ -42,14 +73,59 @@ final class WPN_Helper
      */
     public static function utf8_decode( $input ){
         if ( is_array( $input ) )    {
-            return array_map( array( 'self', 'utf8_decode' ), $input );
+            return array_map( 'WPN_Helper::utf8_decode' , $input );
         } elseif ( function_exists( 'utf8_decode' ) ) {
-            return utf8_decode( $input );
+            return self::utf8_to_iso8859_1( $input );
         } else {
             return $input;
         }
     }
     
+    /**
+     * Replace utf8_decode with mimicked functionaliy
+     * 
+     * Deprecated in PHP8 and removed in PHP9
+     * 
+     * Replacement credit: https://php.watch/versions/8.2/utf8_encode-utf8_decode-deprecated
+     * and https://github.com/symfony/polyfill-php72/blob/v1.26.0/Php72.php#L40-69
+     *
+     * @param string $string
+     * @return string
+     */
+    public static function utf8_to_iso8859_1( $string)
+    {        
+        if(!is_string($string)){
+            return $string;
+        }
+
+        $s = (string) $string;
+        $len = \strlen($s);
+    
+        for ($i = 0, $j = 0; $i < $len; ++$i, ++$j) {
+            switch ($s[$i] & "\xF0") {
+                case "\xC0":
+                case "\xD0":
+                    $c = (\ord($s[$i] & "\x1F") << 6) | \ord($s[++$i] & "\x3F");
+                    $s[$j] = $c < 256 ? \chr($c) : '?';
+                    break;
+    
+                case "\xF0":
+                    ++$i;
+                    // no break
+    
+                case "\xE0":
+                    $s[$j] = '?';
+                    $i += 2;
+                    break;
+    
+                default:
+                    $s[$j] = $s[$i];
+            }
+        }
+    
+        return substr($s, 0, $j);
+    }
+
     /**
      * Function to clean json data before json_decode.
      * @since 3.2
@@ -90,7 +166,7 @@ final class WPN_Helper
      */
     public static function html_entity_decode( $value, $flag = ENT_COMPAT ){
         $value = is_array($value) ?
-            array_map( array( 'self', 'html_entity_decode' ), $value) :
+            array_map( 'WPN_Helper::html_entity_decode' , $value) :
             html_entity_decode( $value, $flag );
         return $value;
     }
@@ -101,7 +177,7 @@ final class WPN_Helper
      */
     public static function htmlspecialchars( $value ){
         $value = is_array($value) ?
-            array_map( array( 'self', 'htmlspecialchars' ), $value) :
+            array_map( 'WPN_Helper::htmlspecialchars' , $value) :
             htmlspecialchars( $value );
         return $value;
     }
@@ -112,7 +188,7 @@ final class WPN_Helper
      */
     public static function stripslashes( $value ){
         $value = is_array($value) ?
-            array_map( array( 'self', 'stripslashes' ), $value) :
+            array_map( 'WPN_Helper::stripslashes' , $value) :
             stripslashes($value);
         return $value;
     }
@@ -124,7 +200,7 @@ final class WPN_Helper
     public static function esc_html( $value )
     {
         $value = is_array($value) ?
-            array_map( array( 'self', 'esc_html' ), $value) :
+            array_map( 'WPN_Helper::esc_html' , $value) :
             esc_html($value);
         return $value;
     }
@@ -136,7 +212,7 @@ final class WPN_Helper
     public static function kses_post( $value )
     {
         $value = is_array( $value ) ?
-            array_map(  array( 'self', 'kses_post' ), $value ) :
+            array_map(  'WPN_Helper::kses_post' , $value ) :
             wp_kses_post($value);
         return $value;
     }
@@ -148,7 +224,7 @@ final class WPN_Helper
     public static function strip_tags( $value )
     {
         $value = is_array( $value ) ?
-            array_map( array( 'self', 'strip_tags' ), $value ) :
+            array_map( 'WPN_Helper::strip_tags' , $value ) :
             strip_tags( $value );
         return $value;
     }
@@ -227,7 +303,7 @@ final class WPN_Helper
     public static function sanitize_text_field( $data )
     {
         if( is_array( $data ) ){
-            return array_map( array( 'self', 'sanitize_text_field' ), $data );
+            return array_map( 'WPN_Helper::sanitize_text_field' , $data );
         }
         return sanitize_text_field( $data );
     }
@@ -253,7 +329,7 @@ final class WPN_Helper
         // Repalcement for https://codex.wordpress.org/Function_Reference/maybe_unserialize
         if ( is_serialized( $original ) ){
             // Ported with php5.2 support from https://magp.ie/2014/08/13/php-unserialize-string-after-non-utf8-characters-stripped-out/
-            $parsed = preg_replace_callback( '!s:(\d+):"(.*?)";!s', array( 'self', 'parse_utf8_serialized' ), $original );
+            $parsed = preg_replace_callback( '!s:(\d+):"(.*?)";!s', 'WPN_Helper::parse_utf8_serialized' , $original );
             $parsed = @unserialize( $parsed );
 
             return ( $parsed ) ? $parsed : unserialize( $original ); // Fallback if parse error.
@@ -518,4 +594,103 @@ final class WPN_Helper
 
         return false;
     }
+
+    /**
+     * Sanitizes single/multiple CSS classNames
+     *
+     * Explodes on space, sanitize each className, implode with space to recombine
+     * @param string $value
+     * @return string
+    */
+    public static function sanitize_classes($value):string {
+        
+        $outgoing = $value;
+        $sanitized = [];
+        
+        $exploded = explode(' ',$value);
+
+        foreach($exploded as $singleClass){
+            $sanitized[] = sanitize_html_class($singleClass);
+        }
+
+        $outgoing = implode(' ',$sanitized);
+
+        return $outgoing;
+    }
+
+    /**
+     * Sanitizes string values for field settings 
+     * 
+     * WIP methods can still be implemented for this.
+     *
+     * @param string $key Setting name
+     * @param string $value of setting
+     * @return string sanitized value for setting
+    */
+    public static function sanitize_string_setting_value($key, $value):string {
+
+        if( in_array( $key, ["element_class", "container_class"] ) ) {
+            $value = self::sanitize_classes($value);
+        } else if( in_array( $key, ["label"] )){
+            $value = self::sanitize_text_field($value);
+        }
+
+
+        return $value;
+    }
+
+    /**
+     * Check the DISALLOW_UNFILTERED_HTML constant value and return early if true. 
+     * If false, return opposite for 'unfiltered_html' current user capability
+     * 
+     * @return bool
+    */
+    public static function maybe_disallow_unfiltered_html_for_sanitization():bool {
+
+        /**
+         * Exit early if the config setting is TRUE to mimic WordPress capability check.
+         */
+        if( defined( 'DISALLOW_UNFILTERED_HTML' ) && DISALLOW_UNFILTERED_HTML ) return true;
+
+        $disallow_unfiltered_html = ! current_user_can( 'unfiltered_html' );
+        return $disallow_unfiltered_html;
+    }
+
+    /**
+     * Check the DISALLOW_UNFILTERED_HTML constant value only on the escaping side
+     * 
+     * @return bool
+    */
+    public static function maybe_disallow_unfiltered_html_for_escaping():bool {
+
+        // Default intentinally left set to false to avoid breaking countless pre-existing forms using this feature.
+        $disallow_unfiltered_html = defined( 'DISALLOW_UNFILTERED_HTML' ) ? DISALLOW_UNFILTERED_HTML : false;
+
+        return $disallow_unfiltered_html;
+    }
+
+    /**
+     * Sanitize output to csv to prevent formula injection.
+     * 
+     * @param String $value The value to be escaped.
+     * @return String
+     */
+    public static function maybe_escape_csv_column( $value ):string {
+        if (!is_string($value) && !is_numeric($value)) {
+            if(is_array($value)){
+                $value = implode(' ', $value);
+            }else{
+                throw new Exception('Incoming value to maybe_escape_csv_column is neither string nor array');
+            }
+        }
+
+        if( 0 < strlen($value ) ) {
+            $first_char = substr( $value, 0, 1 );
+            if( in_array( $first_char, array( '=', '@', '+', '-' ) ) ) {
+                $value = "'" . $value;
+            }
+        }
+        return $value;
+    }
+    
 } // End Class WPN_Helper

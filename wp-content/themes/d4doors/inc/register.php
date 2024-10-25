@@ -152,7 +152,7 @@ function lp_register_post_types()
 		),
 		'public'		=> true,
 		'supports'	  => array('title', 'thumbnail', 'excerpt'),
-		'has_archive'   => 'blogs',
+		'has_archive'   => 'all-blogs',
 		'menu_icon'	 => 'dashicons-welcome-write-blog',
 		'rewrite'	   => array('slug' => 'blog', 'with_front' => true),
 	));

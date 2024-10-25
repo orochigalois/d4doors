@@ -15,7 +15,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
      * Store an array of columns that we want to store in our table rather than meta.
      *
      * This array stores the column name and the name of the setting that it maps to.
-     * 
+     *
      * The format is:
      *
      * array( 'COLUMN_NAME' => 'SETTING_NAME' )
@@ -73,25 +73,21 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         }
         $extra_content = WPN_Helper::esc_html($_POST[ 'extraData' ][ 'content']);
         $data = explode( ';base64,', $extra_content );
-        $data = base64_decode( $data[ 1 ] );
-        
+        $data = $this->base64_decode( $data[ 1 ] );
+
         /**
          * $data could now hold two things, depending on whether this was a 2.9 or 3.0 export.
-         * 
+         *
          * If it's a 3.0 export, the data will be json encoded.
          * If it's a 2.9 export, the data will be serialized.
          *
-         * We're first going to try to json_decode. If we don't get an array, we'll unserialize.
+         * We're first going to try to json_decode. If we don't get an array, we'll error out.
          */
 
         $decoded_data = json_decode( WPN_Helper::json_cleanup( html_entity_decode( $data, ENT_QUOTES ) ), true );
-
-        // If we don't have an array, try unserializing
+        // If we didn't decode properly, try a second json_decode without the ENT_QUOTES flag to account for file encoding.
         if ( ! is_array( $decoded_data ) ) {
-            $decoded_data = WPN_Helper::maybe_unserialize( $data );
-            if ( ! is_array( $decoded_data ) ) {
-                $decoded_data = json_decode( $decoded_data, true );
-            }
+            $decoded_data = json_decode( WPN_Helper::json_cleanup( $data ), true );
         }
 
         // Try to utf8 decode our results.
@@ -108,6 +104,15 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         }
 
         $data = $this->import_form_backwards_compatibility( $data );
+        /**
+         * Sanitize labels if the extra checks checkbox is not checked
+         * OR if the current user does not have permissions
+         */
+        if( ( isset($_POST[ 'extraData' ][ 'extraChecksOff' ]) && $_POST[ 'extraData' ][ 'extraChecksOff' ] === "false" )
+            || WPN_Helper::maybe_disallow_unfiltered_html_for_sanitization() )
+            {
+                $data = $this->sanitize_field_settings($data);
+            }
 
         // $data is now a form array.
         $this->form = $data;
@@ -130,15 +135,37 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
             $db_stage_one_complete = false;
         } else {
             // Add a form value that stores whether or not we have our new DB columns.
-            $db_stage_one_complete = true;            
+            $db_stage_one_complete = true;
         }
 
         $this->form[ 'db_stage_one_complete' ] = $db_stage_one_complete;
     }
 
     /**
+     * Check field settings data before it is being cached
+     *
+     * @since  3.6.10
+     * @return array of $data
+     */
+    public function sanitize_field_settings($data)
+    {
+        if(isset($data[ 'fields' ]) && is_array($data[ 'fields' ])){
+            foreach($data[ 'fields' ] as $field_index => $field_settings_array){
+                foreach($field_settings_array as $field_setting_key => $field_setting_value){
+                    if(is_string($field_setting_value)){
+                        $data[ 'fields' ][$field_index][ $field_setting_key ] = WPN_Helper::sanitize_string_setting_value($field_setting_key, $field_setting_value);
+                    }
+                }
+            }
+
+        }
+
+        return $data;
+    }
+
+    /**
      * On processing steps after the first, we need to grab our data from our saved option.
-     * 
+     *
      * @since  3.4.0
      * @return void
      */
@@ -236,18 +263,10 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
      */
     public function insert_form()
     {
-        $insert_columns = array();
-        $insert_columns_types = array();
-        foreach ( $this->forms_db_columns as $column_name => $setting_name ) {
-            // Make sure we don't try to set created_at to NULL.
-            if( 'created_at' === $column_name && is_null( $this->form[ 'settings' ][ $setting_name ] ) ) continue;
-            $insert_columns[ $column_name ] = $this->form[ 'settings' ][ $setting_name ];
-            if ( is_numeric( $this->form[ 'settings' ][ $setting_name ] ) ) {
-                array_push( $insert_columns_types, '%d' );
-            } else {
-                array_push( $insert_columns_types, '%s' );
-            }
-        }
+        $constructedColumnsAndTypes = $this->constructFormColumnsAndTypes();
+
+        $insert_columns = $constructedColumnsAndTypes['insert_columns'];
+        $insert_columns_types = $constructedColumnsAndTypes['insert_columns_types'];
 
         $this->_db->insert( "{$this->_db->prefix}nf3_forms", $insert_columns, $insert_columns_types );
 
@@ -267,11 +286,48 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
     }
 
     /**
+     * Construct columns and column types from form settings
+     *
+     * @return array
+     */
+    protected function constructFormColumnsAndTypes(): array
+    {
+        $insert_columns = array();
+        $insert_columns_types = array();
+
+        foreach ( $this->forms_db_columns as $column_name => $setting_name ) {
+            // Make sure we don't try to set created_at to NULL.
+            if( 'created_at' === $column_name && (!isset($this->form[ 'settings' ][ $setting_name ]) || is_null( $this->form[ 'settings' ][ $setting_name ] ) ) ) continue;
+
+            $formColumnName = null;
+
+            if(isset($this->form[ 'settings' ][ $setting_name ])){
+                $formColumnName = $this->form[ 'settings' ][ $setting_name ];
+            }    
+
+            $insert_columns[ $column_name ] = $formColumnName;
+
+            if ( is_numeric( $formColumnName) ) {
+                array_push( $insert_columns_types, '%d' );
+            } else {
+                array_push( $insert_columns_types, '%s' );
+            }
+        }
+
+        $return =[
+            'insert_columns'=>$insert_columns,
+            'insert_columns_types'=>$insert_columns_types
+        ];
+
+        return $return;
+    }
+
+    /**
      * Insert Form Meta.
-     * 
+     *
      * Loop over our remaining form settings that we need to insert into meta.
      * Add them to our "Values" string for insertion later.
-     * 
+     *
      * @since  3.4.0
      * @return void
      */
@@ -304,7 +360,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         if ( $this->form[ 'db_stage_one_complete'] ) {
             $insert_columns .= ', `meta_key`, `meta_value`';
         }
-        
+
         // Create SQL string.
         $sql = "INSERT INTO {$this->_db->prefix}nf3_form_meta ( {$insert_columns} ) VALUES {$insert_values}";
         // Run our SQL query.
@@ -315,7 +371,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
      * Insert Actions and Action Meta.
      *
      * Loop over actions for this form and insert actions and action meta.
-     * 
+     *
      * @since  3.4.0
      * @return void
      */
@@ -329,8 +385,16 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
             $insert_columns_types = array();
             // Loop over all our action columns to get their values.
             foreach ( $this->actions_db_columns as $column_name => $setting_name ) {
-                $insert_columns[ $column_name ] = $action_settings[ $setting_name ];
-                if ( is_numeric( $action_settings[ $setting_name ] ) ) {
+
+                // ensure default value, then try to extract action setting value
+                $extractedValue = null;
+                if(isset($action_settings[ $setting_name ])){
+                    $extractedValue=$action_settings[ $setting_name ];
+                }
+
+                $insert_columns[ $column_name ] = $extractedValue;
+
+                if ( is_numeric( $extractedValue) ) {
                     array_push( $insert_columns_types, '%d' );
                 } else {
                     array_push( $insert_columns_types, '%s' );
@@ -339,7 +403,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
 
             // Insert Action
             $this->_db->insert( "{$this->_db->prefix}nf3_actions", $insert_columns, $insert_columns_types );
-            
+
             // Get our new action ID.
             $action_id = $this->_db->insert_id;
 
@@ -360,7 +424,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
                 }
                 $insert_values .= "),";
             }
-            
+
             // Remove the trailing comma.
             $insert_values = rtrim( $insert_values, ',' );
             $insert_columns = '`parent_id`, `key`, `value`';
@@ -383,7 +447,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
      * After we've inserted the field, unset it from our form array.
      * Update our processing option with $this->form.
      * Respond with the remaining steps.
-     * 
+     *
      * @since  3.4.0
      * @return void
      */
@@ -426,8 +490,16 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
             $insert_columns_types = array();
             // Loop over all our action columns to get their values.
             foreach ( $this->fields_db_columns as $column_name => $setting_name ) {
-                $insert_columns[ $column_name ] = $field_settings[ $setting_name ];
-                if ( is_numeric( $field_settings[ $setting_name ] ) ) {
+
+                // ensure default value, then try to extract action setting value
+                $extractedValue = null;
+                if(isset($field_settings[ $setting_name ])){
+                    $extractedValue = $field_settings[ $setting_name ];
+                }
+ 
+                $insert_columns[ $column_name ] = $extractedValue;
+
+                if ( is_numeric( $extractedValue ) ) {
                     array_push( $insert_columns_types, '%d' );
                 } else {
                     array_push( $insert_columns_types, '%s' );
@@ -446,7 +518,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
 
             // Check for repeater field, so we can adjust internal field Ids
             $isRepeater = isset($field_meta['type']) && 'repeater'===$field_meta['type'] ? true : false;
-            
+
             /**
              * Anything left in the $field_meta array should be inserted as meta.
              *
@@ -454,13 +526,16 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
              */
 
             foreach ( $field_meta as $meta_key => $meta_value ) {
-                
+
                 // If repeater, replace fieldset ids on incoming metavalue array
                 if($isRepeater && 'fields'===$meta_key){
                     $meta_value = $this->modifyFieldsetIds($field_id,$meta_value);
                 }
 
                 $meta_value = maybe_serialize( $meta_value );
+                if(is_string($meta_value)){
+                    $meta_value = WPN_Helper::sanitize_string_setting_value($meta_key, $meta_value);
+                }
 
                 $this->_db->escape_by_ref( $meta_value );
                 $insert_values .= "( {$field_id}, '{$meta_key}', '{$meta_value}'";
@@ -469,7 +544,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
                 }
                 $insert_values .= "),";
             }
-            
+
             // Remove the trailing comma.
             $insert_values = rtrim( $insert_values, ',' );
             $insert_columns = '`parent_id`, `key`, `value`';
@@ -689,7 +764,12 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         }
 
         // Convert `name` to `label`
-        if( isset( $action[ 'name' ] ) ) {
+        if( isset( $action[ 'name' ] )
+            /**
+             * Convertkit actually contains a valid 'name' attribute.
+             * So, we need to exclude it from this replace to avoid overwriting valid data.
+             */
+            && 'convertkit' !== $action[ 'type' ] ) {
             $action['label'] = $action['name'];
             unset($action['name']);
         }
@@ -719,7 +799,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         }
 
         if( 'submit' == $field[ 'type' ] ){
-            $field[ 'processing_label' ] = 'Processing';
+            $field[ 'processing_label' ] =  esc_html__( 'Processing', 'ninja-forms' );
         }
 
         if( isset( $field[ 'email' ] ) ){
@@ -844,22 +924,28 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
 
         if( 'number' == $field[ 'type' ] ){
 
-            if( ! isset( $field[ 'number_min' ] ) || ! $field[ 'number_min' ] ){
-                $field[ 'num_min' ] = '';
-            } else {
-                $field[ 'num_min' ] = $field[ 'number_min' ];
+            if( ! isset( $field[ 'num_min'] ) ) {
+                if( ! isset( $field[ 'number_min' ] ) || ! $field[ 'number_min' ] ){
+                    $field[ 'num_min' ] = '';
+                } else {
+                    $field[ 'num_min' ] = $field[ 'number_min' ];
+                }
             }
 
-            if( ! isset( $field[ 'number_max' ] ) || ! $field[ 'number_max' ] ){
-                $field[ 'num_max' ] = '';
-            } else {
-                $field[ 'num_max' ] = $field[ 'number_max' ];
+            if( ! isset( $field[ 'num_max'] ) ) {
+                if( ! isset( $field[ 'number_max' ] ) || ! $field[ 'number_max' ] ){
+                    $field[ 'num_max' ] = '';
+                } else {
+                    $field[ 'num_max' ] = $field[ 'number_max' ];
+                }
             }
 
-            if( ! isset( $field[ 'number_step' ] ) || ! $field[ 'number_step' ] ){
-                $field[ 'num_step' ] = 1;
-            } else {
-                $field[ 'num_step' ] = $field[ 'number_step' ];
+            if( ! isset( $field[ 'num_step'] ) ) {
+                if( ! isset( $field[ 'number_step' ] ) || ! $field[ 'number_step' ] ){
+                    $field[ 'num_step' ] = 1;
+                } else {
+                    $field[ 'num_step' ] = $field[ 'number_step' ];
+                }
             }
         }
 
@@ -927,5 +1013,16 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
 
 
         return apply_filters( 'ninja_forms_upgrade_field', $field );
+    }
+
+    /**
+     * Method to obfuscate the global base64_decode method.
+     * @since 3.6.10.1
+     * @param String $data A base64 encoded string.
+     * @return String
+     */
+    private function base64_decode( $data )
+    {
+        return \base64_decode( $data );
     }
 }

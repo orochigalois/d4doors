@@ -16,6 +16,11 @@ final class NF_Actions_Email extends NF_Abstracts_Action
     protected $_tags = array();
 
     /**
+     * @var string
+     */
+    protected $_documentation_url = 'https://ninjaforms.com/docs/email/';
+
+    /**
     * @var string
     */
     protected $_timing = 'late';
@@ -24,6 +29,11 @@ final class NF_Actions_Email extends NF_Abstracts_Action
     * @var int
     */
     protected $_priority = 10;
+
+    /**
+     * @var string
+     */
+    protected $_group = 'core';
 
     /**
     * Constructor
@@ -55,17 +65,28 @@ final class NF_Actions_Email extends NF_Abstracts_Action
 
         if ( has_filter( 'ninja_forms_get_fields_sorted' ) ) {
             $fields_by_key = array();
-            foreach( $data[ 'fields' ] as $field ){
+
+            foreach( $data[ 'fields' ] as $fieldId=>$field ){
+
                 if( is_null( $field ) ) continue;
+
                 if( is_array( $field ) ){
                     if( ! isset( $field[ 'key' ] ) ) continue;
                     $key = $field[ 'key' ];
+
+                    // add field id if it isn't already set
+                    if(!isset($field['id'])){
+                        $field['id']=$fieldId;
+                    }
+
                 } else {
                     $key = $field->get_setting('key');
                 }
                 $fields_by_key[ $key ] = $field;
             }
-            $data[ 'fields' ] = apply_filters( 'ninja_forms_get_fields_sorted', array(), $data[ 'fields' ], $fields_by_key, $form_id );
+            $sorted = apply_filters( 'ninja_forms_get_fields_sorted', array(), $data[ 'fields' ], $fields_by_key, $form_id );
+            if( ! empty( $sorted ) )
+                $data[ 'fields' ] = $sorted;
         }
 
         $attachments = $this->_get_attachments( $action_settings, $data );
@@ -314,13 +335,38 @@ final class NF_Actions_Email extends NF_Abstracts_Action
             if( in_array( $field[ 'type' ], $ignore ) ) continue;
 
             $label = ( '' != $field[ 'admin_label' ] ) ? $field[ 'admin_label' ] : $field[ 'label' ];
+            // Escape labels.
+            $label = WPN_Helper::maybe_escape_csv_column($label);
 
-            $value = WPN_Helper::stripslashes( $field[ 'value' ] );
-            if ( empty( $value ) && ! isset( $value ) ) {
-                $value = '';
-            }
-            if ( is_array( $value ) ) {
-                $value = implode( ',', $value );
+            if($field["type"] === "repeater" && isset($field['fields'])){
+                $value = "";
+                foreach($field['fields'] as $field_model){
+                    foreach($field['value'] as $in_field_value) {
+                        $matching_value = substr($in_field_value['id'], 0, strlen($field_model['id'])) === $field_model['id'];
+                        $index_found = substr($in_field_value['id'], strpos($in_field_value['id'], "_") + 1);
+                        if( $matching_value ){
+                            //Catch specific file uploeds data
+                            if(isset($in_field_value["files"])){
+                                $field_files_names = [];
+                                foreach($in_field_value["files"] as $file_data){
+                                    $field_files_names []= $file_data["data"]["file_url"];
+                                }
+                                $in_field_value['value'] = implode(" , ", $field_files_names);
+                            }
+
+                            $value .= $field_model['label'] . "#" . $index_found . " : " . WPN_Helper::stripslashes( $in_field_value['value'] ) . " \n";
+                        };
+                    }
+                }
+
+            } else {
+                $value = WPN_Helper::stripslashes( $field[ 'value' ] );
+                if ( empty( $value ) && ! isset( $value ) ) {
+                    $value = '';
+                }
+                if ( is_array( $value ) ) {
+                    $value = implode( ',', $value );
+                }
             }
 
             // add filter to add single quote if first character in value is '='

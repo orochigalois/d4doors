@@ -1,6 +1,7 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
+use NinjaForms\Includes\Handlers\Sanitizer;
 
-final class NF_Display_Render
+class NF_Display_Render
 {
     protected static $render_instance_count = array();
 
@@ -38,6 +39,10 @@ final class NF_Display_Render
     protected static $form_uses_helptext       = array();
     protected static $form_uses_starrating     = array();
 
+    protected static $thread_id      = 1;
+    protected static $recorded_forms       = [];
+    protected static $inline_vars_recorded  = [];
+
     public static function localize( $form_id )
     {
         global $wp_locale;
@@ -61,7 +66,7 @@ final class NF_Display_Render
 
         $settings = $form->get_settings();
 
-        foreach( $settings as $name => $value ){
+        foreach( $settings as $name => &$value ){
             if( ! in_array(
                 $name,
                 array(
@@ -78,7 +83,10 @@ final class NF_Display_Render
                 )
             ) ) continue;
 
-            if( $value ) continue;
+            if( $value ) {
+                $value = esc_html($value);
+                continue;
+            }
 
             unset( $settings[ $name ] );
         }
@@ -128,11 +136,13 @@ final class NF_Display_Render
         if( ! apply_filters( 'ninja_forms_display_show_form', true, $form_id, $form ) ) return;
 
         $currency = $form->get_setting( 'currency', Ninja_Forms()->get_setting( 'currency' ) );
-        $currency_symbol = Ninja_Forms::config( 'CurrencySymbol' );
-        $form->update_setting( 'currency_symbol', ( isset( $currency_symbol[ $currency ] ) ) ? $currency_symbol[ $currency ] : '' );
+        $currencySymbolLookup = Ninja_Forms::config( 'CurrencySymbol' );
+
+        $currencySymbol = self::getCurrencySymbol($currencySymbolLookup,$currency) ;
+        $form->update_setting( 'currency_symbol', $currencySymbol );
 
         $title = apply_filters( 'ninja_forms_form_title', $form->get_setting( 'title' ), $form_id );
-        $form->update_setting( 'title', $title );
+        $form->update_setting( 'title', esc_html( $title ) );
 
         $before_form = apply_filters( 'ninja_forms_display_before_form', '', $form_id );
         $form->update_setting( 'beforeForm', $before_form );
@@ -205,16 +215,13 @@ final class NF_Display_Render
                 if( ! is_string( $field_type ) ) continue;
 
                 if( ! isset( Ninja_Forms()->fields[ $field_type ] ) ) {
-                    $unknown_field = NF_Fields_Unknown::create( $field );
-                    $field = array(
-                        'settings' => $unknown_field->get_settings(),
-                        'id' => $unknown_field->get_id()
-                    );
+                    $field =  self::constructUnknownField($field);
                     $field_type = $field[ 'settings' ][ 'type' ];
                 }
 
-                $field = apply_filters('ninja_forms_localize_fields', $field);
-                $field = apply_filters('ninja_forms_localize_field_' . $field_type, $field);
+                $fieldBeforeFilters = $field;
+
+                $field = self::applyLocalizeFilters($field, $field_type);
 
                 $field_class = Ninja_Forms()->fields[$field_type];
 
@@ -222,11 +229,8 @@ final class NF_Display_Render
                     $field[ 'value' ] = $field_class->get_test_value();
                 }
 
-                // Hide the label on invisible reCAPTCHA fields
-                if ( 'recaptcha' === $field[ 'settings' ][ 'type' ] && 'invisible' === $field[ 'settings' ][ 'size' ] ) {
-                    $field[ 'settings' ][ 'label_pos' ] = 'hidden';
-                }
-
+                $field= self::ensureFieldArrayStructureValidity($field,$fieldBeforeFilters);
+                
                 // Copy field ID into the field settings array for use in localized data.
                 $field[ 'settings' ][ 'id' ] = $field[ 'id' ];
 
@@ -282,65 +286,51 @@ final class NF_Display_Render
                     if ($default_value) {
                         $settings['value'] = $default_value;
 
-                        ob_start();
-                        do_shortcode( $settings['value'] );
-                        $ob = ob_get_clean();
+                        if( ! is_array( $default_value ) ) {
+                            ob_start();
+                            do_shortcode( $settings['value'] );
+                            $ob = ob_get_clean();
 
-                        if( ! $ob ) {
-                            $settings['value'] = do_shortcode( $settings['value'] );
+                            if( ! $ob ) {
+                                $settings['value'] = do_shortcode( $settings['value'] );
+                            }
                         }
                     }
                 }
 
                 $thousands_sep = $wp_locale->number_format[ 'thousands_sep'];
                 $decimal_point = $wp_locale->number_format[ 'decimal_point' ];
+                $currencySymbol = Ninja_Forms()->get_setting('currency_symbol');
 
-                // TODO: Find a better way to do this.
-                if ('shipping' == $settings['type']) {
-                    $settings[ 'shipping_cost' ] = preg_replace ('/[^\d,\.]/', '', $settings[ 'shipping_cost' ] );
-                    $settings[ 'shipping_cost' ] = str_replace( Ninja_Forms()->get_setting( 'currency_symbol' ), '', $settings[ 'shipping_cost' ] );
-
-                    $settings[ 'shipping_cost' ] = str_replace( $decimal_point, '||', $settings[ 'shipping_cost' ] );
-                    $settings[ 'shipping_cost' ] = str_replace( $thousands_sep, '', $settings[ 'shipping_cost' ] );
-                    $settings[ 'shipping_cost' ] = str_replace( '||', '.', $settings[ 'shipping_cost' ] );
-                } elseif ('product' == $settings['type']) {
-                    $settings['product_price'] = preg_replace ('/[^\d,\.]/', '', $settings[ 'product_price' ] );
-                    $settings['product_price'] = str_replace( Ninja_Forms()->get_setting( 'currency_symbol' ), '', $settings['product_price']);
-
-                    $settings[ 'product_price' ] = str_replace( $decimal_point, '||', $settings[ 'product_price' ] );
-                    $settings[ 'product_price' ] = str_replace( $thousands_sep, '', $settings[ 'product_price' ] );
-                    $settings[ 'product_price' ] = str_replace( '||', '.', $settings[ 'product_price' ] );
-
-                } elseif ('total' == $settings['type'] && isset($settings['value'])) {
-                    if ( empty( $settings['value'] ) ) $settings['value'] = 0;
-                    $settings['value'] = number_format($settings['value'], 2);
-                }
-
+                $settings = static::ensureProductRelatedCostLocalizeSettings($settings,$decimal_point,$thousands_sep,$currencySymbol);
+                
                 $settings['element_templates'] = $templates;
                 $settings['old_classname'] = $field_class->get_old_classname();
                 $settings['wrap_template'] = $field_class->get_wrap_template();
 
+                $settings['label']=\wp_kses_post(Sanitizer::preventScriptTriggerInHtmlOutput($settings['label']));
+                
                 $fields[] = apply_filters( 'ninja_forms_localize_field_settings_' . $field_type, $settings, $form );
 
                 if( 'recaptcha' == $field[ 'settings' ][ 'type' ] ){
                     array_push( self::$form_uses_recaptcha, $form_id );
                 }
-                if( 'date' == $field[ 'settings' ][ 'type' ] ){
+                if( 'date' == $field[ 'settings' ][ 'type' ] || self::checkRepeaterChildType($field, 'date') ){
                     array_push( self::$form_uses_datepicker, $form_id );
                 }
-                if( 'starrating' == $field[ 'settings' ][ 'type' ] ){
+                if( 'starrating' == $field[ 'settings' ][ 'type' ] || self::checkRepeaterChildType($field, "starrating")){
                     array_push( self::$form_uses_starrating, $form_id );
                 }
-                if( isset( $field[ 'settings' ][ 'mask' ] ) && $field[ 'settings' ][ 'mask' ] ){
+                if( isset( $field[ 'settings' ][ 'mask' ] ) && $field[ 'settings' ][ 'mask' ] || self::checkRepeaterChildSetting($field, "mask", null) ){
                     array_push( self::$form_uses_inputmask, $form_id );
                 }
-                if( isset( $field[ 'settings' ][ 'mask' ] ) && 'currency' == $field[ 'settings' ][ 'mask' ] ){
+                if( isset( $field[ 'settings' ][ 'mask' ] ) && 'currency' == $field[ 'settings' ][ 'mask' ] || self::checkRepeaterChildSetting($field, "mask", "currency") ){
                     array_push( self::$form_uses_currencymask, $form_id );
                 }
-                if( isset( $field[ 'settings' ][ 'textarea_rte' ] ) && $field[ 'settings' ][ 'textarea_rte' ] ){
+                if( isset( $field[ 'settings' ][ 'textarea_rte' ] ) && $field[ 'settings' ][ 'textarea_rte' ] || self::checkRepeaterChildSetting($field, "textarea_rte", null) ){
                     array_push( self::$form_uses_rte, $form_id );
                 }
-                if( isset( $field[ 'settings' ][ 'textarea_media' ] ) && $field[ 'settings' ][ 'textarea_media' ] ){
+                if( isset( $field[ 'settings' ][ 'textarea_media' ] ) && $field[ 'settings' ][ 'textarea_media' ] || self::checkRepeaterChildSetting($field, "textarea_media", null) ){
                     array_push( self::$form_uses_textarea_media, $form_id );
                 }
                 // strip all tags except image tags
@@ -356,7 +346,7 @@ final class NF_Display_Render
             }
         }
 
-        $fields = apply_filters( 'ninja_forms_display_fields', $fields );
+        $fields = apply_filters( 'ninja_forms_display_fields', $fields, $form_id );
 
         if(!isset($_GET['nf_preview_form'])){
             /* Render Instance Fix */
@@ -380,10 +370,202 @@ final class NF_Display_Render
         $form_id = "$form_id";
 
         ?>
-        <!-- TODO: Move to Template File. -->
+        <!-- That data is being printed as a workaround to page builders reordering the order of the scripts loaded-->
         <script>var formDisplay=1;var nfForms=nfForms||[];var form=[];form.id='<?php echo $form_id; ?>';form.settings=<?php echo wp_json_encode( $form->get_settings() ); ?>;form.fields=<?php echo wp_json_encode( $fields ); ?>;nfForms.push(form);</script>
         <?php
+
         self::enqueue_scripts( $form_id );
+    }
+
+    /**
+     * Transform the inline JS into a variable passed to wp_localize_script
+     *
+     * @param array $fields
+     * @param string $form_id
+     * @param object $form
+     * @return void
+     * */
+    protected static function transformInlineVars($fields, $form_id, $form_settings)
+    {
+        $thread_id = sprintf("%08x", abs(crc32($_SERVER['REMOTE_ADDR'] . $_SERVER['REQUEST_TIME'] . $_SERVER['REMOTE_PORT'])));
+        if($thread_id !== self::$thread_id || isset( $_GET['nf_preview_form'] ) ){
+            self::$recorded_forms = [];
+        }
+        self::$thread_id = $thread_id;
+        $set_form = [];
+        $set_form['id'] = $form_id;
+        $set_form['settings'] = $form_settings;
+        $set_form['fields'] = $fields;
+        array_push(self::$recorded_forms, $set_form);
+        self::$inline_vars_recorded = [
+            "formDisplay"   =>  1,
+            "form"          => $set_form,
+            "nfForms"       => self::$recorded_forms,
+        ];
+    }
+    /**
+     * Ensure that product related costs on `localize` method have intended number format
+     *
+     * @param array $settings
+     * @param string $decimal_point
+     * @param string $thousands_sep
+     * @return array
+     */
+    protected static function ensureProductRelatedCostLocalizeSettings(array $settings, $decimal_point,$thousands_sep, $currencySymbol): array
+    {
+        if ('shipping' == $settings['type']) {
+            $settings['shipping_cost'] = preg_replace('/[^\d,\.]/', '', $settings['shipping_cost']);
+            $settings['shipping_cost'] = str_replace($currencySymbol, '', $settings['shipping_cost']);
+
+            $settings['shipping_cost'] = str_replace($decimal_point, '||', $settings['shipping_cost']);
+            $settings['shipping_cost'] = str_replace($thousands_sep, '', $settings['shipping_cost']);
+            $settings['shipping_cost'] = str_replace('||', '.', $settings['shipping_cost']);
+        } elseif ('product' == $settings['type']) {
+            $settings['product_price'] = preg_replace('/[^\d,\.]/', '', $settings['product_price']);
+            $settings['product_price'] = str_replace($currencySymbol, '', $settings['product_price']);
+
+            $settings['product_price'] = str_replace($decimal_point, '||', $settings['product_price']);
+            $settings['product_price'] = str_replace($thousands_sep, '', $settings['product_price']);
+            $settings['product_price'] = str_replace('||', '.', $settings['product_price']);
+        } elseif ('total' == $settings['type'] && isset($settings['value'])) {
+            if (empty($settings['value'])) $settings['value'] = 0;
+            $settings['value'] = number_format((float)$settings['value'], 2);
+        }
+        return $settings;
+    }
+
+    /**
+     * Construct field array for an unknown field type
+     *
+     * @param array $field
+     * @return array
+     */
+    protected static function constructUnknownField( $field): array
+    {
+        $unknown_field = NF_Fields_Unknown::create( $field );
+
+        $return = array(
+            'settings' => $unknown_field->get_settings(),
+            'id' => $unknown_field->get_id()
+        );
+
+        return $return;
+    }
+
+    /**
+     * Apply localize filters to field
+     *
+     * Property types are not declared because we cannot guarantee what is
+     * returned from apply_filters.
+     * 
+     * @param array $field
+     * @param string $field_type
+     * @return array
+     */
+    protected static function applyLocalizeFilters($field, $field_type)
+    {
+        $wip = apply_filters('ninja_forms_localize_fields', $field);
+
+        $return = apply_filters('ninja_forms_localize_field_' . $field_type, $wip);
+
+        return $return;
+    }
+
+    /**
+     * Ensure that field array has proper construction after localize filters
+     *
+     * After any WP filter, we cannot assume that all properties are intact, so
+     * ensure that our structure is valid.  Checks field type and calls method
+     * that ensures validity of that field typ.
+     *
+     * @param array $field
+     * @param array $fieldBeforeFilters
+     * @return array
+     */
+    protected static function ensureFieldArrayStructureValidity($field, array $fieldBeforeFilters): array
+    {
+        // filter altered field beyond repair, fallback to before
+        if(!is_array($field)){
+            return $fieldBeforeFilters;
+        }
+
+        // initialize return value to incoming value
+        $return = $field;
+
+        if ('recaptcha' === $field['settings']['type']) {
+            $return = self::ensureRecaptchaFieldStructureValidity($return);
+        }
+
+        return $return;
+    }
+
+    /**
+     * Ensure that Recaptcha field array structure is correct
+     *
+     * @param array $field
+     * @param array $fieldBeforeFilters
+     * @return void
+     */
+    protected static function ensureRecaptchaFieldStructureValidity(array $field): array
+    {
+        // initialize return value to incoming value
+        $return = $field;
+
+        // Hide the label on invisible reCAPTCHA fields
+        if (
+            'recaptcha' === $field['settings']['type'] 
+            && isset($field['settings']['size'])
+            && 'invisible' === $field['settings']['size']) {
+
+            $return['settings']['label_pos'] = 'hidden';
+        }
+
+        return $return;
+    }
+
+    /**
+     * Determine currency symbol
+     *
+     * @param array $currencySymbolLookup Currency symbol lookups
+     * @param string $currency
+     * @return string
+     */
+    protected static function getCurrencySymbol($currencySymbolLookup, $currency): string
+    {
+        if(!is_string($currency)){
+            return '';
+        }
+        
+        $return = isset( $currencySymbolLookup[ $currency ] ) ? $currencySymbolLookup[ $currency ] : '';
+
+        return $return;
+    }
+
+    public static function checkRepeaterChildType($field, $type)
+    {
+        $return = [];
+        if($field["settings"]["type"] === "repeater" && !empty($field["settings"]["fields"])){
+            foreach($field["settings"]["fields"] as $child){
+                array_push( $return, isset( $child[ 'type' ] ) &&  $type === $child[ 'type' ] );
+            }
+        }
+        return in_array(true, $return, true);
+    }
+
+    public static function checkRepeaterChildSetting($field, $setting, $value)
+    {
+        $return = [];
+        if($field["settings"]["type"] === "repeater" && !empty($field["settings"]["fields"])){
+            foreach($field["settings"]["fields"] as $child){
+                if( $value !== null ){
+                    array_push( $return, isset( $child[ $setting ] ) && $value === $child[ $setting ] );
+                } else {
+                    array_push( $return, isset( $child[ $setting ] ) && $child[ $setting ] );
+                }
+                
+            }
+        }
+        return in_array(true, $return, true);
     }
 
     public static function localize_preview( $form_id )
@@ -416,8 +598,10 @@ final class NF_Display_Render
         $form[ 'settings' ][ 'is_preview' ] = TRUE;
 
         $currency = ( isset( $form[ 'settings' ][ 'currency' ] ) && $form[ 'settings' ][ 'currency' ] ) ? $form[ 'settings' ][ 'currency' ] : Ninja_Forms()->get_setting( 'currency' ) ;
-        $currency_symbol = Ninja_Forms::config( 'CurrencySymbol' );
-        $form[ 'settings' ][ 'currency_symbol' ] = ( isset( $currency_symbol[ $currency ] ) ) ? $currency_symbol[ $currency ] : '';
+        $currencySymbolLookup = Ninja_Forms::config( 'CurrencySymbol' );
+        $currencySymbol =  ( isset( $currencySymbolLookup[ $currency ] ) ) ? $currencySymbolLookup[ $currency ] : '';
+
+        $form[ 'settings' ][ 'currency_symbol' ] =$currencySymbol;
 
         $before_form = apply_filters( 'ninja_forms_display_before_form', '', $form_id, TRUE );
         $form[ 'settings' ][ 'beforeForm'] = $before_form;
@@ -501,29 +685,22 @@ final class NF_Display_Render
                     if ($default_value) {
                         $field['settings']['value'] = $default_value;
 
-                        ob_start();
-                        do_shortcode( $field['settings']['value'] );
-                        $ob = ob_get_clean();
+                        if( ! is_array( $default_value ) ) {
+                            ob_start();
+                            do_shortcode( $field['settings']['value'] );
+                            $ob = ob_get_clean();
 
-                        if( ! $ob ) {
-                            $field['settings']['value'] = do_shortcode( $field['settings']['value'] );
+                            if( ! $ob ) {
+                                $field['settings']['value'] = do_shortcode( $field['settings']['value'] );
+                            }
                         }
                     }
                 }
 
-                // TODO: Find a better way to do this.
-                if ('shipping' == $field['settings']['type']) {
-                    $field['settings']['shipping_cost'] = preg_replace ('/[^\d,\.]/', '', $field['settings']['shipping_cost'] );
-                    $field['settings']['shipping_cost'] = str_replace( Ninja_Forms()->get_setting( 'currency_symbol' ), '', $field['settings']['shipping_cost'] );
-                    $field['settings']['shipping_cost'] = number_format($field['settings']['shipping_cost'], 2);
-                } elseif ('product' == $field['settings']['type']) {
-                    // TODO: Does the currency marker need to stripped here?
-                    $field['settings']['product_price'] = preg_replace ('/[^\d,\.]/', '', $field['settings']['product_price'] );
-                    $field['settings']['product_price'] = str_replace( Ninja_Forms()->get_setting( 'currency_symbol' ), '', $field['settings']['product_price'] );
-                    $field['settings']['product_price'] = number_format($field['settings']['product_price'], 2);
-                } elseif ('total' == $field['settings']['type']) {
-                    if( ! isset( $field[ 'settings' ][ 'value' ] ) ) $field[ 'settings' ][ 'value' ] = 0;
-                    $field['settings']['value'] = number_format($field['settings']['value'], 2);
+                $fieldType = $field['settings']['type'];
+
+                if(in_array($fieldType,['shipping','product','total'])){
+                    $field = self::ensureProductRelatedCostPreviewFormats($field, $currencySymbol);
                 }
 
                 $field['settings']['element_templates'] = $templates;
@@ -538,31 +715,99 @@ final class NF_Display_Render
         do_action( 'ninja_forms_before_container_preview', $form_id, $form[ 'settings' ], $fields );
         Ninja_Forms::template( 'display-form-container.html.php', compact( 'form_id' ) );
 
-        ?>
-        <!-- TODO: Move to Template File. -->
-        <script>
-            // Maybe initialize nfForms object
-            var nfForms = nfForms || [];
+        self::transformInlineVars($fields, $form_id, $form[ 'settings' ]);
 
-            // Build Form Data
-            var form = [];
-            form.id = '<?php echo $form['id']; ?>';
-            form.settings = JSON.parse( '<?php echo WPN_Helper::addslashes( wp_json_encode( $form['settings'] ) ); ?>' );
-
-            form.fields = JSON.parse( '<?php echo WPN_Helper::addslashes( wp_json_encode(  $fields ) ); ?>' );
-
-            // Add Form Data to nfForms object
-            nfForms.push( form );
-        </script>
-
-        <?php
         self::enqueue_scripts( $form_id, true );
     }
+
+    /**
+     * Set root element that will insert the WP element
+     * 
+     * @since 3.7.4
+     * 
+     * @param string Form ID
+     * 
+     * @return void
+     */
+    public static function localize_iframe( $form_id )
+    {
+        //Render root div
+        echo "<div id='nf_form_iframe_" . $form_id . "'></div>";
+        //Enqueue WP element
+       self::enqueue_iframe_scripts( $form_id );
+
+    }
+
+    /**
+     * Enqueue scripts and localize data needed to insert the iFrame
+     * 
+     * @since 3.7.4
+     * 
+     * @param string Form ID
+     * 
+     * @return void
+     */
+    public static function enqueue_iframe_scripts( $form_id ) {
+         //Get Dependencies and Version from build asset.php generated by wp-scripts
+         $dashboard_asset_php = [
+            "dependencies" => [],
+            "version"   => false
+        ];
+        if( file_exists( Ninja_Forms::$dir . "build/displayFrame.asset.php" ) ){
+            $asset_php = include( Ninja_Forms::$dir . "build/displayFrame.asset.php" );
+            $dashboard_asset_php["dependencies"] = array_merge( $dashboard_asset_php["dependencies"], $asset_php["dependencies"]);
+            $dashboard_asset_php["version"] = $asset_php["version"];
+        }
+         //Register displayFrame script
+         wp_register_script( 'ninja_forms_form_iframe', Ninja_Forms::$url . 'build/displayFrame.js',  $dashboard_asset_php["dependencies"], $dashboard_asset_php["version"], false );
+         wp_enqueue_script( 'ninja_forms_form_iframe' );
+
+         //Set parameters needed in the script
+         wp_localize_script('ninja_forms_form_iframe', 'ninja_forms_form_iframe_data', [
+            'formID'        =>  $form_id,
+            'homeUrl'       => esc_url_raw( home_url() ),
+            'previewToken'  => wp_create_nonce('nf_iframe' ),
+            'isBlock'       => false
+         ]);
+    }
+
+    protected static function ensureProductRelatedCostPreviewFormats(array $field, string $currencySymbol): array
+    {
+        // TODO: Find a better way to do this.
+        if ('shipping' == $field['settings']['type']) {
+            $field['settings']['shipping_cost'] = static::decodeNumberByLocale($field['settings']['shipping_cost']);
+            $field['settings']['shipping_cost'] = str_replace($currencySymbol, '', $field['settings']['shipping_cost']);
+            $field['settings']['shipping_cost'] = number_format((float)$field['settings']['shipping_cost'], 2);
+        } elseif ('product' == $field['settings']['type']) {
+            // TODO: Does the currency marker need to stripped here?
+            $field['settings']['product_price'] =  static::decodeNumberByLocale($field['settings']['product_price']);
+            $field['settings']['product_price'] = (float)str_replace($currencySymbol, '', $field['settings']['product_price']);
+            $field['settings']['product_price'] = number_format((float)$field['settings']['product_price'], 2);
+        } elseif ('total' == $field['settings']['type']) {
+            
+            if (!isset($field['settings']['value'])) $field['settings']['value'] = 0;
+            $field['settings']['value'] = number_format((float)$field['settings']['value'], 2);
+        }
+
+        return $field;
+    }
+
+    /**
+     * Decode a number by locale into string
+     *
+     * @return array
+     */
+    protected static function decodeNumberByLocale( $incoming ): string
+    {
+        $localeNumberFormatting= NF_Handlers_LocaleNumberFormatting::create();
+        $return = $localeNumberFormatting->locale_decode_number($incoming);
+        return $return;
+    }
+
 
     public static function enqueue_scripts( $form_id, $is_preview = false )
     {
         global $wp_locale;
-        $form = Ninja_Forms()->form( $form_id )->get();
 
         $ver     = Ninja_Forms::VERSION;
         $js_dir  = Ninja_Forms::$url . 'assets/js/min/';
@@ -577,7 +822,7 @@ final class NF_Display_Render
 
         if( $is_preview || in_array( $form_id, self::$form_uses_datepicker ) ) {
             wp_enqueue_style( 'nf-flatpickr', $css_dir . 'flatpickr.css', $ver );
-            wp_enqueue_script('nf-front-end--datepicker', $js_dir . 'front-end--datepicker.min.js', array( 'jquery', 'nf-front-end' ), $ver );
+            wp_enqueue_script('nf-datepicker', $js_dir . 'datepicker.min.js', array( 'jquery', 'nf-front-end' ), $ver );
         }
 
         if( $is_preview || in_array( $form_id, self::$form_uses_inputmask ) ) {
@@ -585,7 +830,7 @@ final class NF_Display_Render
         }
 
         if( $is_preview || in_array( $form_id, self::$form_uses_currencymask ) ) {
-            wp_enqueue_script('nf-front-end--currencymask', $js_dir . 'front-end--autonumeric.min.js', array( 'jquery' ), $ver );
+            wp_enqueue_script('nf-front-end--currencymask', $js_dir . 'autonumeric.min.js', array( 'jquery' ), $ver );
         }
 
         if( $is_preview || in_array( $form_id, self::$form_uses_rte ) ) {
@@ -601,7 +846,7 @@ final class NF_Display_Render
 
         if( $is_preview || in_array( $form_id, self::$form_uses_helptext ) ) {
             wp_enqueue_style( 'jBox', $css_dir . 'jBox.css', $ver );
-            wp_enqueue_script('nf-front-end--helptext', $js_dir . 'front-end--helptext.min.js', array( 'jquery' ), $ver );
+            wp_enqueue_script('nf-jBox', $js_dir . 'jBox.min.js', array( 'jquery' ), $ver );
         }
 
         if( $is_preview || in_array( $form_id, self::$form_uses_starrating ) ) {
@@ -619,7 +864,9 @@ final class NF_Display_Render
             'ajaxNonce' => wp_create_nonce( 'ninja_forms_display_nonce' ),
             'requireBaseUrl' => Ninja_Forms::$url . 'assets/js/',
             'use_merge_tags' => array(),
-            'opinionated_styles' => Ninja_Forms()->get_setting( 'opinionated_styles' )
+            'opinionated_styles' => Ninja_Forms()->get_setting( 'opinionated_styles' ),
+            'filter_esc_status'  =>    json_encode( WPN_Helper::maybe_disallow_unfiltered_html_for_escaping() ),
+            'nf_consent_status_response'    => []
         ));
 
         foreach( Ninja_Forms()->fields as $field ){
@@ -629,9 +876,9 @@ final class NF_Display_Render
         }
 
         wp_localize_script( 'nf-front-end', 'nfFrontEnd', $data );
-        wp_localize_script( 'nf-front-end', 'nfRepeater', array(
-            'add_repeater_child_field_text' => __( 'Add ', 'ninja-forms' )
-        ));
+
+        // !!Todoed!! moved inline JS to data
+        wp_localize_script( 'nf-front-end', 'nfInlineVars', self::$inline_vars_recorded );
 
         do_action( 'ninja_forms_enqueue_scripts', array( 'form_id' => $form_id ) );
 

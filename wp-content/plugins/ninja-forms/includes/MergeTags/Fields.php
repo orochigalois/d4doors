@@ -14,8 +14,8 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
         $this->title = esc_html__('Fields', 'ninja-forms');
         $this->merge_tags = Ninja_Forms()->config('MergeTagsFields');
 
-        if (defined('DOING_AJAX') && DOING_AJAX) {
-            $this->merge_tags = array_merge($this->merge_tags, Ninja_Forms()->config('MergeTagsFieldsAJAX'));
+        if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+            $this->include_all_fields_merge_tags();
         }
 
         add_filter('ninja_forms_calc_setting', array($this, 'pre_parse_calc_settings'), 9);
@@ -31,6 +31,15 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
             return $this->merge_tags[$name]['safe_value'];
         }
         return $this->merge_tags[$name]['field_value'];
+    }
+
+    /**
+     * Helps process {all_fields_table} and {fields_table} 
+     * 
+     * This still requires to run add_field() for all fields in a submission before and after calling his function
+     */
+    public function include_all_fields_merge_tags() {
+        $this->merge_tags = array_merge( $this->merge_tags, Ninja_Forms()->config( 'MergeTagsFieldsAJAX' ) );
     }
 
     public function all_fields()
@@ -351,7 +360,7 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
         // Iterate submission indexes (each repeated fieldset in the submission)
         foreach ($array as $submissionIndex => $fieldsetArray) {
 
-            $outgoingValue .= '<tr><td><b>Repeated Fieldset #:' . $submissionIndex . '</b></td></tr>';
+            $outgoingValue .= '<tr><td><b>' . $field['label'] . ' #:' . $submissionIndex . '</b></td></tr>';
 
             // Iterate each field within a submission index
             foreach ($fieldsetArray as $fieldsetFieldId => $submissionValueArray) {
@@ -581,14 +590,20 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
     private function get_fields_sorted()
     {
         $fields = $this->merge_tags['all_fields']['fields'];
+        $sorted = array();
 
         // Filterable Sorting for Add-ons (ie Layout and Multi-Part ).
         if (has_filter('ninja_forms_get_fields_sorted')) {
             $fields_by_key = $this->merge_tags['all_fields_by_key']['fields'];
-            $fields = apply_filters('ninja_forms_get_fields_sorted', array(), $fields, $fields_by_key, $this->form_id);
-        } else {
+            $sorted = apply_filters('ninja_forms_get_fields_sorted', array(), $fields, $fields_by_key, $this->form_id);
+        }
+
+        // If our filter didn't actually give us an order...
+        if( empty($sorted) ) {
             // Default Sorting by Field Order.
             uasort($fields, array($this, 'sort_fields'));
+        } else {
+            $fields = $sorted;
         }
 
         return $fields;

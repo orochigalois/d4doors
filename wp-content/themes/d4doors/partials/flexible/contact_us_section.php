@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="row layer2">
-      <div class="col-lg-6">
+      <div class="col-lg-5">
         <div class="layer2-left highlight__text">
           <p class="fg"><?= get_sub_field('text'); ?></p>
           <p class="bg"><?= wrapMatchWithSpans(get_sub_field('text'), get_sub_field('highlight')); ?></p>
@@ -71,7 +71,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-7">
         <div class="layer2-right">
           <?= do_shortcode(get_sub_field('form_shortcode')); ?>
           
