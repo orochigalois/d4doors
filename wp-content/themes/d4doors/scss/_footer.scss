@@ -225,17 +225,11 @@
 
     // padding:20px;
     .fa-angle-up:before {
-        content: "\1F845";
+        content: url(../images/svg/up.svg);
         color: #000;
         font-size: 1.5em;
         position: relative;
-        top: 3px;
-    }
-    @include media-breakpoint-down(xs) {
-        .fa-angle-up:before {
-            top: 5px;
-            content: url(../images/svg/up.svg);
-        }
+        top: 5px;
     }
 
     // @include media-breakpoint-down(sm) {

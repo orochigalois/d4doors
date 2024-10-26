@@ -7658,17 +7658,11 @@ body.overlay-open {
   opacity: 1;
 }
 #toTop .fa-angle-up:before {
-  content: "🡅";
+  content: url(3b1a1cc79df49406ff7c.svg);
   color: #000;
   font-size: 1.5em;
   position: relative;
-  top: 3px;
-}
-@media (max-width: 575.98px) {
-  #toTop .fa-angle-up:before {
-    top: 5px;
-    content: url(3b1a1cc79df49406ff7c.svg);
-  }
+  top: 5px;
 }
 
 .slogan_banner_section {
