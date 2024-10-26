@@ -90,7 +90,7 @@
 						wp_nav_menu(array(
 							'depth' => 0,
 							'container' => '',
-							'theme_location' => 'header-menu',
+							'theme_location' => 'footer-menu',
 						));
 
 						?>

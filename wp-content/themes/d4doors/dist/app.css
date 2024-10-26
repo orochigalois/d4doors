@@ -7558,6 +7558,9 @@ body.nav-active::before {
 .footer .wrapper .layer1 .col2 ul li a:hover {
   color: #fe6020;
 }
+.footer .wrapper .layer1 .col2 .sub-menu {
+  display: none;
+}
 .footer .wrapper .layer1 .col3 {
   flex: 0 0 22%;
   max-width: 170px;
@@ -7656,7 +7659,8 @@ body.nav-active::before {
   opacity: 1;
 }
 #toTop .fa-angle-up:before {
-  content: "🡅";
+  content: "\f106"; /* Font Awesome up angle icon */
+  font-family: "Font Awesome 5 Free";
   color: #000;
   font-size: 1.5em;
   position: relative;

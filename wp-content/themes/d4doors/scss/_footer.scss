@@ -111,6 +111,9 @@
                         }
                     }
                 }
+                .sub-menu{
+                    display: none;
+                }
             }
 
             .col3 {
@@ -222,7 +225,8 @@
 
     // padding:20px;
     .fa-angle-up:before {
-        content: "\1F845";
+        content: "\f106"; /* Font Awesome up angle icon */
+        font-family: "Font Awesome 5 Free";
         color: #000;
         font-size: 1.5em;
         position: relative;
