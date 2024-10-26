@@ -7695,9 +7695,19 @@ body.nav-active::before {
 .slogan_banner_section .slide-left {
   animation: slideInLeft 2s ease-out;
 }
+@media only screen and (max-width: 600px) {
+  .slogan_banner_section .slide-left {
+    font-size: 50px;
+  }
+}
 .slogan_banner_section .slide-right {
   text-align: right;
   animation: slideInRight 2s ease-out;
+}
+@media only screen and (max-width: 600px) {
+  .slogan_banner_section .slide-right {
+    font-size: 50px;
+  }
 }
 .slogan_banner_section .row2 {
   margin-top: 40px;
