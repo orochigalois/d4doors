@@ -111,7 +111,7 @@
                         }
                     }
                 }
-                .sub-menu{
+                .sub-menu {
                     display: none;
                 }
             }
@@ -225,12 +225,17 @@
 
     // padding:20px;
     .fa-angle-up:before {
-        content: "\f106"; /* Font Awesome up angle icon */
-        font-family: "Font Awesome 5 Free";
+        content: "\1F845";
         color: #000;
         font-size: 1.5em;
         position: relative;
         top: 3px;
+    }
+    @include media-breakpoint-down(xs) {
+        .fa-angle-up:before {
+            top: 5px;
+            content: url(../images/svg/up.svg);
+        }
     }
 
     // @include media-breakpoint-down(sm) {

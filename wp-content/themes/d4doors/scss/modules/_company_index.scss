@@ -15,6 +15,7 @@
         padding-top: 10px;
         position: relative;
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         .filter__btn {
             font-weight: 500;

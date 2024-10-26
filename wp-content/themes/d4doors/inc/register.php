@@ -24,6 +24,17 @@ function lp_register_menus()
 }
 add_action('init', 'lp_register_menus');
 
+function lp_add_default_menu_item($items, $args)
+{
+	// Check if it's the header menu
+	if ($args->theme_location == 'header-menu') {
+		// Append a new menu item to the end
+		$items .= '<li class="menu-item"><a href="/contact-us">Contact</a></li>';
+	}
+	return $items;
+}
+add_filter('wp_nav_menu_items', 'lp_add_default_menu_item', 10, 2);
+
 function lp_register_sidebars()
 {
 	/*register_sidebar(array(

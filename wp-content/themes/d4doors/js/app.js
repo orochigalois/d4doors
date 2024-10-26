@@ -362,7 +362,7 @@ function initIsotope__blog() {
 function initHeader() {
 
     window.onscroll = function (ev) {
-        if (window.scrollY >= 140) {
+        if (window.scrollY >= 90) {
             $("#header").addClass("is_sticky_now");
         }
         else {

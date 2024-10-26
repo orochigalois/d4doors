@@ -1,7 +1,7 @@
 .slogan_banner_section {
     padding: 100px 0 0;
-    @include media-breakpoint-down(sm) { 
-       padding: 25px 0 0; 
+    @include media-breakpoint-down(sm) {
+        padding: 25px 0 0;
     }
     /* Animations */
     @keyframes slideInLeft {
@@ -26,16 +26,20 @@
 
     .slide-left {
         animation: slideInLeft 2s ease-out;
-        @media only screen and (max-width: 600px) { 
-            font-size:50px;
+        @include media-breakpoint-down(xs) {
+            font-size: 50px;
+            margin-bottom: 0;
+            line-height: 1;
         }
     }
 
     .slide-right {
         text-align: right;
         animation: slideInRight 2s ease-out;
-        @media only screen and (max-width: 600px) { 
-            font-size:50px;
+        @include media-breakpoint-down(xs) {
+            font-size: 50px;
+            margin-bottom: 0;
+            line-height: 1;
         }
     }
 
