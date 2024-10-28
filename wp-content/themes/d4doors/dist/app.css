@@ -8257,6 +8257,9 @@ body.overlay-open {
   text-decoration: underline;
   margin-bottom: 10px;
 }
+.project_instruction_section .layer2-left .intro__tags a:hover {
+  color: #fe6020;
+}
 .project_instruction_section .layer2-left .intro__tags a,
 .project_instruction_section .layer2-left .intro__tags p {
   display: block;
@@ -9737,6 +9740,10 @@ body.overlay-open {
 .contact_us_section .description {
   margin-top: 95px;
 }
+.contact_us_section .description a:hover {
+  color: #fe6020 !important;
+  text-decoration: none;
+}
 .contact_us_section .description h3 {
   font-weight: 500;
   font-size: 24px;
@@ -10169,6 +10176,9 @@ body.overlay-open {
 .blog_content_section .layer2-left .intro__tags a {
   text-decoration: underline;
   margin-bottom: 10px;
+}
+.blog_content_section .layer2-left .intro__tags a:hover {
+  color: #fe6020;
 }
 .blog_content_section .layer2-left .intro__tags a,
 .blog_content_section .layer2-left .intro__tags p {

@@ -19,6 +19,10 @@
         max-width: 556px;
     }
     .description {
+        a:hover{
+            color: #fe6020 !important;
+            text-decoration: none;
+        }
         margin-top: 95px;
         h3 {
             font-weight: 500;
