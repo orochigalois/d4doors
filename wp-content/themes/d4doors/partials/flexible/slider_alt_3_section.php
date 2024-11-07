@@ -24,8 +24,9 @@
     </div>
     <div class="slider__alt3">
       <div class="nav__button">
-        <div class="prev">
-          <img src="<?= get_template_directory_uri(); ?>/images/svg/prev.svg" alt="prev">
+        <div class="prev disabled">
+          <img class="gray" src="<?= get_template_directory_uri(); ?>/images/svg/prevbb.svg" alt="prev">
+          <img class="orange" src="<?= get_template_directory_uri(); ?>/images/svg/prev.svg" alt="prev">
         </div>
         <div class="next">
           <img src="<?= get_template_directory_uri(); ?>/images/svg/next.svg" alt="next">

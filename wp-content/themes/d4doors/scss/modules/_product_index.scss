@@ -86,7 +86,7 @@
                     left: -69px;
                     top: 109px;
                     line-height: 0;
-                    z-index: 1;
+                    z-index: 2;
                     transition: all 0.8s;
                     @media only screen and (max-width: 1350px) {
                         top: 10vw;
@@ -95,6 +95,37 @@
                     @include media-breakpoint-down(md) {
                         top: 109px;
                         font-size: 222px;
+                    }
+                }
+                .tile__subtext {
+                    position: absolute;
+                    font-weight: 400;
+                    font-size: 13px;
+                    line-height: 20px;
+                    letter-spacing: 0.03em;
+                    text-transform: uppercase;
+                    color: #ffffff;
+                    width: 133px;
+                    text-align: right;
+
+                    right: 30px;
+                    top: 20px;
+                    z-index: 1;
+                    // @media only screen and (max-width: 1350px) {
+                    //     top: 10vw;
+                    //     font-size: 18vw;
+                    // }
+                    @include media-breakpoint-down(lg) {
+                        right: 15px;
+                        top: 15px;
+                    }
+                    @include media-breakpoint-down(md) {
+                        right: 30px;
+                        top: 20px;
+                    }
+                    @media only screen and (max-width: 420px) {
+                        right: 15px;
+                        top: 15px;
                     }
                 }
                 .tile__text {

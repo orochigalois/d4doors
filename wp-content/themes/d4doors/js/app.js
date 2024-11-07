@@ -104,10 +104,15 @@ function initSlider() {
 
     // Custom navigation button click handlers
     jQuery('.slider__alt3 .nav__button .prev').on('click', function () {
-        jQuery('.slider__alt3 .slider-class').slick('slickPrev');
+        if (!jQuery('.slider__alt3 .nav__button .prev').hasClass("disabled")) {
+            jQuery('.slider__alt3 .slider-class').slick('slickPrev');
+        }
     });
 
     jQuery('.slider__alt3 .nav__button .next').on('click', function () {
+        if (jQuery('.slider__alt3 .nav__button .prev').hasClass("disabled")){
+            jQuery('.slider__alt3 .nav__button .prev').removeClass("disabled");
+        }
         jQuery('.slider__alt3 .slider-class').slick('slickNext');
     });
 

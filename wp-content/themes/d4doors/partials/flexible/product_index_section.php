@@ -42,6 +42,9 @@
                 <div class="tile__text">
                   <?= get_sub_field('text'); ?>
                 </div>
+                <div class="tile__subtext">
+                  <?= get_sub_field('subtext'); ?>
+                </div>
               </div>
 
             </a>

@@ -1441,6 +1441,9 @@ fields:
               text:
                 label: Text
                 type: text
+              subtext:
+                label: Sub Text
+                type: text
               link:
                 label: Link
                 type: link
