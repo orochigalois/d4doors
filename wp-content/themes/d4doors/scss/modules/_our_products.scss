@@ -5,47 +5,84 @@
     }
     .accordion__wrapper {
         display: block;
+        overflow: hidden;
         @include media-breakpoint-down(sm) {
             display: none;
         }
         display: flex;
         width: 100%;
+        max-width: 100%;
         justify-content: end;
+
+        .accordion__title {
+            .wrap {
+                padding-left: 15px;
+                padding-right: 60px;
+            }
+            .title {
+                border-top: 1px solid #cab6ad;
+                max-width: 434px;
+            }
+            h3 {
+                font-style: normal;
+                font-weight: 500;
+                font-size: 28px;
+                line-height: 120%;
+                color: #231f20;
+                max-width: 434px;
+                margin-top: 70px;
+                margin-bottom: 30px;
+            }
+            p {
+                font-family: "Poppins";
+                font-style: normal;
+                font-weight: 300;
+                font-size: 16px;
+                line-height: 150%;
+                color: #231f20;
+                max-width: 434px;
+                margin-bottom: 50px;
+            }
+            opacity: 1;
+            transition: opacity 1s 0.3s ease;
+
+            &.closed {
+                width: 0;
+                opacity: 0;
+                h3,
+                p,
+                a.button_container {
+                    white-space: nowrap;
+                    opacity: 0;
+                }
+            }
+        }
 
         .accordion__tile {
             display: flex;
             height: 900px;
-
-            &.open {
-                .accordion__content {
-                    max-width: 510px;
-                    width: 38vw;
-                    opacity: 1;
-                    padding-left: 15px;
-                    transition:
-                        width 0.7s ease,
-                        opacity 1s 0.3s ease,
-                        padding-left 1s 0.3s ease;
-                }
-            }
+            border-radius: 20px;
+            overflow: hidden;
             .accordion__content {
-                width: 0px;
-                opacity: 0;
-                padding-left: 0;
-
-                .title {
-                    border-top: 1px solid #cab6ad;
-                    max-width: 440px;
-                }
+                overflow: hidden;
+                padding-bottom: 30px;
+                padding-right: 20px;
                 h3 {
                     font-style: normal;
                     font-weight: 500;
                     font-size: 28px;
                     line-height: 120%;
-                    color: #231f20;
-                    max-width: 440px;
-                    margin-top: 70px;
+                    color: #fbfbfb;
+                    max-width: 481px;
+                    margin-top: 30px;
                     margin-bottom: 30px;
+                    min-width: 481px;
+                    @media only screen and (max-width: 1320px) {
+                        min-width: 300px;
+                    }
+                    @media only screen and (max-width: 880px) {
+                        min-width: 200px;
+                    }
                 }
                 p {
                     font-family: "Poppins";
@@ -53,9 +90,81 @@
                     font-weight: 300;
                     font-size: 16px;
                     line-height: 150%;
-                    color: #231f20;
+                    color: #fbfbfb;
                     max-width: 434px;
-                    margin-bottom: 50px;
+                    margin-bottom: 45px;
+                    min-width: 481px;
+                    @media only screen and (max-width: 1320px) {
+                        min-width: 300px;
+                    }
+                    @media only screen and (max-width: 880px) {
+                        min-width: 200px;
+                    }
+                }
+                a.button_container {
+                    .button {
+                        font-weight: 400;
+                        font-size: 11.5px;
+                        line-height: 17px;
+                        letter-spacing: 0.03em;
+                        text-transform: uppercase;
+
+                        color: #fbfbfb;
+                    }
+                }
+                .img__grandparent {
+                    max-width: 438px;
+                    .img__wrap {
+                        margin-top: 70px;
+                        width: 100%;
+                        padding-top: 100%;
+                        position: relative;
+                        height: 0;
+
+                        overflow: hidden;
+                        img {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            bottom: 0;
+                            right: 0;
+                            object-fit: cover;
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                }
+            }
+            &.closed {
+                .accordion__content {
+                    width: 0px;
+                    transition:
+                        width 0.7s,
+                        max-width 0.7s;
+                    max-width: 0px;
+                    h3,
+                    p,
+                    a,
+                    .img__wrap {
+                        opacity: 0;
+                        transition: opacity 0.3s;
+                    }
+                }
+            }
+            &.open {
+                .accordion__content {
+                    max-width: 510px;
+                    width: 38vw;
+                    transition:
+                        width 0.7s,
+                        max-width 0.7s;
+                    h3,
+                    p,
+                    a,
+                    .img__wrap {
+                        opacity: 1;
+                        transition: opacity 2s 0.3s ease;
+                    }
                 }
             }
             .accordion__header {
@@ -64,7 +173,7 @@
                 flex-direction: column;
                 justify-content: space-between;
                 overflow: hidden;
-                border-radius: 20px;
+                // border-radius: 20px;
 
                 max-width: 300px;
                 width: 20vw;
@@ -76,6 +185,9 @@
                     left: -74px;
                     top: 117px;
                     line-height: 0;
+                    @include media-breakpoint-down(md) {
+                        font-size: 162px;
+                    }
                 }
                 .accordion__text {
                     transform: rotate(180deg);
@@ -97,14 +209,23 @@
             .accordion__header {
                 background: #231f20;
             }
+            .accordion__content {
+                background: #231f20;
+            }
         }
         #accordion-2 {
             .accordion__header {
                 background: #615651;
             }
+            .accordion__content {
+                background: #615651;
+            }
         }
         #accordion-3 {
             .accordion__header {
+                background: #8c7b74;
+            }
+            .accordion__content {
                 background: #8c7b74;
             }
         }
@@ -124,7 +245,38 @@
         #accordion-mobile-3 {
             background: #8c7b74;
         }
-
+        .accordion__title {
+            margin-bottom: 40px;
+            .title {
+                border-top: 1px solid #cab6ad;
+                max-width: 434px;
+            }
+            h3 {
+                font-style: normal;
+                font-weight: 500;
+                font-size: 28px;
+                line-height: 120%;
+                color: #231f20;
+                max-width: 434px;
+                margin-top: 70px;
+                margin-bottom: 30px;
+            }
+            p {
+                font-family: "Poppins";
+                font-style: normal;
+                font-weight: 300;
+                font-size: 16px;
+                line-height: 150%;
+                color: #231f20;
+                max-width: 434px;
+                margin-bottom: 50px;
+            }
+        }
+        .accordion__tile {
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
         .accordion {
             font-style: normal;
             font-weight: 500;
@@ -142,7 +294,6 @@
             padding-left: 30px;
             padding-right: 70px;
             position: relative;
-            border-radius: 20px;
         }
 
         .active,
@@ -165,19 +316,21 @@
         }
 
         .panel {
-            padding-left: 10px;
-            padding-bottom: 10px;
-            background-color: white;
+            padding-left: 30px;
+            padding-right: 30px;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.2s ease-out;
-
+            .wrap {
+                padding-bottom: 30px;
+                border-top: 1px solid #fbfbfb;
+            }
             h3 {
                 font-style: normal;
                 font-weight: 500;
-                font-size: 28px;
+                font-size: 22px;
                 line-height: 120%;
-                color: #231f20;
+                color: #fbfbfb;
                 max-width: 440px;
                 margin-top: 20px;
                 margin-bottom: 20px;
@@ -186,12 +339,54 @@
                 font-family: "Poppins";
                 font-style: normal;
                 font-weight: 300;
-                font-size: 16px;
+                font-size: 14px;
                 line-height: 150%;
-                color: #231f20;
+                color: #fbfbfb;
                 max-width: 434px;
                 margin-bottom: 20px;
             }
+            a.button_container {
+                .button {
+                    font-weight: 400;
+                    font-size: 11.5px;
+                    line-height: 17px;
+                    letter-spacing: 0.03em;
+                    text-transform: uppercase;
+
+                    color: #fbfbfb;
+                }
+            }
+            .img__grandparent {
+                max-width: 438px;
+                .img__wrap {
+                    margin-top: 70px;
+                    width: 100%;
+                    padding-top: 100%;
+                    position: relative;
+                    height: 0;
+
+                    overflow: hidden;
+                    img {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        bottom: 0;
+                        right: 0;
+                        object-fit: cover;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+        #accordion-mobile-1 + .panel {
+            background: #231f20;
+        }
+        #accordion-mobile-2 + .panel {
+            background: #615651;
+        }
+        #accordion-mobile-3 + .panel {
+            background: #8c7b74;
         }
     }
 }

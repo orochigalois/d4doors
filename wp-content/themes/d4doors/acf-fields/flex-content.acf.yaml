@@ -390,6 +390,16 @@ fields:
           title:
             label: Title
             type: text
+          h2_title:
+            label: H2 Title
+            type: text
+          text:
+            label: Text
+            type: text
+          link:
+            label: Link
+            type: link
+            return_format: array
           accordion:
             label: Accordion
             type: repeater
@@ -408,6 +418,11 @@ fields:
               text:
                 label: Text
                 type: text
+              image:
+                label: Image
+                type: image
+                preview_size: thumbnail
+                max_size: 5 # in MB
               link:
                 label: Link
                 type: link

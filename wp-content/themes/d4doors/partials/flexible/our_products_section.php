@@ -23,23 +23,71 @@ $title = get_sub_field('title');
     if (clickedElement.classList.contains('closed')) {
       clickedElement.classList.add('open');
       clickedElement.classList.remove('closed');
+    } else {
+      clickedElement.classList.add('closed');
+      clickedElement.classList.remove('open');
     }
+
+    // Check the state of all accordion contents
+    var allContents = document.querySelectorAll('.accordion__content');
+    var anyOpen = Array.from(allContents).some(content => content.parentElement.classList.contains('open'));
+
+    // Toggle 'closed' class on .accordion__title based on the state
+    var accordionTitles = document.querySelectorAll('.accordion__title');
+    accordionTitles.forEach(title => {
+      if (anyOpen) {
+        title.classList.add('closed');
+      } else {
+        title.classList.remove('closed');
+      }
+    });
   }
 </script>
 <section class="our_products_section" id="<?= $random__id; ?>">
   <div class="container">
     <div class="row">
       <div class="accordion__wrapper">
+        <div class="accordion__title">
+          <div class="wrap">
+            <div class="title d4_title">
+              <?= $title ?>
+            </div>
+            <h3>
+              <?= get_sub_field('title'); ?>
+            </h3>
+            <p>
+              <?= get_sub_field('text'); ?>
+            </p>
+
+            <?php
+            $link = get_sub_field('link');
+            if ($link):
+              $link_url = $link['url'];
+              $link_title = $link['title'];
+              $link_target = $link['target'] ? $link['target'] : '_self';
+            ?>
+              <a class="button_container" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                <div class="button"><?php echo esc_html($link_title); ?></div>
+                <img src="<?= get_template_directory_uri() . '/images/svg/link_arrow.svg' ?>" alt="link arrow">
+              </a>
+            <?php endif; ?>
+          </div>
+        </div>
         <?php
         $index = 0;
         if (have_rows('accordion')):
           while (have_rows('accordion')) : the_row();
             $index = $index + 1 ?>
-            <div class="accordion__tile <?php if ($index == 1): ?>open<?php else: ?>closed<?php endif; ?>" id="accordion-<?php echo $index; ?>">
-              <div class="accordion__content">
-                <div class="title d4_title">
-                  <?= $title ?>
+            <div class="accordion__tile closed" id="accordion-<?php echo $index; ?>">
+              <div class="accordion__header" onclick="toggleAccordion(<?php echo $index; ?>)">
+                <div class="accordion__number">
+                  <?= get_sub_field('acc_title'); ?>
                 </div>
+                <div class="accordion__text">
+                  <?= get_sub_field('acc_text'); ?>
+                </div>
+              </div>
+              <div class="accordion__content">
                 <h3>
                   <?= get_sub_field('title'); ?>
                 </h3>
@@ -59,14 +107,14 @@ $title = get_sub_field('title');
                     <img src="<?= get_template_directory_uri() . '/images/svg/link_arrow.svg' ?>" alt="link arrow">
                   </a>
                 <?php endif; ?>
-              </div>
-              <div class="accordion__header" onclick="toggleAccordion(<?php echo $index; ?>)">
-                <div class="accordion__number">
-                  <?= get_sub_field('acc_title'); ?>
-                </div>
-                <div class="accordion__text">
-                  <?= get_sub_field('acc_text'); ?>
-                </div>
+                <?php if (get_sub_field('image')): ?>
+                  <div class="img__grandparent">
+                    <div class="img__wrap">
+                      <img src="<?= get_sub_field('image')['url']; ?>" alt="">
+                    </div>
+                  </div>
+
+                <?php endif; ?>
               </div>
             </div>
         <?php endwhile;
@@ -75,38 +123,73 @@ $title = get_sub_field('title');
       </div>
 
       <div class="col-12 accordion__wrapper__mobile">
+        <div class="accordion__title">
+          <div class="wrap">
+            <div class="title d4_title">
+              <?= $title ?>
+            </div>
+            <h3>
+              <?= get_sub_field('title'); ?>
+            </h3>
+            <p>
+              <?= get_sub_field('text'); ?>
+            </p>
+
+            <?php
+            $link = get_sub_field('link');
+            if ($link):
+              $link_url = $link['url'];
+              $link_title = $link['title'];
+              $link_target = $link['target'] ? $link['target'] : '_self';
+            ?>
+              <a class="button_container" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                <div class="button"><?php echo esc_html($link_title); ?></div>
+                <img src="<?= get_template_directory_uri() . '/images/svg/link_arrow.svg' ?>" alt="link arrow">
+              </a>
+            <?php endif; ?>
+          </div>
+        </div>
         <?php
         $index = 0;
         if (have_rows('accordion')) :
           while (have_rows('accordion')) : the_row();
-            $index = $index + 1?>
+            $index = $index + 1 ?>
 
+            <div class="accordion__tile">
+              <button class="accordion" id="accordion-mobile-<?php echo $index; ?>"><?= get_sub_field('acc_text'); ?></button>
+              <div class="panel">
+                <div class="wrap">
+                  <h3>
+                    <?= get_sub_field('title'); ?>
+                  </h3>
+                  <p>
+                    <?= get_sub_field('text'); ?>
+                  </p>
 
-            <button class="accordion" id="accordion-mobile-<?php echo $index; ?>"><?= get_sub_field('acc_text'); ?></button>
-            <div class="panel">
-              <!-- <div class="title d4_title">
-                <?= $title ?>
-              </div> -->
-              <h3>
-                <?= get_sub_field('title'); ?>
-              </h3>
-              <p>
-                <?= get_sub_field('text'); ?>
-              </p>
+                  <?php
+                  $link = get_sub_field('link');
+                  if ($link):
+                    $link_url = $link['url'];
+                    $link_title = $link['title'];
+                    $link_target = $link['target'] ? $link['target'] : '_self';
+                  ?>
+                    <a class="button_container" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                      <div class="button"><?php echo esc_html($link_title); ?></div>
+                      <img src="<?= get_template_directory_uri() . '/images/svg/link_arrow.svg' ?>" alt="link arrow">
+                    </a>
+                  <?php endif; ?>
+                  <?php if (get_sub_field('image')): ?>
+                    <div class="img__grandparent">
+                      <div class="img__wrap">
+                        <img src="<?= get_sub_field('image')['url']; ?>" alt="">
+                      </div>
+                    </div>
+                  <?php endif; ?>
+                </div>
 
-              <?php
-              $link = get_sub_field('link');
-              if ($link):
-                $link_url = $link['url'];
-                $link_title = $link['title'];
-                $link_target = $link['target'] ? $link['target'] : '_self';
-              ?>
-                <a class="button_container" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
-                  <div class="button"><?php echo esc_html($link_title); ?></div>
-                  <img src="<?= get_template_directory_uri() . '/images/svg/link_arrow.svg' ?>" alt="link arrow">
-                </a>
-              <?php endif; ?>
+              </div>
             </div>
+
         <?php endwhile;
         endif;
         ?>
@@ -238,12 +321,13 @@ $title = get_sub_field('title');
     }
   </style>
 <?php endif; ?>
-<?php $post_objects = get_sub_field('posts'); ?> 
-<?php if ($post_objects): ?> 
-<?php foreach ($post_objects as $post_object) : ?> 
-<?php endforeach; ?> 
-<?php endif; ?> 
+<?php $post_objects = get_sub_field('posts'); ?>
+<?php if ($post_objects): ?>
+  <?php foreach ($post_objects as $post_object) : ?>
+  <?php endforeach; ?>
+<?php endif; ?>
 
-<?php if( get_sub_field('true_false') ): ?> 
-<?php // do something ?> 
-<?php endif; ?> 
+<?php if (get_sub_field('true_false')): ?>
+  <?php // do something 
+  ?>
+<?php endif; ?>
