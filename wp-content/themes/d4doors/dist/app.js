@@ -71,6 +71,7 @@ $(function () {
     initIsotope__project();
     initIsotope__resource();
     initIsotope__blog();
+    initMarquee();
 
     initAnchorScroll();
 });
@@ -190,6 +191,48 @@ function initSlider() {
     });
 }
 
+function initMarquee() {
+    //https://github.com/Vahan0799/infinite-marquee
+    new InfiniteMarquee({
+        element: '.marquee__block1',
+        speed: 25000,
+        smoothEdges: true,
+        direction: 'right',
+        pauseOnHover: true,
+        duplicateCount: 2,
+
+        on: {
+            beforeInit: () => {
+                console.log('Not Yet Initialized');
+            },
+
+            afterInit: () => {
+                console.log('Initialized');
+            }
+        }
+    });
+    new InfiniteMarquee({
+        element: '.marquee__block2',
+        speed: 25000,
+        smoothEdges: true,
+        direction: 'left',
+        pauseOnHover: true,
+        duplicateCount: 2,
+        // mobileSettings: {
+        //     direction: 'top',
+        //     speed: 20000
+        // },
+        on: {
+            beforeInit: () => {
+                console.log('Not Yet Initialized');
+            },
+
+            afterInit: () => {
+                console.log('Initialized');
+            }
+        }
+    });
+}
 
 function initIsotope__company() {
     if (!$(".result__masonry__company").length) {

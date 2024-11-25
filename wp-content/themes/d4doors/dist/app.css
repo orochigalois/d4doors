@@ -8926,18 +8926,18 @@ body.overlay-open {
     padding: 25px 0;
   }
 }
-.marquee_section .marquee__wrap {
+.marquee_section .marquee__content {
   display: flex;
   align-items: center;
   height: 140px;
 }
-.marquee_section span {
+.marquee_section .marquee__content span {
   font-weight: 500;
   font-size: 110px;
   line-height: 120%;
   color: #231f20;
 }
-.marquee_section .svg__wrap {
+.marquee_section .marquee__content .svg__wrap {
   margin-left: 50px;
   margin-right: 50px;
 }
@@ -9492,6 +9492,9 @@ body.overlay-open {
   color: #231f20;
   max-width: 556px;
 }
+.product_instruction_section .layer2-right {
+  padding-bottom: 50px;
+}
 @media (max-width: 991.98px) {
   .product_instruction_section .layer2-right {
     padding-top: 30px;
@@ -9519,7 +9522,7 @@ body.overlay-open {
   text-align: left;
   position: relative;
   background-color: transparent;
-  padding: 20px 0;
+  padding: 15px 0;
 }
 .product_instruction_section .layer2__accordion .active,
 .product_instruction_section .layer2__accordion .accordion:hover {
@@ -9532,26 +9535,32 @@ body.overlay-open {
 .product_instruction_section .layer2__accordion .accordion:after {
   content: url(ffd07f3d395ad2f1b719.svg);
   position: absolute;
-  top: 20px;
+  top: 16px;
   right: 0px;
 }
 .product_instruction_section .layer2__accordion .active:after {
   content: url(457375513f11b121000f.svg);
 }
 .product_instruction_section .layer2__accordion .panel {
-  background-color: white;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
+.product_instruction_section .layer2__accordion .panel .wysiwyg {
+  padding-top: 10px;
+}
 .product_instruction_section .layer2__accordion .panel h3 {
   font-style: normal;
   font-weight: 500;
-  font-size: 28px;
+  font-size: 24px;
   line-height: 120%;
   color: #231f20;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+.product_instruction_section .layer2__accordion .panel hr {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 .product_instruction_section .layer2__accordion .panel p {
   font-family: "Poppins";
@@ -9567,16 +9576,23 @@ body.overlay-open {
   text-decoration: underline;
 }
 .product_instruction_section .layer2__accordion .panel ul {
-  padding-left: 20px;
+  padding-left: 25px;
 }
 .product_instruction_section .layer2__accordion .panel ul li {
   font-weight: 300;
   font-size: 16px;
   line-height: 150%;
   color: #231f20;
+  list-style-type: none; /* Remove default marker */
+  position: relative;
+  margin-bottom: 5px;
 }
-.product_instruction_section .layer2__accordion .panel ul li::marker {
+.product_instruction_section .layer2__accordion .panel ul li::before {
+  content: "•"; /* Add custom marker */
   color: #fe6020;
+  font-size: 17px;
+  position: absolute;
+  left: -24px; /* Position the custom marker */
 }
 .product_instruction_section .layer2__accordion .panel .download {
   padding-top: 30px;

@@ -19,6 +19,7 @@
         max-width: 556px;
     }
     .layer2-right {
+        padding-bottom: 50px;
         @include media-breakpoint-down(md) {
             padding-top: 30px;
         }
@@ -48,7 +49,7 @@
             text-align: left;
             position: relative;
             background-color: transparent;
-            padding: 20px 0;
+            padding: 15px 0;
         }
 
         .active,
@@ -62,7 +63,7 @@
         .accordion:after {
             content: url(../images/svg/addgray.svg);
             position: absolute;
-            top: 20px;
+            top: 16px;
             right: 0px;
         }
 
@@ -71,19 +72,26 @@
         }
 
         .panel {
-            background-color: white;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.2s ease-out;
+            .wysiwyg{
+                padding-top: 10px;
+            }
 
             h3 {
                 font-style: normal;
                 font-weight: 500;
-                font-size: 28px;
+                font-size: 24px;
                 line-height: 120%;
                 color: #231f20;
                 margin-top: 20px;
                 margin-bottom: 20px;
+                
+            }
+            hr{
+                margin-top: 2rem;
+                margin-bottom: 2rem;
             }
             p {
                 font-family: "Poppins";
@@ -100,15 +108,22 @@
                 text-decoration: underline;
             }
             ul {
-                padding-left: 20px;
+                padding-left: 25px;
                 li {
                     font-weight: 300;
                     font-size: 16px;
                     line-height: 150%;
                     color: #231f20;
+                    list-style-type: none; /* Remove default marker */
+                    position: relative;
+                    margin-bottom: 5px;
                 }
-                li::marker {
+                li::before {
+                    content: "•"; /* Add custom marker */
                     color: #fe6020;
+                    font-size: 17px;
+                    position: absolute;
+                    left: -24px; /* Position the custom marker */
                 }
             }
 
@@ -124,7 +139,7 @@
                     /* identical to box height */
                     letter-spacing: 0.03em;
                     text-transform: uppercase;
-                    
+
                     color: #000000;
                     text-decoration: none;
                     margin-bottom: 13px;

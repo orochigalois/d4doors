@@ -53,7 +53,7 @@ $title = get_sub_field('title');
               <?= $title ?>
             </div>
             <h3>
-              <?= get_sub_field('title'); ?>
+              <?= get_sub_field('h2_title'); ?>
             </h3>
             <p>
               <?= get_sub_field('text'); ?>

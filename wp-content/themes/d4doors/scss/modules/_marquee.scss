@@ -4,16 +4,10 @@
         padding: 25px 0;
     }
 
-    .marquee-wrapper .marquee-container {
-        overflow: hidden;
-    }
-    .marquee-inner .half {
-        float: left;
-        width: 47%;
+    .marquee__content {
         display: flex;
         align-items: center;
         height: 140px;
-
         span {
             font-weight: 500;
             font-size: 110px;
@@ -25,46 +19,4 @@
             margin-right: 50px;
         }
     }
-    .marquee-wrapper .marquee-block {
-        height: 150px;
-        width: 100%;
-        overflow: hidden;
-        box-sizing: border-box;
-        position: relative;
-        white-space: nowrap;
-    }
-    .marquee-inner {
-        display: block;
-        width: 200%;
-        position: absolute;
-    }
-    .marquee-inner.to-left {
-        animation: marqueeLeft 15s linear infinite;
-        &:hover {
-            animation-play-state: paused;
-        }
-    }
-    .marquee-inner.to-right {
-        animation: marqueeRight 15s linear infinite;
-        &:hover {
-            animation-play-state: paused;
-        }
-    }
-    @keyframes marqueeLeft {
-        from {
-            left: 0;
-        }
-        to {
-            left: -100%;
-        }
-    }
-    @keyframes marqueeRight {
-        from {
-            left: -100%;
-        }
-        to {
-            left: 0;
-        }
-    }
 }
-

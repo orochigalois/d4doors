@@ -29,9 +29,11 @@
               <button class="accordion"><?= get_sub_field('title'); ?></button>
               <div class="panel">
 
-                <p>
+                <div class="wysiwyg">
                   <?= get_sub_field('wysiwyg'); ?>
-                </p>
+                </div>
+
+
                 <div class="download">
                   <?php
 
