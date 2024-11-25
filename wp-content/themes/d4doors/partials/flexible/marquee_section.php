@@ -4,36 +4,67 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <marquee behavior="scroll" direction="left" scrollamount="12">
-          <div class="marquee__wrap">
-            <span><?= get_sub_field('text'); ?></span>
-            <div class="svg__wrap">
-              <a href="./contact-us" target="_blank">
-                <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="50" cy="50" r="50" fill="#FE6020" />
-                  <path d="M34.666 66.666L57.408 43.9241" stroke="#FBFBFB" stroke-linecap="square" stroke-linejoin="round" />
-                  <path d="M61.3721 48.6284L65.9205 34.9833L52.2753 39.5316L61.3721 48.6284Z" fill="#FBFBFB" />
-                </svg>
-              </a>
+        <div class="marquee-wrapper">
+          <div class="marquee-container">
+            <div class="marquee-block">
+              <div class="marquee-inner to-left">
+                <div class="half">
+                  <span><?= get_sub_field('text'); ?></span>
+                  <div class="svg__wrap">
+                    <a href="./contact-us" target="_blank">
+                      <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="50" fill="#FE6020" />
+                        <path d="M34.666 66.666L57.408 43.9241" stroke="#FBFBFB" stroke-linecap="square" stroke-linejoin="round" />
+                        <path d="M61.3721 48.6284L65.9205 34.9833L52.2753 39.5316L61.3721 48.6284Z" fill="#FBFBFB" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="half">
+                  <span><?= get_sub_field('text'); ?></span>
+                  <div class="svg__wrap">
+                    <a href="./contact-us" target="_blank">
+                      <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="50" fill="#FE6020" />
+                        <path d="M34.666 66.666L57.408 43.9241" stroke="#FBFBFB" stroke-linecap="square" stroke-linejoin="round" />
+                        <path d="M61.3721 48.6284L65.9205 34.9833L52.2753 39.5316L61.3721 48.6284Z" fill="#FBFBFB" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
-            <span><?= get_sub_field('text'); ?></span>
-          </div>
-        </marquee>
-        <marquee behavior="scroll" direction="right" scrollamount="12">
-          <div class="marquee__wrap">
-            <span><?= get_sub_field('text'); ?></span>
-            <div class="svg__wrap">
-              <a href="./contact-us" target="_blank">
-                <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="50" cy="50" r="50" fill="#FE6020" />
-                  <path d="M34.666 66.666L57.408 43.9241" stroke="#FBFBFB" stroke-linecap="square" stroke-linejoin="round" />
-                  <path d="M61.3721 48.6284L65.9205 34.9833L52.2753 39.5316L61.3721 48.6284Z" fill="#FBFBFB" />
-                </svg>
-              </a>
+            <div class="marquee-block">
+              <div class="marquee-inner to-right">
+                <div class="half">
+                  <span><?= get_sub_field('text'); ?></span>
+                  <div class="svg__wrap">
+                    <a href="./contact-us" target="_blank">
+                      <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="50" fill="#FE6020" />
+                        <path d="M34.666 66.666L57.408 43.9241" stroke="#FBFBFB" stroke-linecap="square" stroke-linejoin="round" />
+                        <path d="M61.3721 48.6284L65.9205 34.9833L52.2753 39.5316L61.3721 48.6284Z" fill="#FBFBFB" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="half">
+                  <span><?= get_sub_field('text'); ?></span>
+                  <div class="svg__wrap">
+                    <a href="./contact-us" target="_blank">
+                      <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="50" fill="#FE6020" />
+                        <path d="M34.666 66.666L57.408 43.9241" stroke="#FBFBFB" stroke-linecap="square" stroke-linejoin="round" />
+                        <path d="M61.3721 48.6284L65.9205 34.9833L52.2753 39.5316L61.3721 48.6284Z" fill="#FBFBFB" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
-            <span><?= get_sub_field('text'); ?></span>
           </div>
-        </marquee>
+        </div>
+
       </div>
     </div>
   </div>
