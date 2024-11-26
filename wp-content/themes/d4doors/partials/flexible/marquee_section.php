@@ -1,5 +1,16 @@
 <!-- Generate by Flexible Module Helper -->
 <?php $random__id = lp_generateRandomString(); ?>
+<?php
+$is_smooth_edge = get_sub_field('is_smooth_edge');
+?>
+<?php if (!$is_smooth_edge): ?>
+  <style>
+    .marquee_section .horizontal-marquee.smooth {
+      mask: none;
+      -webkit-mask: none;
+    }
+  </style>
+<?php endif; ?>
 <section class="marquee_section" id="<?= $random__id; ?>">
   <div class="container">
     <div class="row">

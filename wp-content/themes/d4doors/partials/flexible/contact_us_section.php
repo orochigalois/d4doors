@@ -1,5 +1,13 @@
 <!-- Generate by Flexible Module Helper -->
 <?php $random__id = lp_generateRandomString(); ?>
+<?php if (get_sub_field('highlight_width')) : ?>
+  <style>
+    #<?= $random__id; ?> .highlight__text span::after {
+      width: <?= get_sub_field('highlight_width'); ?>%;
+      transform: rotate(-<?= get_sub_field('highlight_angle'); ?>deg);
+    }
+  </style>
+<?php endif; ?>
 <section class="contact_us_section" id="<?= $random__id; ?>">
   <div class="container">
     <div class="row">
@@ -74,7 +82,7 @@
       <div class="col-lg-7">
         <div class="layer2-right">
           <?= do_shortcode(get_sub_field('form_shortcode')); ?>
-          
+
         </div>
 
       </div>
