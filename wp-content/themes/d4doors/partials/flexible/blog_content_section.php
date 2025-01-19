@@ -1,5 +1,13 @@
 <!-- Generate by Flexible Module Helper -->
 <?php $random__id = lp_generateRandomString(); ?>
+<?php if (get_sub_field('highlight_width')) : ?>
+  <style>
+    #<?= $random__id; ?> .highlight__text span::after {
+      width: <?= get_sub_field('highlight_width'); ?>%;
+      transform: rotate(-<?= get_sub_field('highlight_angle'); ?>deg);
+    }
+  </style>
+<?php endif; ?>
 <section class="blog_content_section" id="<?= $random__id; ?>">
   <div class="container">
     <div class="row">
@@ -16,7 +24,9 @@
           <p class="bg"><?= wrapMatchWithSpans(get_sub_field('h2_text'), get_sub_field('highlight')); ?></p>
 
           <div class="intro__tags">
-            <h4>Related Links</h4>
+            <?php if (have_rows('related_links')): ?>
+              <h4>Related Links</h4>
+            <?php endif; ?>
             <?php
             if (have_rows('related_links')):
               while (have_rows('related_links')) : the_row(); ?>
@@ -36,11 +46,11 @@
 
 
 
-            <h4>Publish Date</h4>
+            <!-- <h4>Publish Date</h4>
             <p><?= get_the_date('m.d.Y'); ?></p>
 
             <h4>Author</h4>
-            <p><?= get_the_author(); ?></p>
+            <p><?= get_the_author(); ?></p> -->
 
             <?php if (have_rows('customised_options')) : ?>
               <div class="slider-class">

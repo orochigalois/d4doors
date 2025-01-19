@@ -131,22 +131,41 @@ function wrapMatchWithSpans($text, $match)
 	if (empty($text) || empty($match)) {
 		return $text;
 	}
-	// Check if $match is found in $text
-	if (strpos($text, $match) !== false) {
-		// Split $match by spaces to get each word
-		$words = explode(' ', $match);
 
-		// Wrap each word with <span></span>
-		$new = '';
-		foreach ($words as $word) {
-			$new .= "<span>$word</span> ";
+	// Check if $match contains '|'
+	if (strpos($match, '|') !== false) {
+		// Split $match by '|' to get each part
+		$parts = explode('|', $match);
+
+		// Process each part
+		foreach ($parts as $part) {
+			// Skip empty parts
+			if (empty($part)) {
+				continue;
+			}
+
+			// Apply original logic to the current part
+			$words = explode(' ', $part);
+			$new = '';
+			foreach ($words as $word) {
+				$new .= "<span>$word</span> ";
+			}
+
+			// Trim and replace the current part in the text
+			$new = trim($new);
+			$text = str_replace($part, $new, $text);
 		}
-
-		// Trim any extra space at the end of $new
-		$new = trim($new);
-
-		// Replace $match in $text with the newly created $new string
-		$text = str_replace($match, $new, $text);
+	} else {
+		// No '|' in $match, apply the original logic
+		if (strpos($text, $match) !== false) {
+			$words = explode(' ', $match);
+			$new = '';
+			foreach ($words as $word) {
+				$new .= "<span>$word</span> ";
+			}
+			$new = trim($new);
+			$text = str_replace($match, $new, $text);
+		}
 	}
 
 	return $text;

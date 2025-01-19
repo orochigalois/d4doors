@@ -7065,6 +7065,67 @@ p {
   padding-top: 10px;
 }
 
+.layer2-right ul {
+  padding-left: 25px;
+}
+.layer2-right ul li {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: #231f20;
+  list-style-type: none; /* Remove default marker */
+  position: relative;
+  margin-bottom: 5px;
+}
+.layer2-right ul li::before {
+  content: "•"; /* Add custom marker */
+  color: #fe6020;
+  font-size: 17px;
+  position: absolute;
+  left: -24px; /* Position the custom marker */
+}
+
+.wysiwyg ul {
+  padding-left: 25px;
+}
+.wysiwyg ul li {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: #231f20;
+  list-style-type: none; /* Remove default marker */
+  position: relative;
+  margin-bottom: 5px;
+}
+.wysiwyg ul li::before {
+  content: "•"; /* Add custom marker */
+  color: #fe6020;
+  font-size: 17px;
+  position: absolute;
+  left: -24px; /* Position the custom marker */
+}
+
+ol {
+  margin-left: -23px;
+}
+ol li {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: #231f20;
+  position: relative;
+  margin-bottom: 5px;
+  padding-left: 8px;
+}
+ol li::marker {
+  color: #fe6020;
+  margin-left: -8px;
+}
+
+.hidden {
+  visibility: hidden; /* Hides the carousel initially */
+}
+
 #header {
   width: 100%;
   background: #fbfbfb;
@@ -9147,7 +9208,7 @@ body.overlay-open {
   z-index: 5;
   max-width: 300px;
   background: #f5f5f5;
-  border: 1px solid #cab6ad;
+  border-bottom: 1px solid #cab6ad;
 }
 .company_index_section .filter__company .filter__content ul {
   list-style-type: none;
@@ -9350,7 +9411,7 @@ body.overlay-open {
   z-index: 5;
   max-width: 300px;
   background: #f5f5f5;
-  border: 1px solid #cab6ad;
+  border-bottom: 1px solid #cab6ad;
 }
 .project_index_section .filter__project .filter__content ul {
   list-style-type: none;
@@ -9837,7 +9898,7 @@ body.overlay-open {
   z-index: 5;
   max-width: 300px;
   background: #f5f5f5;
-  border: 1px solid #cab6ad;
+  border-bottom: 1px solid #cab6ad;
 }
 .resource_index_section .filter__resource .filter__content ul {
   list-style-type: none;
@@ -9905,6 +9966,20 @@ body.overlay-open {
   align-items: center;
   justify-content: space-between;
 }
+.resource_index_section .result__masonry__resource .grid-item:hover {
+  cursor: pointer;
+}
+.resource_index_section .result__masonry__resource .grid-item:hover .title {
+  color: #fe6020;
+}
+.resource_index_section .result__masonry__resource .grid-item:hover .tags .tag {
+  color: white;
+  background-color: #fe6020;
+  border: 1px solid #fe6020;
+}
+.resource_index_section .result__masonry__resource .grid-item:hover .download .button_download_container .button {
+  color: #fe6020;
+}
 .resource_index_section .result__masonry__resource .grid-item .title {
   font-weight: 400;
   font-size: 16px;
@@ -9957,9 +10032,6 @@ body.overlay-open {
   line-height: 20px;
   letter-spacing: 0.03em;
   margin-right: 5px;
-}
-.resource_index_section .result__masonry__resource .grid-item .download .button_download_container .button:hover {
-  color: #fe6020;
 }
 .resource_index_section .result__masonry__resource .grid-item .download .button_download_container .button::before {
   content: "";
@@ -10076,12 +10148,12 @@ body.overlay-open {
   line-height: 100%;
   color: #231f20;
 }
-.contact_us_section .layer2-right {
-  margin-top: 45px;
+.contact_us_section .description .email {
+  margin-bottom: 50px;
 }
 @media (max-width: 991.98px) {
   .contact_us_section .layer2-right {
-    padding-top: 30px;
+    padding-top: 50px;
   }
 }
 .contact_us_section .layer2-right p {
@@ -10291,7 +10363,7 @@ body.overlay-open {
   z-index: 5;
   max-width: 300px;
   background: #f5f5f5;
-  border: 1px solid #cab6ad;
+  border-bottom: 1px solid #cab6ad;
 }
 .blog_index_section .filter__blog .filter__content ul {
   list-style-type: none;

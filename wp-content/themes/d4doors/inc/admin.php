@@ -92,11 +92,11 @@ add_filter('mce_buttons_2', 'lp_add_mce_styleselect');
 
 function lp_add_mce_styles($init_array) {
 	$style_formats = array(
-		array(
-			'title' => 'Button link',
-			'selector' => 'a',
-			'classes' => 'button'
-		),
+		// array(
+		// 	'title' => 'Button link',
+		// 	'selector' => 'a',
+		// 	'classes' => 'button'
+		// ),
 		// array(
 		// 	'title' => 'Desktop-only image',
 		// 	'selector' => 'img',
@@ -107,11 +107,11 @@ function lp_add_mce_styles($init_array) {
 		// 	'selector' => 'img',
 		// 	'classes' => 'hidden-desktop'
 		// ),
-		array(
-			'title' => 'Center Bold',
-			'selector' => 'p',
-			'classes' => 'center-bold'
-		),
+		// array(
+		// 	'title' => 'Center Bold',
+		// 	'selector' => 'p',
+		// 	'classes' => 'center-bold'
+		// ),
 		
 		
 		/*array(

@@ -71,11 +71,25 @@ $(function () {
     initIsotope__project();
     initIsotope__resource();
     initIsotope__blog();
+    document.addEventListener('click', function (event) {
+        const filterContent = document.querySelector('.filter__content');
+        const filterButton = document.querySelector('.filter__btn');
+
+        // Check if the clicked element is outside both .filter__content and .filter__btn
+        if (!filterContent.contains(event.target) && !filterButton.contains(event.target)) {
+            $('.filter__btn').removeClass("active");
+        }
+    });
     initMarquee();
 
     initAnchorScroll();
 });
 function initSlider() {
+    jQuery('.slider_section .slider-class').on('init', function (event, slick) {
+        // Remove the hidden class once Slick initializes
+        jQuery(this).removeClass('hidden');
+    });
+
     jQuery('.slider_section .slider-class').slick({
         autoplay: true,
         dots: true,
@@ -189,6 +203,9 @@ function initSlider() {
             // console.log('Reached the last slide');
         }
     });
+
+    
+    
 }
 
 function initMarquee() {

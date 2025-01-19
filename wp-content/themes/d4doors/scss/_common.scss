@@ -161,7 +161,6 @@ p {
 		width: 100%; /* Start at 0 width */
 		transition: width 0.3s ease-in-out;
 	}
-
 }
 
 .d4_title {
@@ -173,3 +172,68 @@ p {
 	color: #615651;
 	padding-top: 10px;
 }
+
+.layer2-right {
+	ul {
+		padding-left: 25px;
+		li {
+			font-weight: 300;
+			font-size: 16px;
+			line-height: 150%;
+			color: #231f20;
+			list-style-type: none; /* Remove default marker */
+			position: relative;
+			margin-bottom: 5px;
+		}
+		li::before {
+			content: "•"; /* Add custom marker */
+			color: #fe6020;
+			font-size: 17px;
+			position: absolute;
+			left: -24px; /* Position the custom marker */
+		}
+	}
+}
+.wysiwyg{
+	ul {
+		padding-left: 25px;
+		li {
+			font-weight: 300;
+			font-size: 16px;
+			line-height: 150%;
+			color: #231f20;
+			list-style-type: none; /* Remove default marker */
+			position: relative;
+			margin-bottom: 5px;
+		}
+		li::before {
+			content: "•"; /* Add custom marker */
+			color: #fe6020;
+			font-size: 17px;
+			position: absolute;
+			left: -24px; /* Position the custom marker */
+		}
+	}
+}
+ol {
+		margin-left: -23px;
+		li {
+			font-weight: 300;
+			font-size: 16px;
+			line-height: 150%;
+			color: #231f20;
+			position: relative;
+			margin-bottom: 5px;
+			padding-left: 8px;
+		}
+		li::marker {
+			color: #fe6020;
+			margin-left: -8px;
+		}
+	}
+.hidden {
+  visibility: hidden; /* Hides the carousel initially */
+}
+// .slick-initialized {
+//   visibility: visible; /* Shows the carousel after initialization */
+// }

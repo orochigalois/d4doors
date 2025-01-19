@@ -3,7 +3,7 @@
 <section class="slider_section" id="<?= $random__id; ?>">
   <div class="container">
     <?php if (have_rows('repeater')) : ?>
-      <div class="slider-class">
+      <div class="slider-class hidden">
         <?php while (have_rows('repeater')) : the_row(); ?>
           <div class="item">
             <div class="img__wrap">

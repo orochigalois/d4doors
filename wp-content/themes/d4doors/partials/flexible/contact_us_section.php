@@ -2,7 +2,7 @@
 <?php $random__id = lp_generateRandomString(); ?>
 <?php if (get_sub_field('highlight_width')) : ?>
   <style>
-    #<?= $random__id; ?> .highlight__text span::after {
+    #<?= $random__id; ?>.highlight__text span::after {
       width: <?= get_sub_field('highlight_width'); ?>%;
       transform: rotate(-<?= get_sub_field('highlight_angle'); ?>deg);
     }
@@ -77,6 +77,33 @@
               <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
             <?php endif; ?>
           </div>
+          <h4 class="contact">ACCOUNTS</h4>
+          <div class="phone">
+            <?php
+            $link = get_sub_field('accounts_phone');
+
+            if ($link) :
+              $link_url = $link['url'];
+              $link_title = $link['title'];
+              $link_target = $link['target'] ? $link['target'] : '_self';
+            ?>
+              <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
+            <?php endif; ?>
+          </div>
+          <div class="email">
+            <?php
+            $link = get_sub_field('accounts_email');
+
+            if ($link) :
+              $link_url = $link['url'];
+              $link_title = $link['title'];
+              $link_target = $link['target'] ? $link['target'] : '_self';
+            ?>
+              <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a>
+            <?php endif; ?>
+          </div>
+
+
         </div>
       </div>
       <div class="col-lg-7">

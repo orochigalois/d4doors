@@ -211,7 +211,7 @@ fields:
           highlight:
             label: Highlight
             type: text
-            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor
+            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor. You can also use one or more '|' to separate the highlighted keywords.
           highlight_width:
             label: Highlight Width
             type: number
@@ -325,7 +325,7 @@ fields:
           highlight:
             label: Highlight
             type: text
-            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor
+            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor. You can also use one or more '|' to separate the highlighted keywords.
           highlight_width:
             label: Highlight Width
             type: number
@@ -587,7 +587,7 @@ fields:
           highlight:
             label: Highlight
             type: text
-            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor
+            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor. You can also use one or more '|' to separate the highlighted keywords.
           highlight_width:
             label: Highlight Width
             type: number
@@ -984,7 +984,7 @@ fields:
           highlight:
             label: Highlight
             type: text
-            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor
+            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor. You can also use one or more '|' to separate the highlighted keywords.
           highlight_width:
             label: Highlight Width
             type: number
@@ -1224,7 +1224,7 @@ fields:
           highlight:
             label: Highlight
             type: text
-            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor
+            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor. You can also use one or more '|' to separate the highlighted keywords.
           highlight_width:
             label: Highlight Width
             type: number
@@ -1435,7 +1435,7 @@ fields:
           highlight:
             label: Highlight
             type: text
-            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor
+            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor. You can also use one or more '|' to separate the highlighted keywords.
           highlight_width:
             label: Highlight Width
             type: number
@@ -1550,7 +1550,7 @@ fields:
           highlight:
             label: Highlight
             type: text
-            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor
+            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor. You can also use one or more '|' to separate the highlighted keywords.
           highlight_width:
             label: Highlight Width
             type: number
@@ -1712,6 +1712,25 @@ fields:
           highlight:
             label: Highlight
             type: text
+            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor. You can also use one or more '|' to separate the highlighted keywords.
+          highlight_width:
+            label: Highlight Width
+            type: number
+            min: 100
+            max: 200
+            step: 1
+            instructions: "Enter a number between 100 and 200, to decide the width of the highlight mark. Default value is 120."
+            default_value: 120
+            required: true
+          highlight_angle:
+            label: Highlight Angle
+            type: number
+            min: 0
+            max: 9
+            step: 1
+            instructions: "Enter a number between 0 and 9, to decide the angle of the highlight mark. Default value is 5."
+            default_value: 5
+            required: true
           address:
             label: Address
             type: link
@@ -1734,6 +1753,14 @@ fields:
             return_format: array
           email:
             label: Email
+            type: link
+            return_format: array
+          accounts_phone:
+            label: Accounts Phone
+            type: link
+            return_format: array
+          accounts_email:
+            label: Accounts Email
             type: link
             return_format: array
           form_shortcode:
@@ -1857,6 +1884,25 @@ fields:
           highlight:
             label: Highlight
             type: text
+            instructions: must be the whole words in above text(don't truncate them), e.g. Hello World, not Hel or Wor. You can also use one or more '|' to separate the highlighted keywords.
+          highlight_width:
+            label: Highlight Width
+            type: number
+            min: 100
+            max: 200
+            step: 1
+            instructions: "Enter a number between 100 and 200, to decide the width of the highlight mark. Default value is 120."
+            default_value: 120
+            required: true
+          highlight_angle:
+            label: Highlight Angle
+            type: number
+            min: 0
+            max: 9
+            step: 1
+            instructions: "Enter a number between 0 and 9, to decide the angle of the highlight mark. Default value is 5."
+            default_value: 5
+            required: true
           wysiwyg:
             label: Wysiwyg
             type: wysiwyg
