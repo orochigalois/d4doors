@@ -177,6 +177,40 @@ function initSlider() {
             }
         }]
     });
+    jQuery('.slider__alt4 .slider-class').slick({
+        autoplay: false,
+        dots: false,
+        speed: 300,
+        fade: false,
+        arrows: false,
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        centerMode: true,
+        centerPadding: '26px',
+        responsive: [{
+            breakpoint: 1150,
+            settings: {
+                slidesToShow: 2,
+            }
+        }, {
+            breakpoint: 900,
+            settings: {
+                slidesToShow: 1,
+                // centerMode: false,
+                // centerPadding: '0',
+            }
+        }
+        // ,{
+        //     breakpoint: 599,
+        //     settings: {
+        //         slidesToShow: 1,
+        //         centerMode: false,
+        //         centerPadding: '0',
+        //     }
+        // }
+    ]
+    });
 
     // Custom navigation button click handlers
     jQuery('.slider__alt3 .nav__button .prev').on('click', function () {

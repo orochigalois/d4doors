@@ -1,13 +1,14 @@
-.product_index_section {
+.related_products_section {
     padding: 60px 0;
-    @media only screen and (max-width: 600px) {
+    @include media-breakpoint-down(sm) {
         padding: 25px 0;
     }
     .title {
         border-top: 1px solid #cab6ad;
     }
     .layer2 {
-        margin-top: 70px;
+        padding-top: 50px;
+        padding-bottom: 70px;
     }
     .layer2-left {
         font-family: "Poppins";
@@ -19,7 +20,7 @@
         max-width: 556px;
     }
     .layer2-right {
-        @media only screen and (max-width: 600px) {
+        @include media-breakpoint-down(md) {
             padding-top: 30px;
         }
 
@@ -32,15 +33,37 @@
 
             color: #000000;
         }
+        .link {
+            // margin-top: 50px;
+        }
     }
+    .slider-class {
+        .slick-track {
+            .slick-slide:nth-child(3n + 1) {
+                .tile {
+                    background: #231f20;
+                }
+            }
+            .slick-slide:nth-child(3n + 2) {
+                .tile {
+                    background: #615651;
+                }
+            }
+            .slick-slide:nth-child(3n + 3) {
+                .tile {
+                    background: #8c7b74;
+                }
+            }
+        }
 
-    .product__tiles {
-        display: flex;
-        flex-wrap: wrap;
-        max-width: 1396px;
         margin-left: -8px;
-        margin-right: -8px;
-        margin-top: 120px;
+        .slick-slide {
+            // margin-left: 15px;
+            // margin-right: 15px;
+        }
+        .slick-list {
+            padding-left: 0px !important; // half partial
+        }
         a.tile__wrap {
             padding: 8px;
             padding: 8px;
@@ -53,24 +76,9 @@
                 padding-bottom: 16px;
             }
 
-            &:nth-child(3n+1) {
-                .tile {
-                    background: #231f20;
-                }
-            }
-            &:nth-child(3n+2) {
-                .tile {
-                    background: #615651;
-                }
-            }
-            &:nth-child(3n+3) {
-                .tile {
-                    background: #8c7b74;
-                }
-            }
             .tile {
                 width: 100%;
-                padding-top: 100%;
+                padding-top: 54.89%;
                 position: relative;
                 height: 0;
                 border-radius: 20px;
@@ -78,25 +86,25 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: end;
-                .tile__number {
-                    position: absolute;
-                    font-size: 222px;
-                    font-weight: 500;
-                    color: #e3e3e3;
-                    left: -69px;
-                    top: 109px;
-                    line-height: 0;
-                    z-index: 2;
-                    transition: all 0.8s;
-                    @media only screen and (max-width: 1350px) {
-                        top: 10vw;
-                        font-size: 18vw;
-                    }
-                    @include media-breakpoint-down(md) {
-                        top: 109px;
-                        font-size: 222px;
-                    }
-                }
+                // .tile__number {
+                //     position: absolute;
+                //     font-size: 222px;
+                //     font-weight: 500;
+                //     color: #e3e3e3;
+                //     left: -69px;
+                //     top: 109px;
+                //     line-height: 0;
+                //     z-index: 2;
+                //     transition: all 0.8s;
+                //     @media only screen and (max-width: 1350px) {
+                //         top: 10vw;
+                //         font-size: 18vw;
+                //     }
+                //     @include media-breakpoint-down(md) {
+                //         top: 109px;
+                //         font-size: 222px;
+                //     }
+                // }
                 .tile__subtext {
                     position: absolute;
                     font-weight: 400;
@@ -109,7 +117,7 @@
                     text-align: right;
 
                     right: 30px;
-                    top: 20px;
+                    top: 18px;
                     z-index: 1;
                     // @media only screen and (max-width: 1350px) {
                     //     top: 10vw;
@@ -130,33 +138,36 @@
                 }
                 .tile__text {
                     font-weight: 500;
-                    font-size: 62px;
+                    font-size: 50px;
                     line-height: 100%;
                     color: #e3e3e3;
-                    padding: 24px;
+                    padding: 20px;
                     @media only screen and (max-width: 1350px) {
-                        font-size: 4vw;
+                        font-size: 3vw;
                     }
                     @include media-breakpoint-down(md) {
-                        font-size: 48px;
+                        font-size: 36px;
+                    }
+                    @include media-breakpoint-down(xs) {
+                        font-size: 22px;
                     }
                 }
-                &:hover {
-                    .tile__number {
-                        position: absolute;
-                        font-size: 270px;
-                        top: 129px;
-                        color: #fbfbfb;
-                        @media only screen and (max-width: 1350px) {
-                            top: 12vw;
-                            font-size: 20vw;
-                        }
-                        @include media-breakpoint-down(md) {
-                            top: 129px;
-                            font-size: 270px;
-                        }
-                    }
-                }
+                // &:hover {
+                //     .tile__number {
+                //         position: absolute;
+                //         font-size: 270px;
+                //         top: 129px;
+                //         color: #fbfbfb;
+                //         @media only screen and (max-width: 1350px) {
+                //             top: 12vw;
+                //             font-size: 20vw;
+                //         }
+                //         @include media-breakpoint-down(md) {
+                //             top: 129px;
+                //             font-size: 270px;
+                //         }
+                //     }
+                // }
             }
         }
     }

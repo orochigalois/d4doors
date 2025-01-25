@@ -234,6 +234,10 @@ ol {
 .hidden {
   visibility: hidden; /* Hides the carousel initially */
 }
+
+b, strong{
+	font-weight: 500 !important;
+}
 // .slick-initialized {
 //   visibility: visible; /* Shows the carousel after initialization */
 // }

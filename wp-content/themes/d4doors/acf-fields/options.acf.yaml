@@ -52,7 +52,11 @@ fields:
     type: text
   copyright:
     label: Copyright
-    type: text
+    type: wysiwyg
+    tabs: all
+    toolbar: full
+    media_upload: true
+    delay: true
   address:
     label: Address
     type: link

@@ -102,12 +102,12 @@
                 max-width: 33.33%;
                 width: 33.33%; //very very important for isotope to work
             }
-            @media only screen and (max-width: 950px) {
+            @media only screen and (max-width: 1040px) {
                 flex: 0 0 50%;
                 max-width: 50%;
                 width: 50%; //very very important for isotope to work
             }
-            @include media-breakpoint-down(xs) {
+            @media only screen and (max-width: 700px) {
                 flex: 0 0 100%;
                 max-width: 100%;
                 width: 100%; //very very important for isotope to work
@@ -150,9 +150,6 @@
                             letter-spacing: 0.08em;
                             color: #231f20;
                             margin-bottom: 20px;
-                        }
-                        .address {
-                            max-width: 170px;
                         }
                         .address a {
                             font-weight: 300;

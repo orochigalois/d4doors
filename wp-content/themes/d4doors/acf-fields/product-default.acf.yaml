@@ -9,6 +9,10 @@ location:
       operator: '=='
       value: 'product'
 fields:
+  subtitle:
+    label: Introduction
+    type: text
+    instructions: 'This field will be displayed on the top-right corner of product tile.'
   flex_content:
     label: Flex Content
     type: "clone"
