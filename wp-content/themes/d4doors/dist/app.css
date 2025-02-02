@@ -10431,8 +10431,14 @@ body.overlay-open {
 }
 .blog_index_section .result__masonry__blog .grid-item .item__excerpt {
   font-weight: 400;
-  font-size: 14px;
-  line-height: 130%;
+  font-size: 20px;
+  line-height: 135%;
+  color: #111822;
+}
+.blog_index_section .result__masonry__blog .grid-item .item__excerpt p {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 135%;
   color: #111822;
 }
 .blog_index_section .result__masonry__blog .grid-item .img__wrap {

@@ -119,9 +119,17 @@
 
             .item__excerpt {
                 font-weight: 400;
-                font-size: 14px;
-                line-height: 130%;
+                font-size: 20px;
+                line-height: 135%;
                 color: #111822;
+            }
+            .item__excerpt {
+                p {
+                    font-weight: 400;
+                    font-size: 20px;
+                    line-height: 135%;
+                    color: #111822;
+                }
             }
             .img__wrap {
                 border-radius: 20px;
