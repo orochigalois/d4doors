@@ -14,9 +14,13 @@ $(function () {
         const filterContent = document.querySelector('.filter__content');
         const filterButton = document.querySelector('.filter__btn');
 
-        // Check if the clicked element is outside both .filter__content and .filter__btn
-        if (!filterContent.contains(event.target) && !filterButton.contains(event.target)) {
-            $('.filter__btn').removeClass("active");
+        
+        // Check if the elements exist before accessing `contains`
+        if (filterContent && filterButton) {
+            // Check if the clicked element is outside both .filter__content and .filter__btn
+            if (!filterContent.contains(event.target) && !filterButton.contains(event.target)) {
+                $('.filter__btn').removeClass("active");
+            }
         }
     });
     initMarquee();
